@@ -36,7 +36,7 @@ define behavior for zetr_ddl_p_archive_serials //alias <alias_name>
   use delete;
 
   use association _eArchiveParameters;
-  use association _numberStatus { }
+  use association _numberStatus { create; }
   use action createNumbers;
 }
 

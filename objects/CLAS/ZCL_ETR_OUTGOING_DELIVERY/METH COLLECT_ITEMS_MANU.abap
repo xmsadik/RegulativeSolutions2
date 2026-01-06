@@ -1,6 +1,6 @@
   METHOD collect_items_manu.
     DATA: ls_items        TYPE mty_item_collect,
-          ls_manual_items TYPE zetr_t_ogdli.
+          ls_manual_items TYPE mty_ogdli.
 
     LOOP AT ms_manual_data-items INTO ls_manual_items.
       CHECK ls_manual_items-menge IS NOT INITIAL.

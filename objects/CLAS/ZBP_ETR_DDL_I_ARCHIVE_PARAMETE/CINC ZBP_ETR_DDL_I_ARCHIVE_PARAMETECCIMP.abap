@@ -4,6 +4,7 @@ CLASS lhc_zetr_ddl_i_archive_serials DEFINITION INHERITING FROM cl_abap_behavior
 
     METHODS checkSerials FOR VALIDATE ON SAVE
       IMPORTING keys FOR zetr_ddl_i_archive_serials~checkSerials.
+
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR zetr_ddl_i_archive_serials RESULT result.
 

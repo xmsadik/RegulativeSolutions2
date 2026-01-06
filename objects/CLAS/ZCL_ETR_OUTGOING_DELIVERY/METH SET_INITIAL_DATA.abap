@@ -29,6 +29,11 @@
         AND cuspa = 'ADDSIGN'
       INTO @mv_add_signature.
 
+    SELECT SINGLE value
+      FROM zetr_t_edcus
+      WHERE bukrs = @ms_document-bukrs
+        AND cuspa = 'DLVPARTNER'
+      INTO @mv_delivery_partner_role.
 
     SELECT *
       FROM zetr_t_odti

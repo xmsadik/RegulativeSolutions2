@@ -23,6 +23,14 @@
                                                                                                                       docno = ls_document-invno
                                                                                                                  envui = ls_document-envui ) ).
           rs_status = CORRESPONDING #( ls_earchive_status ).
+        WHEN 'EABELGE'.
+          DATA(lo_eproducer_service) = zcl_etr_eproducer_ws=>factory( iv_company = ls_document-bukrs ).
+          DATA(ls_eproducer_status) = lo_eproducer_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
+                                                                                                                      docii = ls_document-invii
+                                                                                                                      duich = ls_document-invui
+                                                                                                                      docno = ls_document-invno
+                                                                                                                 envui = ls_document-envui ) ).
+          rs_status = CORRESPONDING #( ls_eproducer_status ).
         WHEN OTHERS.
           DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
           DATA(ls_einvoice_status) = lo_einvoice_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
@@ -49,7 +57,7 @@
       ENDIF.
       IF rs_status-resst IS INITIAL.
         CASE ls_document-prfid.
-          WHEN 'TEMEL' OR 'EARSIV'.
+          WHEN 'TEMEL' OR 'EARSIV' OR 'EABELGE'.
             rs_status-resst = 'X'.
           WHEN OTHERS.
             rs_status-resst = '0'.

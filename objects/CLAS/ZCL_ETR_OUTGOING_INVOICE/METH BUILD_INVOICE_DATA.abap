@@ -238,9 +238,14 @@
       ENDLOOP.
     ENDLOOP.
 
+    IF ms_document-prfid = 'EABELGE'.
+      map_invoice_to_credit( ).
+    ENDIF.
+
     invoice_abap_to_ubl( ).
     ev_invoice_hash = mv_invoice_hash.
     ev_invoice_ubl = mv_invoice_ubl.
     es_invoice_ubl = ms_invoice_ubl.
+    es_credit_ubl = ms_credit_ubl.
     et_custom_parameters[] = mt_custom_parameters[].
   ENDMETHOD.

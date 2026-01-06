@@ -2833,6 +2833,16 @@
     "MTDFINAL":"",
     "ATTVALUE":"",
     "EXPOSURE":2
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EINVOICE_WS_EFINANS",
+    "REFCLSNAME":"ZCL_ETR_EINVOICE_WS",
+    "VERSION":1,
+    "MTDNAME":"OUTGOING_INVOICE_SEND_AGAIN",
+    "MTDABSTRCT":"",
+    "MTDFINAL":"",
+    "ATTVALUE":"",
+    "EXPOSURE":2
    }
   ]
  },
@@ -3937,6 +3947,12 @@
     "METHODINDX":20,
     "METHODNAME":"INCOMING_INVOICE_GET_FIELDS2",
     "FLAGS":0
+   },
+   {
+    "CLASSNAME":"ZCL_ETR_EINVOICE_WS_EFINANS",
+    "METHODINDX":21,
+    "METHODNAME":"OUTGOING_INVOICE_SEND_AGAIN",
+    "FLAGS":0
    }
   ]
  },
@@ -4210,6 +4226,17 @@
    },
    {
     "NAME":"ZCL_ETR_EINVOICE_WS_EFINANS===CM00K",
+    "VARCL":"X",
+    "DBAPL":"S",
+    "DBNA":"D$",
+    "SUBC":"I",
+    "APPL":"S",
+    "FIXPT":"X",
+    "LDBNAME":"D$S",
+    "UCCHECK":"X"
+   },
+   {
+    "NAME":"ZCL_ETR_EINVOICE_WS_EFINANS===CM00L",
     "VARCL":"X",
     "DBAPL":"S",
     "DBNA":"D$",

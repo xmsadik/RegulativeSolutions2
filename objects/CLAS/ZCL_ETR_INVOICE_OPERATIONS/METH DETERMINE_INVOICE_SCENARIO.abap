@@ -69,17 +69,35 @@
 
     IF cs_document-prfid IS INITIAL.
       SELECT SINGLE datab, datbi, genid
+        FROM zetr_t_eppar
+        WHERE bukrs = @mv_company_code
+        INTO @cs_company_data.
+      IF sy-subrc = 0 AND cs_document-bldat BETWEEN cs_company_data-datab AND cs_company_data-datbi.
+
+        ls_invoice_rule_output = get_eproducer_rule( iv_rule_type   = 'P'
+                                                     is_rule_input  = is_invoice_rule_input ).
+        IF ls_invoice_rule_output-ruleok IS NOT INITIAL AND ls_invoice_rule_output-excld = abap_false.
+          cs_document-prfid = 'EABELGE'.
+          cs_document-invty = 'MUSTAHSIL'.
+          cs_document-taxex = ls_invoice_rule_output-taxex.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+    IF cs_document-prfid IS INITIAL.
+      SELECT SINGLE datab, datbi, genid
         FROM zetr_t_eapar
         WHERE bukrs = @mv_company_code
         INTO @cs_company_data.
-      CHECK sy-subrc = 0 AND cs_document-bldat BETWEEN cs_company_data-datab AND cs_company_data-datbi.
+      IF sy-subrc = 0 AND cs_document-bldat BETWEEN cs_company_data-datab AND cs_company_data-datbi.
 
-      ls_invoice_rule_output = get_earchive_rule( iv_rule_type   = 'P'
-                                                  is_rule_input  = is_invoice_rule_input ).
-      IF ls_invoice_rule_output-ruleok IS NOT INITIAL AND ls_invoice_rule_output-excld = abap_false.
-        cs_document-prfid = 'EARSIV'.
-        cs_document-invty = ls_invoice_rule_output-ityou.
-        cs_document-taxex = ls_invoice_rule_output-taxex.
+        ls_invoice_rule_output = get_earchive_rule( iv_rule_type   = 'P'
+                                                    is_rule_input  = is_invoice_rule_input ).
+        IF ls_invoice_rule_output-ruleok IS NOT INITIAL AND ls_invoice_rule_output-excld = abap_false.
+          cs_document-prfid = 'EARSIV'.
+          cs_document-invty = ls_invoice_rule_output-ityou.
+          cs_document-taxex = ls_invoice_rule_output-taxex.
+        ENDIF.
       ENDIF.
     ENDIF.
   ENDMETHOD.

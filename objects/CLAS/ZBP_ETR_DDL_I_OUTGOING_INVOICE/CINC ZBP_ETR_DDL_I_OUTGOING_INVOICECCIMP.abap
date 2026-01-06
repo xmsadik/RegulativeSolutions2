@@ -66,6 +66,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
       FROM zetr_t_usaut
       FOR ALL ENTRIES IN @lt_invoices
       WHERE bukrs = @lt_invoices-CompanyCode
+        AND uname = @sy-uname
       INTO TABLE @DATA(lt_authorizations).
     result = VALUE #( FOR ls_invoice IN lt_invoices
                       ( %tky = ls_invoice-%tky
@@ -76,7 +77,10 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                         %action-archiveinvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-setasrejected = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
-                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                                                             THEN if_abap_behv=>fc-o-disabled
+                                                        WHEN NOT line_exists( lt_authorizations[ bukrs = ls_invoice-CompanyCode ogimr = abap_true ] )
+                                                             THEN if_abap_behv=>fc-o-disabled
+                                                        ELSE if_abap_behv=>fc-o-enabled  )
                         %action-statusupdate = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-sendMailToPartner = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
@@ -89,7 +93,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %field-profileid = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
                                                      THEN if_abap_behv=>fc-f-read_only
-                                                   WHEN ls_invoice-profileid = 'EARSIV'
+                                                   WHEN ls_invoice-profileid = 'EARSIV' OR ls_invoice-profileid = 'EABELGE'
                                                      THEN if_abap_behv=>fc-f-read_only
                                                    ELSE if_abap_behv=>fc-f-mandatory  )
                         %field-internetsale = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
@@ -118,6 +122,8 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                                      THEN if_abap_behv=>fc-f-unrestricted
                                                    ELSE if_abap_behv=>fc-f-read_only  )
                         %field-invoicetype = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
+                                                     THEN if_abap_behv=>fc-f-read_only
+                                                     WHEN ls_invoice-profileid = 'EABELGE'
                                                      THEN if_abap_behv=>fc-f-read_only
                                                    ELSE if_abap_behv=>fc-f-unrestricted  )
                         %field-taxtype = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
@@ -152,7 +158,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                                    ELSE if_abap_behv=>fc-f-read_only  )
                         %field-aliass = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
                                                      THEN if_abap_behv=>fc-f-read_only
-                                                   WHEN ls_invoice-profileid = 'EARSIV'
+                                                   WHEN ls_invoice-profileid = 'EARSIV' OR ls_invoice-profileid = 'EABELGE'
                                                      THEN if_abap_behv=>fc-f-read_only
                                                    ELSE if_abap_behv=>fc-f-unrestricted  )
                       ) ).
@@ -312,7 +318,12 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
       INTO TABLE @DATA(lt_auto_mail).
 
     SELECT bukrs, 'EARSIV' AS prfid
-      FROM zetr_t_eipar
+      FROM zetr_t_eapar
+      WHERE automail = 'X'
+      APPENDING TABLE @lt_auto_mail.
+
+    SELECT bukrs, 'EABELGE' AS prfid
+      FROM zetr_t_eppar
       WHERE automail = 'X'
       APPENDING TABLE @lt_auto_mail.
     SORT lt_auto_mail BY bukrs prfid.
@@ -324,7 +335,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                             number   = '036'
                                             severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
         DELETE InvoiceList.
-      ELSEIF ( <InvoiceLine>-TaxAmount IS INITIAL OR <InvoiceLine>-ExemptionExists = abap_true ) AND <InvoiceLine>-TaxExemption IS INITIAL.
+      ELSEIF <InvoiceLine>-ExemptionExists = abap_true AND <InvoiceLine>-TaxExemption IS INITIAL.
         APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
                         %msg = new_message( id       = 'ZETR_COMMON'
                                             number   = '039'
@@ -373,6 +384,23 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                     ev_invoice_no        = DATA(lv_invoice_no)
                     ev_envelope_uuid     = DATA(lv_envelope_uuid)
                     es_status            = DATA(ls_ea_status) ).
+              WHEN 'EABELGE'.
+                DATA(eProducerServiceInstance) = zcl_etr_eproducer_ws=>factory( <InvoiceLine>-CompanyCode ).
+                eProducerServiceInstance->outgoing_invoice_send(
+                  EXPORTING
+                    iv_document_uuid     = <InvoiceLine>-DocumentUUID
+                    is_ubl_structure     = ls_invoice_ubl
+                    iv_ubl_xstring       = lv_invoice_ubl
+                    iv_ubl_hash          = lv_invoice_hash
+                    iv_receiver_alias    = PartyAlias
+                    iv_receiver_taxid    = PartyTaxID
+                    it_custom_parameters = lt_custom_parameters
+                  IMPORTING
+                    ev_integrator_uuid   = <InvoiceLine>-IntegratorDocumentID
+                    ev_invoice_uuid      = lv_invoice_uuid
+                    ev_invoice_no        = lv_invoice_no
+                    ev_envelope_uuid     = lv_envelope_uuid
+                    es_status            = DATA(ls_ep_status) ).
               WHEN OTHERS.
                 DATA(eInvoiceServiceInstance) = zcl_etr_einvoice_ws=>factory( <InvoiceLine>-CompanyCode ).
                 eInvoiceServiceInstance->outgoing_invoice_send(
@@ -404,6 +432,9 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
             CASE <InvoiceLine>-ProfileID.
               WHEN 'EARSIV'.
                 <InvoiceLine>-StatusCode = ls_ea_status-stacd.
+                <InvoiceLine>-Response = 'X'.
+              WHEN 'EABELGE'.
+                <InvoiceLine>-StatusCode = ls_ep_status-stacd.
                 <InvoiceLine>-Response = 'X'.
               WHEN OTHERS.
                 <InvoiceLine>-StatusCode = ls_ei_status-stacd.
@@ -520,6 +551,8 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
         CASE InvoiceLine-ProfileID.
           WHEN 'EARSIV'.
             CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EARSIV' ] ).
+          WHEN 'EABELGE'.
+            CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EABELGE' ] ).
           WHEN OTHERS.
             CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EFATURA' ] ).
         ENDCASE.

@@ -3,6 +3,7 @@
     DATA ms_document TYPE mty_document .
     DATA mv_preview TYPE abap_boolean .
     DATA ms_invoice_ubl TYPE zif_etr_invoice_ubl21=>invoicetype .
+    DATA ms_credit_ubl TYPE zif_etr_credit_ubl21=>creditnotetype .
     DATA mv_invoice_hash TYPE mty_hash_code .
     DATA mv_invoice_ubl TYPE xstring .
     DATA mt_custom_parameters TYPE TABLE OF zetr_t_cmpcp .
@@ -139,6 +140,9 @@
       RAISING
         zcx_etr_regulative_exception .
     METHODS invoice_abap_to_ubl
+      RAISING
+        zcx_etr_regulative_exception .
+    METHODS map_invoice_to_credit
       RAISING
         zcx_etr_regulative_exception .
     METHODS get_einvoice_rule

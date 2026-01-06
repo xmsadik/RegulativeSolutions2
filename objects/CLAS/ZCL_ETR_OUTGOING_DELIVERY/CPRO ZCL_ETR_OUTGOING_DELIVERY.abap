@@ -5,6 +5,7 @@
     DATA mv_preview TYPE abap_boolean .
     DATA mv_company_taxid TYPE zetr_e_taxid .
     DATA mv_add_signature TYPE zetr_E_VALUE .
+    DATA mv_delivery_partner_role TYPE zetr_E_VALUE .
     DATA mv_shipto_address TYPE c LENGTH 10 .
     DATA ms_delivery_ubl TYPE zif_etr_delivery_ubl21=>despatchadvicetype .
     DATA mv_delivery_hash TYPE string .
@@ -138,3 +139,20 @@
     METHODS get_issue_date
       RETURNING
         VALUE(rv_date) TYPE datum.
+
+    METHODS collect_items_likp_change_item
+      IMPORTING
+        is_lips TYPE mty_lips
+      CHANGING
+        cs_item TYPE mty_item_collect.
+
+    METHODS build_delivery_data_item_chg
+      IMPORTING
+        is_item         TYPE mty_item_collect
+      CHANGING
+        cs_invoice_line TYPE zif_etr_common_ubl21=>despatchlinetype.
+    METHODS collect_items_common_chg_item
+      IMPORTING
+        is_common_item TYPE mty_ogdli
+      CHANGING
+        cs_item        TYPE zcl_etr_outgoing_delivery=>mty_item_collect.

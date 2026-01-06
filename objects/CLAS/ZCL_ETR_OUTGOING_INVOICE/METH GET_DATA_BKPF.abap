@@ -96,13 +96,13 @@
                      THEN fiacc~taxty
                 ELSE altfiacc~taxty END AS taxty
       FROM i_journalentryitem AS item
-        LEFT OUTER JOIN i_glaccounttext AS glaccounttext
+        LEFT OUTER JOIN I_GlAccountTextInCompanycode AS glaccounttext
           ON  glaccounttext~Language = @sy-langu
-          AND glaccounttext~ChartOfAccounts = @ms_accdoc_data-t001-ktopl
+          AND glaccounttext~CompanyCode = @ms_document-bukrs
           AND glaccounttext~GLAccount = item~GLAccount
-        LEFT OUTER JOIN i_glaccounttext AS altglaccounttext
+        LEFT OUTER JOIN I_GlAccountTextInCompanycode AS altglaccounttext
           ON  altglaccounttext~Language = @sy-langu
-          AND altglaccounttext~ChartOfAccounts = @ms_accdoc_data-t001-ktopl
+          AND altglaccounttext~CompanyCode = @ms_document-bukrs
           AND altglaccounttext~GLAccount = item~AlternativeGLAccount
         LEFT OUTER JOIN zetr_t_fiacc AS fiacc
           ON  fiacc~ktopl = @ms_accdoc_data-t001-ktopl
@@ -198,12 +198,20 @@
                    AND bseg~shkzg = 'H'
                    AND fiac~accty IS NULL
                   THEN bseg~wrbtr
+                  WHEN bseg~koart = 'S'
+                   AND bseg~shkzg = 'S'
+                   AND fiac~accty = 'D'
+                  THEN bseg~wrbtr * -1
                   ELSE 0 END ) AS fwbas,
         SUM( CASE WHEN bseg~koart <> 'D'
                    AND bseg~koart <> 'K'
                    AND bseg~shkzg = 'H'
                    AND fiac~accty IS NULL
                   THEN bseg~dmbtr
+                  WHEN bseg~koart = 'S'
+                   AND bseg~shkzg = 'S'
+                   AND fiac~accty = 'D'
+                  THEN bseg~dmbtr * -1
                   ELSE 0 END ) AS hwbas,
         SUM( CASE WHEN bseg~koart = 'S'
                    AND bseg~shkzg = 'S'

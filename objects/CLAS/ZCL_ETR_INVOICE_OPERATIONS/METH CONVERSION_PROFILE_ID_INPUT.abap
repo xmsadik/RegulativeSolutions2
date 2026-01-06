@@ -5,6 +5,8 @@
         REPLACE 'FATURA' IN rv_output WITH ``.
       WHEN 'YOLCUBERABERFATURA'.
         rv_output = 'YOLCU'.
+      WHEN 'EARSIVBELGE'.
+        rv_output = 'EABELGE'.
       WHEN OTHERS.
         rv_output = iv_input.
     ENDCASE.

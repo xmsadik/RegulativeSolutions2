@@ -14,6 +14,19 @@
         AND FiscalYear = @ms_document-gjahr
       INTO @ms_invrec_data-headerdata.
 
+    SELECT SINGLE company~companycode AS bukrs,
+                  company~currency AS waers,
+                  company~country AS land1,
+*                  CASE WHEN company~CountryChartOfAccounts IS NOT INITIAL THEN CountryChartOfAccounts
+*                  ELSE company~chartofaccounts END AS ktopl,
+                  company~chartofaccounts AS ktopl,
+                  country~taxcalculationprocedure AS kalsm
+      FROM I_CompanyCode AS company
+      INNER JOIN i_country AS country
+        ON country~country = company~country
+      WHERE companycode = @ms_document-bukrs
+      INTO CORRESPONDING FIELDS OF @ms_invrec_data-t001.
+
     SELECT SupplierInvoiceItem AS invoice_doc_item,
            PurchaseOrder AS po_number,
            PurchaseOrderItem AS po_item,
@@ -30,29 +43,69 @@
     SELECT SupplierInvoiceItem AS invoice_doc_item,
            SupplierInvoiceItemText AS item_text,
            SupplierInvoiceItemAmount AS item_amount,
+           item~glaccount AS glaccount,
+           glaccounttext~glaccountname AS glaccount_name,
            TaxCode AS Tax_Code
-      FROM I_SuplrInvoiceItemGLAcctAPI01
+      FROM I_SuplrInvoiceItemGLAcctAPI01 AS item
+        LEFT OUTER JOIN I_GlAccountTextInCompanycode AS glaccounttext
+          ON  glaccounttext~Language = @sy-langu
+          AND glaccounttext~CompanyCode = @ms_document-bukrs
+          AND glaccounttext~GLAccount = item~GLAccount
       WHERE SupplierInvoice = @ms_document-belnr
         AND FiscalYear = @ms_document-gjahr
       INTO TABLE @ms_invrec_data-glaccountdata.
 
-    SELECT *
-      FROM i_supplierinvoicetaxapi01
+    SELECT
+        SupplierInvoiceItem AS invoice_doc_item ,
+        material,
+        ProductName AS material_text,
+        quantity,
+        QuantityUnit AS base_uom,
+        SupplierInvoiceItemAmount AS item_amount,
+        TaxCode AS tax_code
+      FROM I_SuplrInvcItemMaterialAPI01 AS Item
+        LEFT OUTER JOIN I_ProductText AS Product
+          ON Product~Language = @sy-langu
+          AND Product~Product = Item~Material
       WHERE SupplierInvoice = @ms_document-belnr
         AND FiscalYear = @ms_document-gjahr
-      INTO TABLE @ms_invrec_data-taxdata.
+      INTO TABLE @ms_invrec_data-materialdata.
 
-    SELECT SINGLE company~companycode AS bukrs,
-                  company~currency AS waers,
-                  company~country AS land1,
-                  CASE WHEN company~CountryChartOfAccounts IS NOT INITIAL THEN CountryChartOfAccounts
-                  ELSE company~chartofaccounts END AS ktopl,
-                  country~taxcalculationprocedure AS kalsm
-      FROM I_CompanyCode AS company
-      INNER JOIN i_country AS country
-        ON country~country = company~country
-      WHERE companycode = @ms_document-bukrs
-      INTO CORRESPONDING FIELDS OF @ms_invrec_data-t001.
+    CASE ms_document-prfid.
+      WHEN 'EABELGE'.
+        SELECT *
+          FROM I_SuplrInvcHeaderWhldgTaxAPI01
+          WHERE SupplierInvoice = @ms_document-belnr
+            AND FiscalYear = @ms_document-gjahr
+          INTO TABLE @ms_invrec_data-withholdingtaxdata.
+
+        SELECT item~AccountingDocumentItem AS buzei,
+               item~financialaccounttype AS koart,
+               item~debitcreditcode AS shkzg,
+               item~glaccount AS hkont,
+               abs( amountincompanycodecurrency ) AS dmbtr,
+               abs( amountintransactioncurrency ) AS wrbtr,
+               DocumentItemText AS sgtxt,
+               TaxCode AS mwskz
+          FROM i_journalentryitem AS item
+          INNER JOIN zetr_t_fiacc AS fiacc
+            ON  fiacc~ktopl = @ms_invrec_data-t001-ktopl
+            AND fiacc~saknr = item~GLAccount
+           WHERE item~ReferenceDocumentType = 'RMRP'
+             AND item~ReferenceDocument = @ms_document-belnr
+             AND item~ReferenceDocumentContext = @ms_document-gjahr
+             AND item~DebitCreditCode = 'H'
+             AND item~FinancialAccountType = 'S'
+             AND item~Ledger = '0L'
+             AND fiacc~accty = 'T'
+          INTO CORRESPONDING FIELDS OF TABLE @ms_invrec_data-bseg.
+      WHEN OTHERS.
+        SELECT *
+          FROM i_supplierinvoicetaxapi01
+          WHERE SupplierInvoice = @ms_document-belnr
+            AND FiscalYear = @ms_document-gjahr
+          INTO TABLE @ms_invrec_data-taxdata.
+    ENDCASE.
 
     SELECT country AS land1, CountryName AS landx
       FROM I_CountryText

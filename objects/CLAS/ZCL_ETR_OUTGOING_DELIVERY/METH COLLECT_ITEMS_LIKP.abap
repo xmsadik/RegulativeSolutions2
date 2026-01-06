@@ -11,6 +11,12 @@
       ls_items-vrkme = ls_lips-vrkme.
       ls_items-kdmat = ls_lips-kdmat.
 
+      collect_items_likp_change_item(
+        EXPORTING
+          is_lips = ls_lips
+        CHANGING
+          cs_item = ls_items ).
+
       IF ms_document-itmcl = abap_false.
         ls_items-posnr = ls_lips-posnr.
         APPEND ls_items TO mt_delivery_items.

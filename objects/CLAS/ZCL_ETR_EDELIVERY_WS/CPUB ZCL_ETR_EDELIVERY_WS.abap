@@ -125,6 +125,21 @@ CLASS zcl_etr_edelivery_ws DEFINITION
         !es_status          TYPE mty_outgoing_document_status
       RAISING
         zcx_etr_regulative_exception .
+    METHODS outgoing_delivery_send_again
+      ABSTRACT
+      IMPORTING
+        !iv_document_uuid      TYPE sysuuid_c22
+        !iv_document_uuid_char TYPE zetr_e_duich
+        !is_ubl_structure      TYPE zif_etr_delivery_ubl21=>despatchadvicetype
+        !iv_ubl_xstring        TYPE xstring
+        !iv_ubl_hash           TYPE string
+        !iv_receiver_alias     TYPE zetr_e_alias
+        !iv_receiver_taxid     TYPE zetr_e_taxid
+*        !it_custom_parameters  TYPE /itetr/com_tt_custom_param OPTIONAL
+      EXPORTING
+        !ev_envelope_uuid      TYPE zetr_e_envui
+      RAISING
+        zcx_etr_regulative_exception .
     METHODS outgoing_delivery_get_status
       ABSTRACT
       IMPORTING

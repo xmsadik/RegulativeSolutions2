@@ -43,6 +43,12 @@
                       WHERE bukrs = @ls_document-bukrs
                         AND deflt = @abap_true
                       INTO @ls_document-xsltt.
+                  WHEN 'EABELGE'.
+                    SELECT SINGLE xsltt
+                      FROM zetr_t_epxslt
+                      WHERE bukrs = @ls_document-bukrs
+                        AND deflt = @abap_true
+                      INTO @ls_document-xsltt.
                   WHEN OTHERS.
                     SELECT SINGLE xsltt
                       FROM zetr_t_eixslt
@@ -66,6 +72,14 @@
                                                                                                            docno = ls_document-invno
                                                                                                            envui = ls_document-envui )
                                                                             iv_content_type = iv_content_type ).
+            WHEN 'EABELGE'.
+              DATA(lo_eproducer_service) = zcl_etr_eproducer_ws=>factory( iv_company = ls_document-bukrs ).
+              rv_document = lo_eproducer_service->outgoing_invoice_download( is_document_numbers = VALUE #( docui = ls_document-docui
+                                                                                                            docii = ls_document-invii
+                                                                                                            duich = ls_document-invui
+                                                                                                            docno = ls_document-invno
+                                                                                                            envui = ls_document-envui )
+                                                                             iv_content_type = iv_content_type ).
             WHEN OTHERS.
               DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
               rv_document = lo_einvoice_service->outgoing_invoice_download( is_document_numbers = VALUE #( docui = ls_document-docui

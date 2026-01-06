@@ -12,6 +12,18 @@
               AND maisp = @abap_true
             INTO @cs_document-serpr.
         ENDIF.
+      WHEN 'EABELGE'.
+        ls_invoice_rule_output = get_eproducer_rule( iv_rule_type   = 'S'
+                                                     is_rule_input  = is_invoice_rule_input ).
+        IF ls_invoice_rule_output-ruleok IS NOT INITIAL.
+          cs_document-serpr = ls_invoice_rule_output-serpr.
+        ELSE.
+          SELECT SINGLE serpr
+            FROM zetr_t_epser
+            WHERE bukrs = @mv_company_code
+              AND maisp = @abap_true
+            INTO @cs_document-serpr.
+        ENDIF.
       WHEN OTHERS.
         CLEAR ls_invoice_rule_output.
         ls_invoice_rule_output = get_einvoice_rule( iv_rule_type   = 'S'

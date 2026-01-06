@@ -32,6 +32,9 @@
       CLEAR ls_invoice_items.
       ls_invoice_items-posnr = ls_itemdata-invoice_doc_item.
       ls_invoice_items-arktx = ls_glaccountdata-item_text.
+      IF ls_invoice_items-arktx IS INITIAL.
+        ls_invoice_items-arktx = ls_glaccountdata-glaccount_name.
+      ENDIF.
       ls_invoice_items-fkimg = 1.
       ls_invoice_items-vrkme = 'ST'.
       ls_invoice_items-netwr = ls_glaccountdata-item_amount.
@@ -61,4 +64,41 @@
         APPEND ls_invoice_items TO mt_invoice_items.
       ENDIF.
     ENDLOOP.
+
+    IF ms_document-prfid = 'EABELGE'.
+      READ TABLE ms_invrec_data-bseg INTO DATA(ls_bseg) INDEX 1.
+      IF sy-subrc = 0.
+        SELECT SINGLE *
+          FROM zetr_t_fiacc
+          WHERE ktopl = @ms_invrec_data-t001-ktopl
+            AND saknr = @ls_bseg-hkont
+          INTO @DATA(ls_glaccount_data).
+
+        LOOP AT mt_invoice_items INTO DATA(ls_item).
+          ls_item-othtx = ls_item-netwr * ls_glaccount_data-taxrt / 100.
+          ls_item-othtr = ls_glaccount_data-taxrt.
+          ls_item-othtt = ls_glaccount_data-taxty.
+          CLEAR: ls_item-mwskz, ls_item-mwsbp.
+          MODIFY mt_invoice_items FROM ls_item.
+        ENDLOOP.
+      ELSE.
+        READ TABLE ms_invrec_data-withholdingtaxdata INTO DATA(ls_withholding_taxdata) INDEX 1.
+        IF sy-subrc = 0.
+          SELECT SINGLE *
+            FROM zetr_ddl_i_tax_code_matching
+            WHERE TaxProcedure = @ms_invrec_data-t001-kalsm
+              AND TaxCode = @ls_withholding_taxdata-WithholdingTaxCode
+            INTO @DATA(ls_tax_code_matching).
+          IF sy-subrc = 0.
+            LOOP AT mt_invoice_items INTO ls_item.
+              ls_item-othtx = ls_item-netwr * ls_tax_code_matching-TaxRate / 100.
+              ls_item-othtr = ls_tax_code_matching-TaxRate.
+              ls_item-othtt = ls_tax_code_matching-TaxType.
+              CLEAR: ls_item-mwskz, ls_item-mwsbp.
+              MODIFY mt_invoice_items FROM ls_item.
+            ENDLOOP.
+          ENDIF.
+        ENDIF.
+      ENDIF.
+    ENDIF.
   ENDMETHOD.

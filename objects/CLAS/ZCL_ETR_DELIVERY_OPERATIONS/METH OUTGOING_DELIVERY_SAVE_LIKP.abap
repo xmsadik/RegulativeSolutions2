@@ -36,6 +36,9 @@
              bwart TYPE bwart,
              vtweg TYPE zetr_e_vtweg,
              spart TYPE spart,
+             brgew TYPE brgew,
+             ntgew TYPE ntgew,
+             gewei TYPE gewei,
            END OF ty_lips.
     DATA: lt_lips          TYPE STANDARD TABLE OF ty_lips,
           ls_lips          TYPE ty_lips,
@@ -71,6 +74,11 @@
       es_return-id = 'ZETR_COMMON'.
       es_return-number = '005'.
       RETURN.
+    ELSEIF ls_likp-wbstk <> 'C'.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '246'.
+      RETURN.
     ENDIF.
 
     SELECT SINGLE datab, datbi, genid, prfid
@@ -97,7 +105,10 @@
            InventorySpecialStockType AS sobkz,
            GoodsMovementType AS bwart,
            distributionchannel AS vtweg,
-           division AS spart
+           division AS spart,
+           itemgrossweight AS brgew,
+           itemnetweight AS ntgew,
+           itemweightunit AS gewei
       FROM I_DeliveryDocumentItem
       WHERE DeliveryDocument = @iv_belnr
       INTO TABLE @lt_lips.
@@ -249,5 +260,8 @@
       <ls_items>-mdesc = ls_lips-arktx.
       <ls_items>-menge = ls_lips-lfimg.
       <ls_items>-meins = ls_lips-vrkme.
+      <ls_items>-brgew = ls_lips-brgew.
+      <ls_items>-ntgew = ls_lips-ntgew.
+      <ls_items>-gewei = ls_lips-gewei.
     ENDLOOP.
   ENDMETHOD.

@@ -151,6 +151,22 @@ CLASS zcl_etr_einvoice_ws DEFINITION
       RAISING
         zcx_etr_regulative_exception .
 
+    METHODS outgoing_invoice_send_again
+      ABSTRACT
+      IMPORTING
+        !iv_document_uuid      TYPE sysuuid_c22
+        !iv_document_uuid_char TYPE zetr_e_duich
+        !is_ubl_structure      TYPE zif_etr_invoice_ubl21=>invoicetype
+        !iv_ubl_xstring        TYPE xstring
+        !iv_ubl_hash           TYPE string
+        !iv_receiver_alias     TYPE zetr_e_alias
+        !iv_receiver_taxid     TYPE zetr_e_taxid
+        !it_custom_parameters  TYPE zcl_etr_outgoing_invoice=>mty_custom_parameters_t OPTIONAL
+      EXPORTING
+        !ev_envelope_uuid      TYPE zetr_e_envui
+      RAISING
+        zcx_etr_regulative_exception .
+
     METHODS outgoing_invoice_get_status
       ABSTRACT
       IMPORTING

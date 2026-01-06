@@ -482,6 +482,17 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"SARJANLIK"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":14,
+    "AS4VERS":0,
+    "DDTEXT":"Müstahsil",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"MUSTAHSIL"
    }
   ]
  },

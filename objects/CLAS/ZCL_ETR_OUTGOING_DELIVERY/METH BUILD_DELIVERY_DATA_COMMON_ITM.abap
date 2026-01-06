@@ -29,5 +29,11 @@
         FROM zetr_t_untmc
         WHERE meins = @ls_delivery_items-vrkme
         INTO @<ls_deilvery_line>-deliveredquantity-unitcode.
+
+      build_delivery_data_item_chg(
+        EXPORTING
+          is_item         = ls_delivery_items
+        CHANGING
+          cs_invoice_line = <ls_deilvery_line> ).
     ENDLOOP.
   ENDMETHOD.

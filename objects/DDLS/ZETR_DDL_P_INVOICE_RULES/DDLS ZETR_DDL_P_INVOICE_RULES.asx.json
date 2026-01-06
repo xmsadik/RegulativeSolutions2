@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'eInvoice Rules'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity zetr_ddl_p_invoice_rules\r\n  as projection on zetr_ddl_i_invoice_rules\r\n{\r\n  key CompanyCode,\r\n      @ObjectModel.text.element: ['RuleTypeText']\r\n  key RuleType,\r\n  key RuleItemNumber,\r\n      RuleTypeText,\r\n      RuleDescription,\r\n      @ObjectModel.text.element: ['ReferenceDocumentTypeText']\r\n      ReferenceDocumentType,\r\n      ReferenceDocumentTypeText,\r\n      ProfileIDInput,\r\n      InvoiceTypeInput,\r\n      @ObjectModel.text.element: ['SalesOrganizationName']\r\n      SalesOrganization,\r\n      SalesOrganizationName,\r\n      @ObjectModel.text.element: ['DistributionChannelName']\r\n      DistributionChannel,\r\n      DistributionChannelName,\r\n      @ObjectModel.text.element: ['DivisionName']\r\n      Division,\r\n      DivisionName,\r\n      @ObjectModel.text.element: ['PlantName']\r\n      Plant,\r\n      PlantName,\r\n      @ObjectModel.text.element: ['SalesDocumentItemCategoryName']\r\n      SalesDocumentItemCategory,\r\n      SalesDocumentItemCategoryName,\r\n      @ObjectModel.text.element: ['CustomerAccountAssgmtGrpName']\r\n      CustomerAccountAssignmentGroup,\r\n      CustomerAccountAssgmtGrpName,\r\n      @ObjectModel.text.element: ['BillingDocumentTypeName']\r\n      BillingDocumentType,\r\n      BillingDocumentTypeName,\r\n      @ObjectModel.text.element: ['InvoiceReceiptTypeName']\r\n      InvoiceReceiptType,\r\n      InvoiceReceiptTypeName,\r\n      @ObjectModel.text.element: ['AccountingDocumentTypeName']\r\n      AccountingDocumentType,\r\n      AccountingDocumentTypeName,\r\n      @ObjectModel.text.element: ['PartnerNmae']\r\n      Partner,\r\n      PartnerNmae,\r\n      SalesDocument,\r\n      ProfileID,\r\n      InvoiceType,\r\n      @ObjectModel.text.element: ['ExemptionTypeText']\r\n      TaxExemption,\r\n      ExemptionTypeText,\r\n      Exclude,\r\n      @ObjectModel.text.element: ['SerialPrefixText']\r\n      SerialPrefix,\r\n      SerialPrefixText,\r\n      XSLTTemplate,\r\n      Note,\r\n      FieldName,\r\n      FieldValue,\r\n      _eInvoiceParameters : redirected to parent zetr_ddl_p_invoice_parameters\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_INVOICE_RULES\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_INVOICE_PARAMETERS\",\n\"ZETR_DDL_P_INVOICE_PARAMETERS\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_INVOICE_RULES\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'eInvoice Rules'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity zetr_ddl_p_invoice_rules\r\n  as projection on zetr_ddl_i_invoice_rules\r\n{\r\n  key CompanyCode,\r\n      @ObjectModel.text.element: ['RuleTypeText']\r\n  key RuleType,\r\n  key RuleItemNumber,\r\n      RuleTypeText,\r\n      RuleDescription,\r\n      @ObjectModel.text.element: ['ReferenceDocumentTypeText']\r\n      ReferenceDocumentType,\r\n      ReferenceDocumentTypeText,\r\n      ProfileIDInput,\r\n      InvoiceTypeInput,\r\n      @ObjectModel.text.element: ['SalesOrganizationName']\r\n      SalesOrganization,\r\n      SalesOrganizationName,\r\n      @ObjectModel.text.element: ['DistributionChannelName']\r\n      DistributionChannel,\r\n      DistributionChannelName,\r\n      @ObjectModel.text.element: ['DivisionName']\r\n      Division,\r\n      DivisionName,\r\n      @ObjectModel.text.element: ['PlantName']\r\n      Plant,\r\n      PlantName,\r\n      @ObjectModel.text.element: ['SalesDocumentItemCategoryName']\r\n      SalesDocumentItemCategory,\r\n      SalesDocumentItemCategoryName,\r\n      @ObjectModel.text.element: ['CustomerAccountAssgmtGrpName']\r\n      CustomerAccountAssignmentGroup,\r\n      CustomerAccountAssgmtGrpName,\r\n      @ObjectModel.text.element: ['BillingDocumentTypeName']\r\n      BillingDocumentType,\r\n      BillingDocumentTypeName,\r\n      @ObjectModel.text.element: ['InvoiceReceiptTypeName']\r\n      InvoiceReceiptType,\r\n      InvoiceReceiptTypeName,\r\n      @ObjectModel.text.element: ['AccountingDocumentTypeName']\r\n      AccountingDocumentType,\r\n      AccountingDocumentTypeName,\r\n      @ObjectModel.text.element: ['PurchaseDocumentTypeName']\r\n      PurchaseDocumentType,\r\n      PurchaseDocumentTypeName,      \r\n      @ObjectModel.text.element: ['PartnerNmae']\r\n      Partner,\r\n      PartnerNmae,\r\n      SalesDocument,\r\n      ProfileID,\r\n      InvoiceType,\r\n      @ObjectModel.text.element: ['ExemptionTypeText']\r\n      TaxExemption,\r\n      ExemptionTypeText,\r\n      Exclude,\r\n      @ObjectModel.text.element: ['SerialPrefixText']\r\n      SerialPrefix,\r\n      SerialPrefixText,\r\n      XSLTTemplate,\r\n      Note,\r\n      FieldName,\r\n      FieldValue,\r\n      _eInvoiceParameters : redirected to parent zetr_ddl_p_invoice_parameters\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_INVOICE_RULES\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_INVOICE_PARAMETERS\",\n\"ZETR_DDL_P_INVOICE_PARAMETERS\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_INVOICE_RULES\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"J,W4T2Z",
+    "CHGFLAG":"54D",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -156,14 +156,14 @@
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"PARTNER",
     "NAME":"OBJECTMODEL",
-    "POSITION":25,
+    "POSITION":27,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"PARTNER",
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
-    "POSITION":26,
+    "POSITION":28,
     "VALUE":"'PartnerNmae'"
    },
    {
@@ -179,6 +179,20 @@
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
     "POSITION":14,
     "VALUE":"'PlantName'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
+    "LFIELDNAME":"PURCHASEDOCUMENTTYPE",
+    "NAME":"OBJECTMODEL",
+    "POSITION":25,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
+    "LFIELDNAME":"PURCHASEDOCUMENTTYPE",
+    "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
+    "POSITION":26,
+    "VALUE":"'PurchaseDocumentTypeName'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
@@ -240,28 +254,28 @@
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"SERIALPREFIX",
     "NAME":"OBJECTMODEL",
-    "POSITION":29,
+    "POSITION":31,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"SERIALPREFIX",
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
-    "POSITION":30,
+    "POSITION":32,
     "VALUE":"'SerialPrefixText'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"TAXEXEMPTION",
     "NAME":"OBJECTMODEL",
-    "POSITION":27,
+    "POSITION":29,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_INVOICE_RULES",
     "LFIELDNAME":"TAXEXEMPTION",
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
-    "POSITION":28,
+    "POSITION":30,
     "VALUE":"'ExemptionTypeText'"
    }
   ]

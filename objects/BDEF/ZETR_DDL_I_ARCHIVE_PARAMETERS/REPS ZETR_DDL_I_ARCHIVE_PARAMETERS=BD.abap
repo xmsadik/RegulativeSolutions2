@@ -145,8 +145,10 @@ authorization dependent by _earchiveParameters
       BillingDocumentType            = sddty;
       InvoiceReceiptType             = mmdty;
       AccountingDocumentType         = fidty;
+      PurchaseDocumentType           = bsart;
       Partner                        = partner;
       SalesDocument                  = vbeln;
+      ProfileID                      = pidou;
       InvoiceType                    = ityou;
       TaxExemption                   = taxex;
       Exclude                        = excld;
@@ -158,7 +160,7 @@ authorization dependent by _earchiveParameters
     }
   update;
   delete;
-  field ( readonly ) CompanyCode;
+  field ( readonly ) CompanyCode, ProfileID;
   field ( readonly : update ) RuleType, RuleItemNumber;
   association _earchiveParameters;
 }

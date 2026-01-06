@@ -65,8 +65,9 @@ CLASS zcl_etr_edelivery_ws_efinans DEFINITION
     METHODS: incoming_delivery_get_status REDEFINITION.
     METHODS: incoming_delivery_respdown REDEFINITION.
     METHODS: incoming_delivery_response REDEFINITION.
-    METHODS: outgoing_delivery_send REDEFINITION,
-      outgoing_delivery_get_status REDEFINITION,
-      outgoing_delivery_download REDEFINITION,
-      outgoing_delivery_respdown REDEFINITION.
+    METHODS: outgoing_delivery_send REDEFINITION.
+    METHODS: outgoing_delivery_get_status REDEFINITION.
+    METHODS: outgoing_delivery_download REDEFINITION.
+    METHODS: outgoing_delivery_respdown REDEFINITION.
     METHODS: download_registered_taxpayers2 REDEFINITION.
+    METHODS: outgoing_delivery_send_again REDEFINITION.

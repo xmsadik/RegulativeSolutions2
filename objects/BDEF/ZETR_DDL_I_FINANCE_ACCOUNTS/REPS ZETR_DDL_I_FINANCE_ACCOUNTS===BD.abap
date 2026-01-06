@@ -13,6 +13,9 @@ authorization master ( instance )
       GLAccount       = saknr;
       AccountType     = accty;
       TaxType         = taxty;
+      TaxRate         = taxrt;
+      TaxExemption    = taxex;
+      InvoiceType     = invty;
     }
   field ( readonly : update ) GLAccount, ChartOfAccounts;
   create;

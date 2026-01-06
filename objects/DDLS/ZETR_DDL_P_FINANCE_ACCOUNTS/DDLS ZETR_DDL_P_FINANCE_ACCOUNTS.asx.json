@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Finance Accounts'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine root view entity zetr_ddl_p_finance_accounts\r\n  provider contract transactional_query\r\n  as projection on zetr_ddl_i_finance_accounts\r\n{\r\n      @ObjectModel.text.element: ['ChartOfAccountsText']\r\n  key ChartOfAccounts,\r\n      @ObjectModel.text.element: ['GLAccountText']\r\n  key GLAccount,\r\n      ChartOfAccountsText,\r\n      GLAccountText,\r\n      @ObjectModel.text.element: ['AccountTypeText']\r\n      AccountType,\r\n      AccountTypeText,\r\n      @ObjectModel.text.element: ['TaxTypeText']\r\n      TaxType,\r\n      TaxTypeText\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_FINANCE_ACCOUNTS\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Finance Accounts'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine root view entity zetr_ddl_p_finance_accounts\r\n  provider contract transactional_query\r\n  as projection on zetr_ddl_i_finance_accounts\r\n{\r\n      @ObjectModel.text.element: ['ChartOfAccountsText']\r\n  key ChartOfAccounts,\r\n      @ObjectModel.text.element: ['GLAccountText']\r\n  key GLAccount,\r\n      ChartOfAccountsText,\r\n      GLAccountText,\r\n      @ObjectModel.text.element: ['AccountTypeText']\r\n      AccountType,\r\n      AccountTypeText,\r\n      @ObjectModel.text.element: ['TaxTypeText']\r\n      TaxType,\r\n      TaxTypeText,\r\n      TaxRate,\r\n      @ObjectModel.text.element: ['TaxExemptionText']\r\n      TaxExemption,\r\n      TaxExemptionText,\r\n      InvoiceType\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_FINANCE_ACCOUNTS\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"4",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -103,6 +103,20 @@
     "NAME":"ABAPCATALOG.INTERNAL.ISMANDT",
     "POSITION":2,
     "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_P_FINANCE_ACCOUNTS",
+    "LFIELDNAME":"TAXEXEMPTION",
+    "NAME":"OBJECTMODEL",
+    "POSITION":11,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_P_FINANCE_ACCOUNTS",
+    "LFIELDNAME":"TAXEXEMPTION",
+    "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
+    "POSITION":12,
+    "VALUE":"'TaxExemptionText'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_P_FINANCE_ACCOUNTS",

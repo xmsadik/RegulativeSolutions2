@@ -7,9 +7,9 @@
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2024-12-25",
-    "CHANGED_AT":"12:39:19",
-    "UUID":"CB92D17136801EEFB0D7A8529A9102FF",
+    "CHANGED_ON":"2025-12-08",
+    "CHANGED_AT":"11:16:31",
+    "UUID":"FA163EBBCF7E1FE0B584EB24EA4EC70D",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n@UI:{\r\nheaderInfo:{\r\n                typeNamePlural: 'User Authorizations',\r\n                typeName: 'User Authorization',\r\n                title:{ type: #STANDARD, label: 'User Authorization', value: 'Username' }\r\n           }\r\n}\r\nannotate entity zetr_ddl_p_user_authorizations with\r\n{\r\n  @UI.facet: [ { id:            'Parameters',\r\n                 purpose:       #STANDARD,\r\n                 type:          #IDENTIFICATION_REFERENCE,\r\n                 label:         'User Authorizations',\r\n                 position:      10 }  ]\r\n  @UI.hidden: true\r\n  CompanyCode;\r\n  @UI: { lineItem: [ { position: 20, importance: #HIGH } ],\r\n         identification: [{ position: 20 }] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  Username;\r\n  @UI.hidden: true\r\n  UserFullName;\r\n  @UI: { lineItem: [ { position: 30 } ],\r\n         identification: [{ position: 30 }] }  \r\n  OutgoingInvoiceStatusChange;\r\n  @UI: { lineItem: [ { position: 40 } ],\r\n         identification: [{ position: 40 }] }\r\n  OutgoingDeliveryStatusChange;\r\n  @UI: { lineItem: [ { position: 50 } ],\r\n         identification: [{ position: 50 }] }  \r\n  OutgoingDeliveryItemChange;\r\n  @UI: { lineItem: [ { position: 60 } ],\r\n         identification: [{ position: 60 }] }\r\n  IncomingInvoicePurcGrpChange;  \r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n@UI:{\r\nheaderInfo:{\r\n                typeNamePlural: 'User Authorizations',\r\n                typeName: 'User Authorization',\r\n                title:{ type: #STANDARD, label: 'User Authorization', value: 'Username' }\r\n           }\r\n}\r\nannotate entity zetr_ddl_p_user_authorizations with\r\n{\r\n  @UI.facet: [ { id:            'Parameters',\r\n                 purpose:       #STANDARD,\r\n                 type:          #IDENTIFICATION_REFERENCE,\r\n                 label:         'User Authorizations',\r\n                 position:      10 }  ]\r\n  @UI.hidden: true\r\n  CompanyCode;\r\n  @UI: { lineItem: [ { position: 20, importance: #HIGH } ],\r\n         identification: [{ position: 20 }] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_BusinessUserVH', element: 'UserID' }}]\r\n  Username;\r\n  @UI.hidden: true\r\n  UserFullName;\r\n  @UI: { lineItem: [ { position: 30 } ],\r\n         identification: [{ position: 30 }] }  \r\n  OutgoingInvoiceStatusChange;\r\n  @UI: { lineItem: [ { position: 40 } ],\r\n         identification: [{ position: 40 }] }\r\n  OutgoingDeliveryStatusChange;\r\n  @UI: { lineItem: [ { position: 50 } ],\r\n         identification: [{ position: 50 }] }  \r\n  OutgoingInvoiceMarkRejected;\r\n  @UI: { lineItem: [ { position: 60 } ],\r\n         identification: [{ position: 60 }] }\r\n  OutgoingDeliveryMarkRejected;  \r\n  @UI: { lineItem: [ { position: 70 } ],\r\n         identification: [{ position: 70 }] }  \r\n  OutgoingDeliveryItemChange;\r\n  @UI: { lineItem: [ { position: 80 } ],\r\n         identification: [{ position: 80 }] }\r\n  IncomingInvoicePurcGrpChange;  \r\n\r\n}"
    }
   ]
  },
@@ -124,28 +124,42 @@
     "ELEMENT":"INCOMINGINVOICEPURCGRPCHANGE",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"60"
+    "VALUE":"80"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
     "ELEMENT":"INCOMINGINVOICEPURCGRPCHANGE",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
+    "VALUE":"80"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
+    "ELEMENT":"OUTGOINGDELIVERYITEMCHANGE",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"70"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
+    "ELEMENT":"OUTGOINGDELIVERYITEMCHANGE",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"70"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
+    "ELEMENT":"OUTGOINGDELIVERYMARKREJECTED",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
     "VALUE":"60"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
-    "ELEMENT":"OUTGOINGDELIVERYITEMCHANGE",
-    "NAME":"UI.IDENTIFICATION$1$.POSITION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"50"
-   },
-   {
-    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
-    "ELEMENT":"OUTGOINGDELIVERYITEMCHANGE",
+    "ELEMENT":"OUTGOINGDELIVERYMARKREJECTED",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"50"
+    "VALUE":"60"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
@@ -160,6 +174,20 @@
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"40"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
+    "ELEMENT":"OUTGOINGINVOICEMARKREJECTED",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"50"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
+    "ELEMENT":"OUTGOINGINVOICEMARKREJECTED",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"50"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_USER_AUTHORIZATIONS",
@@ -290,8 +318,8 @@
     "EXTENDED_ARTIFACT":"ZETR_DDL_P_USER_AUTHORIZATIONS",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"CB92D17136801EEFB0D7A8529A9102FF",
-    "RT_HASH":"CCC1B45A3515439F9984FF55D8B78B0E791EC265",
+    "DT_UUID":"FA163EBBCF7E1FE0B584EB24EA4EC70D",
+    "RT_HASH":"F1695D337BC96AA71027E3D8D84EF47DBD6530EF",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }

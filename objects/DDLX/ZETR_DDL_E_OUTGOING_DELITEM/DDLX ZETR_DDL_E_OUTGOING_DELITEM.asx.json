@@ -7,9 +7,9 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2024-07-03",
-    "CHANGED_AT":"12:55:44",
-    "UUID":"5B80129E71491EEF8EA771EABFE380D1",
+    "CHANGED_ON":"2025-12-26",
+    "CHANGED_AT":"11:33:21",
+    "UUID":"FA163EBBCF7E1FE0B8C9D5D11291C745",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n@UI:{\r\nheaderInfo:{\r\n                typeNamePlural: 'Items',\r\n                typeName: 'Item',\r\n                title:{ type: #STANDARD, label: 'Items', value: 'MaterialDescription' }\r\n           }\r\n}\r\nannotate entity zetr_ddl_p_outgoing_delitem with\r\n{\r\n  @UI.facet: [ { id:            'Items',\r\n                 purpose:       #STANDARD,\r\n                 type:          #IDENTIFICATION_REFERENCE,\r\n                 label:         'Items',\r\n                 position:      10 }  ]\r\n  @UI.hidden: true\r\n  DocumentUUID;\r\n  @UI: { lineItem: [ { position: 1 } ],\r\n         identification: [ { position: 1 } ] }\r\n  LineNumber;\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_product_codes', element: 'ProductExternalID' }}]\r\n  @UI: { lineItem: [ { position: 10 } ],\r\n         identification: [ { position: 10 } ] }\r\n  SellersItemIdentification;\r\n  @UI: { lineItem: [ { position: 20 } ],\r\n         identification: [ { position: 20 } ] }\r\n  BuyersItemIdentification;\r\n  @UI: { lineItem: [ { position: 30 } ],\r\n         identification: [ { position: 30 } ] }\r\n  ManufacturerItemIdentification;\r\n  @UI: { lineItem: [ { position: 40 } ],\r\n         identification: [ { position: 40 } ] }\r\n  MaterialDescription;\r\n  @UI: { lineItem: [ { position: 50 } ],\r\n         identification: [ { position: 50 } ] }\r\n  Description;\r\n  @UI.hidden: true\r\n  NetPrice;\r\n  @UI.hidden: true\r\n  Currency;\r\n  @UI: { lineItem: [ { position: 80 } ],\r\n         identification: [ { position: 80 } ] }\r\n  Quantity;\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_UnitOfMeasure', element: 'UnitOfMeasure' }}]\r\n  @UI: { lineItem: [ { position: 90 } ] }\r\n  //         identification: [ { position: 90 } ] }\r\n  UnitOfMeasure;\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n@UI:{\r\nheaderInfo:{\r\n                typeNamePlural: 'Items',\r\n                typeName: 'Item',\r\n                title:{ type: #STANDARD, label: 'Items', value: 'MaterialDescription' }\r\n           }\r\n}\r\nannotate entity zetr_ddl_p_outgoing_delitem with\r\n{\r\n  @UI.facet: [ { id:            'Items',\r\n                 purpose:       #STANDARD,\r\n                 type:          #IDENTIFICATION_REFERENCE,\r\n                 label:         'Items',\r\n                 position:      10 }  ]\r\n  @UI.hidden: true\r\n  DocumentUUID;\r\n  @UI: { lineItem: [ { position: 1 } ],\r\n         identification: [ { position: 1 } ] }\r\n  LineNumber;\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_product_codes', element: 'ProductExternalID' }}]\r\n  @UI: { lineItem: [ { position: 10 } ],\r\n         identification: [ { position: 10 } ] }\r\n  SellersItemIdentification;\r\n  @UI: { lineItem: [ { position: 20 } ],\r\n         identification: [ { position: 20 } ] }\r\n  BuyersItemIdentification;\r\n  @UI: { lineItem: [ { position: 30 } ],\r\n         identification: [ { position: 30 } ] }\r\n  ManufacturerItemIdentification;\r\n  @UI: { lineItem: [ { position: 40 } ],\r\n         identification: [ { position: 40 } ] }\r\n  MaterialDescription;\r\n  @UI: { lineItem: [ { position: 50 } ],\r\n         identification: [ { position: 50 } ] }\r\n  Description;\r\n  @UI.hidden: true\r\n  NetPrice;\r\n  @UI.hidden: true\r\n  Currency;\r\n  @UI: { lineItem: [ { position: 80 } ],\r\n         identification: [ { position: 80 } ] }\r\n  Quantity;\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_UnitOfMeasure', element: 'UnitOfMeasure' }}]\r\n  @UI: { lineItem: [ { position: 90 } ] }\r\n  //         identification: [ { position: 90 } ] }\r\n  UnitOfMeasure;\r\n  @UI: { lineItem: [ { position: 100 } ],\r\n         identification: [ { position: 100 } ] }\r\n  GrossWeight;\r\n  @UI: { lineItem: [ { position: 110 } ],\r\n         identification: [ { position: 110 } ] }\r\n  NetWeight;\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_UnitOfMeasure', element: 'UnitOfMeasure' }}]\r\n  @UI: { lineItem: [ { position: 120 } ],\r\n         identification: [ { position: 120 } ] }\r\n  WeightUnit;\r\n}"
    }
   ]
  },
@@ -156,6 +156,20 @@
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"GROSSWEIGHT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"100"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"GROSSWEIGHT",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"100"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
     "ELEMENT":"LINENUMBER",
     "NAME":"UI.IDENTIFICATION$1$.POSITION",
     "ELEMENT_TYPE":"S",
@@ -202,6 +216,20 @@
     "NAME":"UI.HIDDEN",
     "ELEMENT_TYPE":"S",
     "VALUE":"true"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"NETWEIGHT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"110"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"NETWEIGHT",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"110"
    },
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
@@ -265,6 +293,34 @@
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"90"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"WEIGHTUNIT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'UnitOfMeasure'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"WEIGHTUNIT",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'I_UnitOfMeasure'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"WEIGHTUNIT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"120"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"WEIGHTUNIT",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"120"
    }
   ]
  },
@@ -311,8 +367,8 @@
     "EXTENDED_ARTIFACT":"ZETR_DDL_P_OUTGOING_DELITEM",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"5B80129E71491EEF8EA771EABFE380D1",
-    "RT_HASH":"66AD30BFC189F0799E5F414DD1F18514C16A97BD",
+    "DT_UUID":"FA163EBBCF7E1FE0B8C9D5D11291C745",
+    "RT_HASH":"E07D724D8EE788E0B077913EDD404C71A565541C",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }
@@ -345,6 +401,16 @@
    {
     "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
     "ELEMENT":"UNITOFMEASURE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "PATH":"I_UNITOFMEASURE",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"I_UNITOFMEASURE",
+    "REF_OBJECT_ELEMENT":""
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_OUTGOING_DELITEM",
+    "ELEMENT":"WEIGHTUNIT",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
     "PATH":"I_UNITOFMEASURE",
     "REF_OBJECT_TYPE":"STOB",

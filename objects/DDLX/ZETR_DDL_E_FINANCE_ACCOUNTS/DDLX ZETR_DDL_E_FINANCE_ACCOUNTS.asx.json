@@ -7,9 +7,9 @@
     "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2023-11-17",
-    "CHANGED_AT":"08:10:39",
-    "UUID":"77E41BC4D9AD1EDEA1A4196F2250DEA1",
+    "CHANGED_ON":"2025-12-25",
+    "CHANGED_AT":"16:16:33",
+    "UUID":"FA163EBBCF7E1FE0B8B5A26DCED16744",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n@Search.searchable: true\r\n@UI:{\r\nheaderInfo:{ typeNamePlural: 'GL Accounts',\r\n             typeName: 'GL Account',\r\n             title:{ type: #STANDARD, label: 'GL Accounts', value: 'GLAccountText' } } }\r\nannotate entity zetr_ddl_p_finance_accounts with\r\n{\r\n  @UI.facet: [ { id:              'Users',\r\n                 purpose:         #STANDARD,\r\n                 type:            #IDENTIFICATION_REFERENCE,\r\n                 label:           'GL Accounts',\r\n                 position:        10 } ]\r\n  @UI: { lineItem:       [ { position: 10, importance: #HIGH }],\r\n         identification: [{ position: 10 }],\r\n         selectionField: [ { position: 10 } ] }\r\n  @Search.defaultSearchElement: true\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_ChartOfAccounts', element: 'ChartOfAccounts' }}]\r\n  ChartOfAccounts;\r\n  @UI: { lineItem:       [ { position: 20, importance: #HIGH }],\r\n         identification: [{ position: 20 }],\r\n         selectionField: [ { position: 20 } ] }\r\n  @Search.defaultSearchElement: true\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_GLAccount', element: 'GLAccount' }}]\r\n  GLAccount;\r\n  @UI.hidden: true\r\n  ChartOfAccountsText;\r\n  @UI.hidden: true\r\n  GLAccountText;\r\n  @UI: { lineItem:       [ { position: 30 }],\r\n         identification: [{ position: 30 }],\r\n         selectionField: [ { position: 30 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_account_type', element: 'AccountType' }}]\r\n  AccountType;\r\n  @UI.hidden: true\r\n  AccountTypeText;\r\n  @UI: { lineItem:       [ { position: 40 }],\r\n         identification: [{ position: 40 }],\r\n         selectionField: [ { position: 40 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_codes', element: 'TaxCode' }}]\r\n  TaxType;\r\n  @UI.hidden: true\r\n  TaxTypeText;\r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n@Search.searchable: true\r\n@UI:{\r\nheaderInfo:{ typeNamePlural: 'GL Accounts',\r\n             typeName: 'GL Account',\r\n             title:{ type: #STANDARD, label: 'GL Accounts', value: 'GLAccountText' } } }\r\nannotate entity zetr_ddl_p_finance_accounts with\r\n{\r\n  @UI.facet: [ { id:              'Users',\r\n                 purpose:         #STANDARD,\r\n                 type:            #IDENTIFICATION_REFERENCE,\r\n                 label:           'GL Accounts',\r\n                 position:        10 } ]\r\n  @UI: { lineItem:       [ { position: 10, importance: #HIGH }],\r\n         identification: [{ position: 10 }],\r\n         selectionField: [ { position: 10 } ] }\r\n  @Search.defaultSearchElement: true\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_ChartOfAccounts', element: 'ChartOfAccounts' }}]\r\n  ChartOfAccounts;\r\n  @UI: { lineItem:       [ { position: 20, importance: #HIGH }],\r\n         identification: [{ position: 20 }],\r\n         selectionField: [ { position: 20 } ] }\r\n  @Search.defaultSearchElement: true\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'I_GLAccount', element: 'GLAccount' }}]\r\n  GLAccount;\r\n  @UI.hidden: true\r\n  ChartOfAccountsText;\r\n  @UI.hidden: true\r\n  GLAccountText;\r\n  @UI: { lineItem:       [ { position: 30 }],\r\n         identification: [{ position: 30 }],\r\n         selectionField: [ { position: 30 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_account_type', element: 'AccountType' }}]\r\n  AccountType;\r\n  @UI.hidden: true\r\n  AccountTypeText;\r\n  @UI: { lineItem:       [ { position: 40 }],\r\n         identification: [{ position: 40 }],\r\n         selectionField: [ { position: 40 } ] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_codes', element: 'TaxCode' }}]\r\n  TaxType;\r\n  @UI.hidden: true\r\n  TaxTypeText;\r\n  @UI: { lineItem:       [ { position: 45 }],\r\n         identification: [{ position: 45 }] }\r\n  TaxRate;\r\n  @UI: { lineItem:       [ { position: 50 }],\r\n         identification: [{ position: 50 }] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_tra_tax_exemptions', element: 'TaxExemption' }}]\r\n  TaxExemption;\r\n  @UI.hidden: true\r\n  TaxExemptionText;\r\n  @UI: { lineItem:       [ { position: 60 }],\r\n         identification: [{ position: 60 }] }\r\n  @Consumption.valueHelpDefinition: [ { entity: { name: 'zetr_ddl_vh_invoice_type', element: 'InvoiceType' }}]\r\n  InvoiceType;  \r\n\r\n}"
    }
   ]
  },
@@ -275,6 +275,83 @@
    },
    {
     "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"INVOICETYPE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'InvoiceType'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"INVOICETYPE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'zetr_ddl_vh_invoice_type'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"INVOICETYPE",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"INVOICETYPE",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTION",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'TaxExemption'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTION",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'zetr_ddl_vh_tra_tax_exemptions'"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTION",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"50"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTION",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"50"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTIONTEXT",
+    "NAME":"UI.HIDDEN",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"true"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXRATE",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"45"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXRATE",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"45"
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
     "ELEMENT":"TAXTYPE",
     "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.ELEMENT",
     "ELEMENT_TYPE":"S",
@@ -388,8 +465,8 @@
     "EXTENDED_ARTIFACT":"ZETR_DDL_P_FINANCE_ACCOUNTS",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"77E41BC4D9AD1EDEA1A4196F2250DEA1",
-    "RT_HASH":"FA8EE8EC74B6262FA5E94AFEE20B4B5E5A96B395",
+    "DT_UUID":"FA163EBBCF7E1FE0B8B5A26DCED16744",
+    "RT_HASH":"E65ACE2EA811AA90FCB36EAA69C91B2FA30D9281",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }
@@ -437,6 +514,26 @@
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DO",
     "REF_OBJECT_NAME":"I_GLACCOUNT",
+    "REF_OBJECT_ELEMENT":""
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"INVOICETYPE",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "PATH":"ZETR_DDL_VH_INVOICE_TYPE",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"ZETR_DDL_VH_INVOICE_TYPE",
+    "REF_OBJECT_ELEMENT":""
+   },
+   {
+    "DDLXNAME":"ZETR_DDL_E_FINANCE_ACCOUNTS",
+    "ELEMENT":"TAXEXEMPTION",
+    "NAME":"CONSUMPTION.VALUEHELPDEFINITION$1$.ENTITY.NAME",
+    "PATH":"ZETR_DDL_VH_TRA_TAX_EXEMPTIONS",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"ZETR_DDL_VH_TRA_TAX_EXEMPTIONS",
     "REF_OBJECT_ELEMENT":""
    },
    {

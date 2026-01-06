@@ -6,7 +6,10 @@
                   DeliveryDocumentType AS lfart,
                   ShipToParty AS kunnr,
                   CreatedByUser AS ernam,
-                  overallgoodsmovementstatus AS wbstk
+                  overallgoodsmovementstatus AS wbstk,
+                  headergrossweight AS brgew,
+                  headernetweight AS ntgew,
+                  HeaderWeightUnit AS gewei
     FROM I_DeliveryDocument
     WHERE deliverydocument = @ms_document-belnr
     INTO @ms_outdel_data-likp.
@@ -21,7 +24,14 @@
            lips~ReferenceSDDocument AS vgbel,
            lips~ReferenceSDDocumentItem AS vgpos,
            vbap~MaterialByCustomer AS kdmat,
-           vbap~PurchaseOrderByCustomer AS bstkd
+           vbap~PurchaseOrderByCustomer AS bstkd,
+           lips~DistributionChannel AS vtweg,
+           lips~Division AS spart,
+           lips~SalesOffice AS vkbur,
+           lips~SalesGroup AS vkgrp,
+           lips~ItemGrossWeight AS brgew,
+           lips~ItemNetWeight AS ntgew,
+           lips~ItemWeightUnit AS gewei
        FROM i_deliverydocumentitem AS lips
        LEFT OUTER JOIN i_salesdocumentitem AS vbap
         ON  vbap~salesdocument = lips~ReferenceSDDocument
@@ -69,8 +79,18 @@
       ms_outdel_data-address_number = ls_partner_data-adrnr.
     ENDIF.
 
-    READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = 'WE'.
+    IF mv_delivery_partner_role IS NOT INITIAL.
+      DATA(lv_partner_role) = mv_delivery_partner_role.
+    ELSE.
+      lv_partner_role = 'WE'.
+    ENDIF.
+    READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = lv_partner_role.
     IF sy-subrc = 0.
       mv_shipto_address = ls_vbpa-adrnr.
+    ELSEIF lv_partner_role <> 'WE'.
+      READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = 'WE'.
+      IF sy-subrc = 0.
+        mv_shipto_address = ls_vbpa-adrnr.
+      ENDIF.
     ENDIF.
   ENDMETHOD.

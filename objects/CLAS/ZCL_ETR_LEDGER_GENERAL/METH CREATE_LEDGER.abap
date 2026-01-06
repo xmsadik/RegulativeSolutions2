@@ -696,7 +696,7 @@
             tsfyd              = gv_tasfiye
              ).
 
-        ls_ledger-bktxt = lv_bktxt.
+*        ls_ledger-bktxt = lv_bktxt.
         ls_ledger-gbtur = ls_blart-gbtur.
         IF ls_ledger-gbtur = 'other'.
           ls_ledger-blart_t = ls_blart-blart_t.

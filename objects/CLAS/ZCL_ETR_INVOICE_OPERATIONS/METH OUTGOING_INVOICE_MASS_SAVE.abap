@@ -12,7 +12,7 @@
           lv_bukrs        TYPE bukrs,
           ls_return       TYPE bapiret2,
           ls_document     TYPE zetr_t_oginv,
-          lt_docui_range  TYPE RANGE OF zetr_e_docui.
+          lt_docui_range  TYPE RANGE OF sysuuid_c22.
 
     IF ls_selection-bukrs IS INITIAL.
       SELECT 'I' AS sign,

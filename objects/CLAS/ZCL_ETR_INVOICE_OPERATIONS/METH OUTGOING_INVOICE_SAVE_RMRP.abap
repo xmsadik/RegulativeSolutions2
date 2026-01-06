@@ -62,8 +62,8 @@
       es_return-type = 'E'.
       es_return-id = 'ZETR_COMMON'.
       es_return-number = '005'.
-    ELSEIF ls_rbkp-xrech <> ''
-        OR ls_rbkp-stblg <> ''
+    ELSEIF "ls_rbkp-xrech <> ''
+        ls_rbkp-stblg <> ''
         OR ls_rbkp-rbstat = 'A'.
       es_return-type = 'E'.
       es_return-id = 'ZETR_COMMON'.
@@ -110,6 +110,14 @@
     ls_invoice_rule_input-mmdty = ls_rbkp-blart.
     ls_invoice_rule_input-partner = ls_partner_data-businesspartner.
 
+    SELECT SINGLE Order~PurchaseOrderType
+      FROM I_SuplrInvcItemPurOrdRefAPI01 AS InvItem
+      INNER JOIN I_PurchaseOrderAPI01 AS Order
+        ON InvItem~PurchaseOrder = Order~PurchaseOrder
+      WHERE InvItem~SupplierInvoice = @iv_belnr
+        AND InvItem~FiscalYear = @iv_gjahr
+      INTO @ls_invoice_rule_input-bsart.
+
     determine_invoice_scenario(
       EXPORTING
         is_invoice_rule_input = ls_invoice_rule_input
@@ -121,6 +129,13 @@
       es_return-id = 'ZETR_COMMON'.
       es_return-number = '243'.
       RETURN.
+    ELSEIF ls_document-prfid = 'EABELGE'.
+      CLEAR ls_document-texex.
+    ELSEIF ls_rbkp-xrech <> ''.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '093'.
+      RETURN.
     ENDIF.
     ls_invoice_rule_input-ityin = ls_document-invty.
     ls_invoice_rule_input-pidin = ls_document-prfid.
@@ -128,7 +143,8 @@
     IF ( ls_document-invty IS INITIAL OR
          ls_document-taxex IS INITIAL OR
          ls_document-taxty IS INITIAL ) AND
-         ls_rbkp-mwskz IS NOT INITIAL.
+         ls_rbkp-mwskz IS NOT INITIAL AND
+         ls_document-prfid <> 'EABELGE'.
       determine_invoice_tax_type(
         EXPORTING
           iv_tax_code = ls_rbkp-mwskz

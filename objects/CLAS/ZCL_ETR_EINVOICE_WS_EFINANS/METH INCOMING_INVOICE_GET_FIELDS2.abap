@@ -92,10 +92,13 @@
           cs_invoice-waers = ls_xml_line-value.
         WHEN 'odenecekTutar'.
           cs_invoice-wrbtr = ls_xml_line-value.
-        WHEN 'vergiDahilTutar'.
+        WHEN 'toplamVergiTutari'.
+          CHECK ls_xml_line-xpath_upper = 'FATURA-VERGILER-TOPLAMVERGITUTARI'.
           cs_invoice-fwste += ls_xml_line-value.
-        WHEN 'vergiHaricTutar'.
-          cs_invoice-fwste -= ls_xml_line-value.
+*        WHEN 'vergiDahilTutar'.
+*          cs_invoice-fwste += ls_xml_line-value.
+*        WHEN 'vergiHaricTutar'.
+*          cs_invoice-fwste -= ls_xml_line-value.
         WHEN OTHERS.
 *          CHECK line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP1' ] ) OR
 *                line_exists( mt_custom_parameters[ KEY by_cuspa COMPONENTS cuspa = 'INCFLDMAP2' ] ) OR

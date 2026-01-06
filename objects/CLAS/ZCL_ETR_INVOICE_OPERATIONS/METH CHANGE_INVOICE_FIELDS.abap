@@ -3,6 +3,9 @@
       WHEN 'EARSIV'.
         DATA(lt_field_rules) = get_earchive_rules( iv_rule_type   = 'F'
                                                    is_rule_input  = is_invoice_rule_input ).
+      WHEN 'EABELGE'.
+        lt_field_rules = get_eproducer_rules( iv_rule_type   = 'F'
+                                              is_rule_input  = is_invoice_rule_input ).
       WHEN OTHERS.
         lt_field_rules = get_einvoice_rules( iv_rule_type   = 'F'
                                              is_rule_input  = is_invoice_rule_input ).

@@ -300,7 +300,12 @@
             INTO TABLE @DATA(lt_auto_mail).
 
           SELECT bukrs, 'EARSIV' AS prfid
-            FROM zetr_t_eipar
+            FROM zetr_t_eapar
+            WHERE automail = 'X'
+            APPENDING TABLE @lt_auto_mail.
+
+          SELECT bukrs, 'EABELGE' AS prfid
+            FROM zetr_t_eppar
             WHERE automail = 'X'
             APPENDING TABLE @lt_auto_mail.
           SORT lt_auto_mail BY bukrs prfid.
@@ -311,7 +316,7 @@
                                                            id = 'ZETR_COMMON'
                                                            number = '036' ).
               lo_log->add_item( lo_message ).
-            ELSEIF ( <InvoiceLine>-TaxAmount IS INITIAL OR <InvoiceLine>-ExemptionExists = abap_true ) AND <InvoiceLine>-TaxExemption IS INITIAL.
+            ELSEIF <InvoiceLine>-ExemptionExists = abap_true AND <InvoiceLine>-TaxExemption IS INITIAL.
               lo_message = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_error
                                                            id = 'ZETR_COMMON'
                                                            number = '039' ).
@@ -350,6 +355,23 @@
                           ev_invoice_no        = DATA(lv_invoice_no)
                           ev_envelope_uuid     = DATA(lv_envelope_uuid)
                           es_status            = DATA(ls_ea_status) ).
+                    WHEN 'EABELGE'.
+                      DATA(eProducerServiceInstance) = zcl_etr_eproducer_ws=>factory( <InvoiceLine>-CompanyCode ).
+                      eProducerServiceInstance->outgoing_invoice_send(
+                        EXPORTING
+                          iv_document_uuid     = <InvoiceLine>-DocumentUUID
+                          is_ubl_structure     = ls_invoice_ubl
+                          iv_ubl_xstring       = lv_invoice_ubl
+                          iv_ubl_hash          = lv_invoice_hash
+                          iv_receiver_alias    = PartyAlias
+                          iv_receiver_taxid    = PartyTaxID
+                          it_custom_parameters = lt_custom_parameters
+                        IMPORTING
+                          ev_integrator_uuid   = <InvoiceLine>-IntegratorDocumentID
+                          ev_invoice_uuid      = lv_invoice_uuid
+                          ev_invoice_no        = lv_invoice_no
+                          ev_envelope_uuid     = lv_envelope_uuid
+                          es_status            = DATA(ls_ep_status) ).
                     WHEN OTHERS.
                       DATA(eInvoiceServiceInstance) = zcl_etr_einvoice_ws=>factory( <InvoiceLine>-CompanyCode ).
                       eInvoiceServiceInstance->outgoing_invoice_send(
@@ -381,6 +403,9 @@
                   CASE <InvoiceLine>-ProfileID.
                     WHEN 'EARSIV'.
                       <InvoiceLine>-StatusCode = ls_ea_status-stacd.
+                      <InvoiceLine>-Response = 'X'.
+                    WHEN 'EABELGE'.
+                      <InvoiceLine>-StatusCode = ls_ep_status-stacd.
                       <InvoiceLine>-Response = 'X'.
                     WHEN OTHERS.
                       <InvoiceLine>-StatusCode = ls_ei_status-stacd.
@@ -449,6 +474,8 @@
               CASE InvoiceLine-ProfileID.
                 WHEN 'EARSIV'.
                   CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EARSIV' ] ).
+                WHEN 'EABELGE'.
+                  CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EABELGE' ] ).
                 WHEN OTHERS.
                   CHECK line_exists( lt_auto_mail[ bukrs = InvoiceLine-CompanyCode prfid = 'EFATURA' ] ).
               ENDCASE.

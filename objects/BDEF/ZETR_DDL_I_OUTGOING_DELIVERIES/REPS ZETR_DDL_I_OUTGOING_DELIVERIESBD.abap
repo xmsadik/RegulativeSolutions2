@@ -244,6 +244,9 @@ authorization dependent by _outgoingDeliveries
     field Currency affects entity _outgoingDeliveries;
     field Quantity affects entity _outgoingDeliveries;
     field UnitOfMeasure affects entity _outgoingDeliveries;
+    field GrossWeight affects entity _outgoingDeliveries;
+    field NetWeight affects entity _outgoingDeliveries;
+    field WeightUnit affects entity _outgoingDeliveries;
   }
 
   association _outgoingDeliveries;
@@ -261,5 +264,8 @@ authorization dependent by _outgoingDeliveries
       Currency                       = waers;
       Quantity                       = menge;
       UnitOfMeasure                  = meins;
+      GrossWeight                    = brgew;
+      NetWeight                      = ntgew;
+      WeightUnit                     = gewei;
     }
 }

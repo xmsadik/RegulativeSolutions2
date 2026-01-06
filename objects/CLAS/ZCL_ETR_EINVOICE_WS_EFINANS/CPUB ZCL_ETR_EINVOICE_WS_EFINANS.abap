@@ -210,3 +210,4 @@ CLASS zcl_etr_einvoice_ws_efinans DEFINITION
     METHODS: download_registered_taxpayers2 REDEFINITION.
     METHODS: download_registered_taxpayers3 REDEFINITION.
     METHODS: download_registered_taxpayers4 REDEFINITION.
+    METHODS: outgoing_invoice_send_again REDEFINITION.

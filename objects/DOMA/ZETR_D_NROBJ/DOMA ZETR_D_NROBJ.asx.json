@@ -80,6 +80,15 @@
     "DOMVALUE_L":"ZETR_EAR",
     "DOMVALUE_H":"",
     "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_NROBJ",
+    "AS4LOCAL":"N",
+    "VALPOS":4,
+    "AS4VERS":0,
+    "DOMVALUE_L":"ZETR_EPR",
+    "DOMVALUE_H":"",
+    "APPVAL":""
    }
   ]
  },
@@ -122,6 +131,17 @@
    },
    {
     "DOMNAME":"ZETR_D_NROBJ",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":4,
+    "AS4VERS":0,
+    "DDTEXT":"eProducer",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"ZETR_EPR"
+   },
+   {
+    "DOMNAME":"ZETR_D_NROBJ",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
     "VALPOS":1,
@@ -152,6 +172,17 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"ZETR_EAR"
+   },
+   {
+    "DOMNAME":"ZETR_D_NROBJ",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":4,
+    "AS4VERS":0,
+    "DDTEXT":"eMüstahsil",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"ZETR_EPR"
    }
   ]
  },

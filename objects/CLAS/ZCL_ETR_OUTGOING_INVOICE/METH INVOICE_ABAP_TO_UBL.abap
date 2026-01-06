@@ -1,8 +1,15 @@
   METHOD invoice_abap_to_ubl.
     TRY.
-        CALL TRANSFORMATION zetr_ubl21_invoice
-          SOURCE root = ms_invoice_ubl
-          RESULT XML mv_invoice_ubl.
+        CASE ms_document-prfid.
+          WHEN 'EABELGE'.
+            CALL TRANSFORMATION zetr_ubl21_creditnote
+              SOURCE root = ms_credit_ubl
+              RESULT XML mv_invoice_ubl.
+          WHEN OTHERS.
+            CALL TRANSFORMATION zetr_ubl21_invoice
+              SOURCE root = ms_invoice_ubl
+              RESULT XML mv_invoice_ubl.
+        ENDCASE.
         mv_invoice_hash = zcl_etr_regulative_common=>calculate_hash_for_raw( mv_invoice_ubl ).
       CATCH cx_root INTO DATA(lx_root).
         DATA(lv_error) = lx_root->get_text( ).

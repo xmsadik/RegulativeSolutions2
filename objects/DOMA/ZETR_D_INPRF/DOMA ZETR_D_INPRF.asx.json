@@ -149,7 +149,7 @@
     "AS4LOCAL":"N",
     "VALPOS":11,
     "AS4VERS":0,
-    "DOMVALUE_L":"MUSTAHSIL",
+    "DOMVALUE_L":"EABELGE",
     "DOMVALUE_H":"",
     "APPVAL":""
    }
@@ -275,10 +275,10 @@
     "AS4LOCAL":"N",
     "VALPOS":11,
     "AS4VERS":0,
-    "DDTEXT":"Producer Invoice",
+    "DDTEXT":"Archive Document",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
-    "DOMVALUE_L":"MUSTAHSIL"
+    "DOMVALUE_L":"EABELGE"
    },
    {
     "DOMNAME":"ZETR_D_INPRF",
@@ -389,6 +389,17 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"ENERJI"
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":11,
+    "AS4VERS":0,
+    "DDTEXT":"e-Arşiv Belge",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"EABELGE"
    }
   ]
  },

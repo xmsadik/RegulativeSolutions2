@@ -151,6 +151,7 @@ authorization dependent by _eInvoiceParameters
       BillingDocumentType            = sddty;
       InvoiceReceiptType             = mmdty;
       AccountingDocumentType         = fidty;
+      PurchaseDocumentType           = bsart;
       Partner                        = partner;
       SalesDocument                  = vbeln;
       Exclude                        = excld;

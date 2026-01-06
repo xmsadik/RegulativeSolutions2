@@ -16,6 +16,13 @@
           WHERE bukrs = @ms_document-bukrs
             AND serpr = @ms_document-serpr
           INTO @ls_serial.
+      WHEN 'EABELGE'.
+        lv_number_object = 'ZETR_EPR'.
+        SELECT SINGLE *
+          FROM zetr_t_epser
+          WHERE bukrs = @ms_document-bukrs
+            AND serpr = @ms_document-serpr
+          INTO @ls_serial.
       WHEN OTHERS.
         lv_number_object = 'ZETR_EIN'.
         SELECT SINGLE *
@@ -70,6 +77,13 @@
                 lv_number_object = 'ZETR_EAR'.
                 SELECT SINGLE *
                   FROM zetr_t_easer
+                  WHERE bukrs = @ms_document-bukrs
+                    AND serpr = @ls_serial-nxtsp
+                  INTO @ls_serial.
+              WHEN 'EABELGE'.
+                lv_number_object = 'ZETR_EPR'.
+                SELECT SINGLE *
+                  FROM zetr_t_epser
                   WHERE bukrs = @ms_document-bukrs
                     AND serpr = @ls_serial-nxtsp
                   INTO @ls_serial.

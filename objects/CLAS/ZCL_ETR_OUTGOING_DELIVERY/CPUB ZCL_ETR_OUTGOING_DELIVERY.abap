@@ -8,6 +8,9 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES tdline   TYPE c LENGTH 132.
     TYPES END OF mty_text_line.
 
+    TYPES mty_ogdli TYPE zetr_t_ogdli.
+    TYPES mty_ogdli_t TYPE TABLE OF mty_ogdli WITH EMPTY KEY.
+
     TYPES BEGIN OF mty_texts.
     TYPES tdobject TYPE c LENGTH 10.
     TYPES tdname   TYPE c LENGTH 70.
@@ -155,6 +158,9 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES kunnr TYPE zetr_e_partner.
     TYPES ernam TYPE abp_creation_user.
     TYPES wbstk TYPE c LENGTH 1.
+    TYPES brgew TYPE brgew.
+    TYPES ntgew TYPE ntgew.
+    TYPES gewei TYPE gewei.
     TYPES END OF mty_likp.
 
     TYPES BEGIN OF mty_lips.
@@ -168,6 +174,13 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES vgpos TYPE n LENGTH 6.
     TYPES kdmat TYPE c LENGTH 35.
     TYPES bstkd TYPE c LENGTH 35.
+    TYPES vtweg TYPE vtweg.
+    TYPES spart TYPE spart.
+    TYPES vkbur TYPE vkbur.
+    TYPES vkgrp TYPE vkgrp.
+    TYPES brgew TYPE brgew.
+    TYPES ntgew TYPE ntgew.
+    TYPES gewei TYPE gewei.
     TYPES END OF mty_lips.
 
     TYPES BEGIN OF mty_vbpa.
@@ -207,7 +220,8 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES t005 TYPE SORTED TABLE OF mty_t005 WITH UNIQUE KEY land1.
     TYPES t005u TYPE SORTED TABLE OF mty_t005u WITH UNIQUE KEY land1 bland.
     TYPES head TYPE zetr_t_ogdlv.
-    TYPES items TYPE SORTED TABLE OF zetr_t_ogdli WITH UNIQUE KEY linno.
+    TYPES items TYPE mty_ogdli_t.
+*    TYPES items TYPE SORTED TABLE OF zetr_t_ogdli WITH UNIQUE KEY linno.
     TYPES vbak TYPE SORTED TABLE OF mty_vbak WITH UNIQUE KEY vbeln.
     TYPES address_number TYPE c LENGTH 10.
     TYPES taxid TYPE zetr_e_taxid.
@@ -228,10 +242,16 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES netpr TYPE c LENGTH 20.
     TYPES peinh TYPE c LENGTH 20.
     TYPES netwa TYPE waers.
+    TYPES pacno TYPE c LENGTH 20.
+    TYPES pacqt TYPE menge_d.
+    TYPES pacun TYPE meins.
+    TYPES brgew TYPE brgew.
+    TYPES ntgew TYPE ntgew.
+    TYPES gewei TYPE gewei.
     TYPES END OF mty_item_collect .
     TYPES mty_item_collect_t TYPE TABLE OF mty_item_collect .
     TYPES BEGIN OF mty_delivery_item.
-    INCLUDE TYPE zetr_t_ogdli.
+    INCLUDE TYPE mty_ogdli.
     TYPES END OF mty_delivery_item.
     TYPES mty_delivery_items TYPE TABLE OF mty_delivery_item WITH EMPTY KEY.
 
