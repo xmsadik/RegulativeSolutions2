@@ -95,8 +95,10 @@ authorization master ( global, instance )
   association _invoiceContents { }
   association _invoiceLogs { create; }
 
+  action ( features : instance ) downloadInvoices result [1] $self;
   action ( features : instance ) sendInvoices result [1] $self;
   action ( features : instance ) sendInvoicesBackground result [1] $self;
+  action ( features : instance ) markAsSent result [1] $self;
   action ( features : instance ) archiveInvoices result [1] $self;
   action ( features : instance ) statusUpdate result [1] $self;
   action ( features : instance ) sendMailToPartner result [1] $self;

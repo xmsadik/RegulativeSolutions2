@@ -168,10 +168,18 @@ CLASS lhc_zetr_ddl_i_outgoing_delive DEFINITION INHERITING FROM cl_abap_behavior
 
     METHODS createWithoutReference FOR MODIFY
       IMPORTING keys FOR ACTION OutgoingDeliveries~createWithoutReference.
+
     METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
       IMPORTING REQUEST requested_authorizations FOR OutgoingDeliveries RESULT result.
+
     METHODS sendDeliveriesBackground FOR MODIFY
       IMPORTING keys FOR ACTION OutgoingDeliveries~sendDeliveriesBackground RESULT result.
+
+    METHODS downloadDeliveries FOR MODIFY
+      IMPORTING keys FOR ACTION OutgoingDeliveries~downloadDeliveries RESULT result.
+
+    METHODS markAsSent FOR MODIFY
+      IMPORTING keys FOR ACTION OutgoingDeliveries~markAsSent RESULT result.
 
 ENDCLASS.
 
@@ -194,11 +202,15 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                       ( %tky = ls_delivery-%tky
                         %action-sendDeliveries = COND #( WHEN ls_delivery-statuscode <> '' AND ls_delivery-statuscode <> '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                        %action-markAsSent = COND #( WHEN ls_delivery-statuscode <> '' AND ls_delivery-statuscode <> '2'
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-archiveDeliveries = COND #( WHEN ls_delivery-statuscode = '' OR ls_delivery-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-setAsRejected = COND #( WHEN ls_delivery-statuscode = '' OR ls_delivery-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-statusUpdate = COND #( WHEN ls_delivery-statuscode = '' OR ls_delivery-statuscode = '2'
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                        %action-downloadDeliveries = COND #( WHEN ls_delivery-statuscode = '' OR ls_delivery-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %features-%update = COND #( WHEN ls_delivery-statuscode <> '' AND ls_delivery-statuscode <> '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
@@ -818,6 +830,138 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
 
     result = VALUE #( FOR Delivery IN DeliveryList ( %tky   = Delivery-%tky
                                                      %param = Delivery ) ).
+  ENDMETHOD.
+
+  METHOD downloadDeliveries.
+    READ ENTITIES OF zetr_ddl_i_outgoing_deliveries IN LOCAL MODE
+      ENTITY OutgoingDeliveries
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(deliveries).
+
+    TYPES BEGIN OF ty_company.
+    TYPES companycode TYPE zetr_ddl_i_outgoing_deliveries-companycode.
+    TYPES companytitle TYPE zetr_ddl_i_outgoing_deliveries-companytitle.
+    TYPES END OF ty_company.
+    DATA lt_companies TYPE STANDARD TABLE OF ty_company.
+
+    lt_companies = CORRESPONDING #( deliveries ).
+    SORT lt_companies BY companycode.
+    DELETE ADJACENT DUPLICATES FROM lt_companies COMPARING companycode.
+
+    DATA(lo_pdf_merger) = cl_rspo_pdf_merger=>create_instance( ).
+
+    TRY.
+        LOOP AT lt_companies INTO DATA(ls_company).
+          DATA(lo_delivery_operations) = zcl_etr_delivery_operations=>factory( ls_company-companycode ).
+          LOOP AT deliveries ASSIGNING FIELD-SYMBOL(<ls_delivery>) WHERE companycode = ls_company-companycode.
+            DATA(lv_pdf_content) = lo_delivery_operations->outgoing_delivery_download( iv_document_uid = <ls_delivery>-DocumentUUID
+                                                                                       iv_content_type = 'PDF' ).
+            IF lv_pdf_content IS NOT INITIAL.
+              lo_pdf_merger->add_document( lv_pdf_content ).
+              CLEAR lv_pdf_content.
+            ENDIF.
+          ENDLOOP.
+        ENDLOOP.
+
+        CLEAR lv_pdf_content.
+        lv_pdf_content = lo_pdf_merger->merge_documents( ).
+        IF lv_pdf_content IS NOT INITIAL.
+          DATA(lv_doc_name) = |Deliveries_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.pdf|.
+          cl_print_queue_utils=>create_queue_item_by_data(
+            EXPORTING
+              iv_qname            = 'DEFAULT'
+              iv_print_data       = lv_pdf_content
+              iv_name_of_main_doc = CONV #( lv_doc_name )
+            IMPORTING
+              ev_err_msg = DATA(lv_print_error) ).
+          IF lv_print_error IS NOT INITIAL.
+            DATA(lv_error) = CONV bapi_msg( lv_print_error ).
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '000'
+                                                severity = if_abap_behv_message=>severity-error
+                                                v1 = lv_error(50)
+                                                v2 = lv_error+50(50)
+                                                v3 = lv_error+100(50)
+                                                v4 = lv_error+150(*) ) ) TO reported-outgoingdeliveries.
+          ELSE.
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '247'
+                                                severity = if_abap_behv_message=>severity-success
+                                                v1 = lv_doc_name ) ) TO reported-outgoingdeliveries.
+          ENDIF.
+        ENDIF.
+
+      CATCH cx_root INTO DATA(lx_root).
+        lv_error = lx_root->get_text( ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-outgoingdeliveries.
+    ENDTRY.
+
+    result = VALUE #( FOR delivery IN deliveries
+                 ( %tky   = delivery-%tky
+                   %param = delivery ) ).
+  ENDMETHOD.
+
+  METHOD markAsSent.
+    READ ENTITIES OF zetr_ddl_i_outgoing_deliveries IN LOCAL MODE
+      ENTITY OutgoingDeliveries
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(DeliveryList).
+
+    LOOP AT DeliveryList ASSIGNING FIELD-SYMBOL(<DeliveryLine>).
+      <deliveryline>-StatusCode = 'Z'.
+      <deliveryline>-Response = 'X'.
+    ENDLOOP.
+    CHECK DeliveryList IS NOT INITIAL.
+
+    TRY.
+        MODIFY ENTITIES OF zetr_ddl_i_outgoing_deliveries IN LOCAL MODE
+          ENTITY OutgoingDeliveries
+             UPDATE FIELDS ( StatusCode Response )
+             WITH VALUE #( FOR delivery IN deliverylist ( documentuuid = delivery-documentuuid
+                                                     StatusCode = delivery-StatusCode
+                                                     Response = delivery-Response
+
+                                                     %control-StatusCode = if_abap_behv=>mk-on
+                                                     %control-Response = if_abap_behv=>mk-on ) )
+
+                  ENTITY outgoingdeliveries
+                    CREATE BY \_deliverylogs
+                    FIELDS ( loguuid documentuuid createdby creationdate creationtime logcode lognote )
+                    AUTO FILL CID
+                    WITH VALUE #( FOR delivery IN deliverylist
+                                     ( documentuuid = delivery-documentuuid
+                                       %target = VALUE #( ( loguuid = cl_system_uuid=>create_uuid_c22_static( )
+                                                            documentuuid = delivery-documentuuid
+                                                            createdby = sy-uname
+                                                            creationdate = cl_abap_context_info=>get_system_date( )
+                                                            creationtime = cl_abap_context_info=>get_system_time( )
+                                                            logcode = zcl_etr_regulative_log=>mc_log_codes-marksent ) ) ) )
+             FAILED failed
+             REPORTED reported.
+      CATCH cx_uuid_error.
+    ENDTRY.
+
+    READ ENTITIES OF zetr_ddl_i_outgoing_deliveries IN LOCAL MODE
+      ENTITY OutgoingDeliveries
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT deliverylist.
+
+    result = VALUE #( FOR delivery IN deliverylist
+                 ( %tky   = delivery-%tky
+                   %param = delivery ) ).
+
+    APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                        number   = '003'
+                                        severity = if_abap_behv_message=>severity-success ) ) TO reported-outgoingdeliveries.
   ENDMETHOD.
 
 ENDCLASS.

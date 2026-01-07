@@ -41,6 +41,12 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic DEFINITION INHERITING FROM cl_abap_behavior
     METHODS sendinvoicesbackground FOR MODIFY
       IMPORTING keys FOR ACTION outgoinginvoices~sendinvoicesbackground RESULT result.
 
+    METHODS downloadinvoices FOR MODIFY
+      IMPORTING keys FOR ACTION outgoinginvoices~downloadinvoices RESULT result.
+
+    METHODS markassent FOR MODIFY
+      IMPORTING keys FOR ACTION outgoinginvoices~markassent RESULT result.
+
     METHODS send_mail_to_partner
       IMPORTING
         it_invoice_list  TYPE mty_invoice_list
@@ -70,9 +76,13 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
       INTO TABLE @DATA(lt_authorizations).
     result = VALUE #( FOR ls_invoice IN lt_invoices
                       ( %tky = ls_invoice-%tky
-                        %action-sendinvoices = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-Reversed = 'X'
+                        %action-sendinvoices = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-sendInvoicesBackground = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-Reversed = 'X'
+                        %action-markAsSent = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                        %action-downloadInvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                        %action-sendInvoicesBackground = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-archiveinvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
@@ -1209,6 +1219,138 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                           message_v4 = lv_error+150(*) ) TO rt_return.
       ENDTRY.
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD downloadInvoices.
+    READ ENTITIES OF zetr_ddl_i_outgoing_invoices IN LOCAL MODE
+      ENTITY OutgoingInvoices
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(invoices).
+
+    TYPES BEGIN OF ty_company.
+    TYPES companycode TYPE zetr_ddl_i_outgoing_invoices-companycode.
+    TYPES companytitle TYPE zetr_ddl_i_outgoing_invoices-companytitle.
+    TYPES END OF ty_company.
+    DATA lt_companies TYPE STANDARD TABLE OF ty_company.
+
+    lt_companies = CORRESPONDING #( invoices ).
+    SORT lt_companies BY companycode.
+    DELETE ADJACENT DUPLICATES FROM lt_companies COMPARING companycode.
+
+    DATA(lo_pdf_merger) = cl_rspo_pdf_merger=>create_instance( ).
+
+    TRY.
+        LOOP AT lt_companies INTO DATA(ls_company).
+          DATA(lo_invoice_operations) = zcl_etr_invoice_operations=>factory( ls_company-companycode ).
+          LOOP AT invoices ASSIGNING FIELD-SYMBOL(<ls_invoice>) WHERE companycode = ls_company-companycode.
+            DATA(lv_pdf_content) = lo_invoice_operations->outgoing_invoice_download( iv_document_uid = <ls_invoice>-DocumentUUID
+                                                                                     iv_content_type = 'PDF' ).
+            IF lv_pdf_content IS NOT INITIAL.
+              lo_pdf_merger->add_document( lv_pdf_content ).
+              CLEAR lv_pdf_content.
+            ENDIF.
+          ENDLOOP.
+        ENDLOOP.
+
+        CLEAR lv_pdf_content.
+        lv_pdf_content = lo_pdf_merger->merge_documents( ).
+        IF lv_pdf_content IS NOT INITIAL.
+          DATA(lv_doc_name) = |Invoices_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.pdf|.
+          cl_print_queue_utils=>create_queue_item_by_data(
+            EXPORTING
+              iv_qname            = 'DEFAULT'
+              iv_print_data       = lv_pdf_content
+              iv_name_of_main_doc = CONV #( lv_doc_name )
+            IMPORTING
+              ev_err_msg = DATA(lv_print_error) ).
+          IF lv_print_error IS NOT INITIAL.
+            DATA(lv_error) = CONV bapi_msg( lv_print_error ).
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '000'
+                                                severity = if_abap_behv_message=>severity-error
+                                                v1 = lv_error(50)
+                                                v2 = lv_error+50(50)
+                                                v3 = lv_error+100(50)
+                                                v4 = lv_error+150(*) ) ) TO reported-outgoinginvoices.
+          ELSE.
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '247'
+                                                severity = if_abap_behv_message=>severity-success
+                                                v1 = lv_doc_name ) ) TO reported-outgoinginvoices.
+          ENDIF.
+        ENDIF.
+
+      CATCH cx_root INTO DATA(lx_root).
+        lv_error = lx_root->get_text( ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-outgoinginvoices.
+    ENDTRY.
+
+    result = VALUE #( FOR invoice IN invoices
+                 ( %tky   = invoice-%tky
+                   %param = invoice ) ).
+  ENDMETHOD.
+
+  METHOD markAsSent.
+    READ ENTITIES OF zetr_ddl_i_outgoing_invoices IN LOCAL MODE
+      ENTITY outgoinginvoices
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(invoices).
+
+    LOOP AT invoices ASSIGNING FIELD-SYMBOL(<ls_invoice>).
+      <ls_invoice>-StatusCode = 'Z'.
+      <ls_invoice>-Response = 'X'.
+    ENDLOOP.
+    CHECK invoices IS NOT INITIAL.
+
+    TRY.
+        MODIFY ENTITIES OF zetr_ddl_i_outgoing_invoices IN LOCAL MODE
+          ENTITY outgoinginvoices
+             UPDATE FIELDS ( StatusCode Response )
+             WITH VALUE #( FOR invoice IN invoices ( documentuuid = invoice-documentuuid
+
+                                                     StatusCode = invoice-StatusCode
+                                                     Response = invoice-Response
+
+                                                     %control-StatusCode = if_abap_behv=>mk-on
+                                                     %control-Response = if_abap_behv=>mk-on ) )
+                  ENTITY outgoinginvoices
+                    CREATE BY \_invoicelogs
+                    FIELDS ( loguuid documentuuid createdby creationdate creationtime logcode lognote )
+                    AUTO FILL CID
+                    WITH VALUE #( FOR invoice IN invoices
+                                     ( documentuuid = invoice-documentuuid
+                                       %target = VALUE #( ( loguuid = cl_system_uuid=>create_uuid_c22_static( )
+                                                            documentuuid = invoice-documentuuid
+                                                            createdby = sy-uname
+                                                            creationdate = cl_abap_context_info=>get_system_date( )
+                                                            creationtime = cl_abap_context_info=>get_system_time( )
+                                                            logcode = zcl_etr_regulative_log=>mc_log_codes-marksent ) ) ) )
+             FAILED failed
+             REPORTED reported.
+      CATCH cx_uuid_error.
+        "handle exception
+    ENDTRY.
+
+    READ ENTITIES OF zetr_ddl_i_outgoing_invoices IN LOCAL MODE
+      ENTITY OutgoingInvoices
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT Invoices.
+    result = VALUE #( FOR invoice IN invoices
+                 ( %tky   = invoice-%tky
+                   %param = invoice ) ).
+
+    APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                        number   = '003'
+                                        severity = if_abap_behv_message=>severity-success ) ) TO reported-outgoinginvoices.
   ENDMETHOD.
 
 ENDCLASS.

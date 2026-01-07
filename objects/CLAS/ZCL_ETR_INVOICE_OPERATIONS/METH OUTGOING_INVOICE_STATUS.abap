@@ -14,32 +14,34 @@
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e032(zetr_common).
     ELSE.
-      CASE ls_document-prfid.
-        WHEN 'EARSIV'.
-          DATA(lo_earchive_service) = zcl_etr_earchive_ws=>factory( iv_company = ls_document-bukrs ).
-          DATA(ls_earchive_status) = lo_earchive_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
-                                                                                                                      docii = ls_document-invii
-                                                                                                                      duich = ls_document-invui
-                                                                                                                      docno = ls_document-invno
-                                                                                                                 envui = ls_document-envui ) ).
-          rs_status = CORRESPONDING #( ls_earchive_status ).
-        WHEN 'EABELGE'.
-          DATA(lo_eproducer_service) = zcl_etr_eproducer_ws=>factory( iv_company = ls_document-bukrs ).
-          DATA(ls_eproducer_status) = lo_eproducer_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
-                                                                                                                      docii = ls_document-invii
-                                                                                                                      duich = ls_document-invui
-                                                                                                                      docno = ls_document-invno
-                                                                                                                 envui = ls_document-envui ) ).
-          rs_status = CORRESPONDING #( ls_eproducer_status ).
-        WHEN OTHERS.
-          DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
-          DATA(ls_einvoice_status) = lo_einvoice_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
-                                                                                                                      docii = ls_document-invii
-                                                                                                                      duich = ls_document-invui
-                                                                                                                      docno = ls_document-invno
-                                                                                                                 envui = ls_document-envui ) ).
-          rs_status = CORRESPONDING #( ls_einvoice_status ).
-      ENDCASE.
+      IF ls_document-stacd <> 'Z'.
+        CASE ls_document-prfid.
+          WHEN 'EARSIV'.
+            DATA(lo_earchive_service) = zcl_etr_earchive_ws=>factory( iv_company = ls_document-bukrs ).
+            DATA(ls_earchive_status) = lo_earchive_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
+                                                                                                                        docii = ls_document-invii
+                                                                                                                        duich = ls_document-invui
+                                                                                                                        docno = ls_document-invno
+                                                                                                                   envui = ls_document-envui ) ).
+            rs_status = CORRESPONDING #( ls_earchive_status ).
+          WHEN 'EABELGE'.
+            DATA(lo_eproducer_service) = zcl_etr_eproducer_ws=>factory( iv_company = ls_document-bukrs ).
+            DATA(ls_eproducer_status) = lo_eproducer_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
+                                                                                                                        docii = ls_document-invii
+                                                                                                                        duich = ls_document-invui
+                                                                                                                        docno = ls_document-invno
+                                                                                                                   envui = ls_document-envui ) ).
+            rs_status = CORRESPONDING #( ls_eproducer_status ).
+          WHEN OTHERS.
+            DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
+            DATA(ls_einvoice_status) = lo_einvoice_service->outgoing_invoice_get_status( is_document_numbers = VALUE #( docui = ls_document-docui
+                                                                                                                        docii = ls_document-invii
+                                                                                                                        duich = ls_document-invui
+                                                                                                                        docno = ls_document-invno
+                                                                                                                   envui = ls_document-envui ) ).
+            rs_status = CORRESPONDING #( ls_einvoice_status ).
+        ENDCASE.
+      ENDIF.
 
       IF rs_status-stacd IS INITIAL.
         rs_status-stacd = ls_document-stacd.

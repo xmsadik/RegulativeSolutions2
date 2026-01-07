@@ -100,6 +100,8 @@ authorization master ( instance )
   action ( features : instance ) archiveDeliveries result [1] $self;
   action ( features : instance ) statusUpdate result [1] $self;
   action ( features : instance ) setAsRejected parameter ZETR_DDL_I_NOTE_SELECTION result [1] $self;
+  action ( features : instance ) downloadDeliveries result [1] $self;
+  action ( features : instance ) markAsSent result [1] $self;
   static action ( authorization : global ) createWithoutReference parameter ZETR_DDL_I_DLVWOREF_SELECTION;
 
 }

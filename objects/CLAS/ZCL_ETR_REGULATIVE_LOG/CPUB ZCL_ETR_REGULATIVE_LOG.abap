@@ -22,6 +22,7 @@ CLASS zcl_etr_regulative_log DEFINITION
     CONSTANTS mail TYPE zetr_e_logcd VALUE 'MAIL' ##NO_TEXT.
     CONSTANTS reversed TYPE zetr_e_logcd VALUE 'REVERSED' ##NO_TEXT.
     CONSTANTS status TYPE zetr_e_logcd VALUE 'STATUS' ##NO_TEXT.
+    CONSTANTS marksent TYPE zetr_e_logcd VALUE 'MARKSENT' ##NO_TEXT.
     CONSTANTS download TYPE zetr_e_logcd VALUE 'DOWNLOAD' ##NO_TEXT.
     CONSTANTS nonprinted TYPE zetr_e_logcd VALUE 'NONPRINTED' ##NO_TEXT.
     CONSTANTS sent TYPE zetr_e_logcd VALUE 'SENT' ##NO_TEXT.

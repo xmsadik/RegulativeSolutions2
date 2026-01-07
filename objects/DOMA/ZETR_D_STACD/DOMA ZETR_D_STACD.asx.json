@@ -131,6 +131,15 @@
     "AS4LOCAL":"N",
     "VALPOS":9,
     "AS4VERS":0,
+    "DOMVALUE_L":"Z",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_STACD",
+    "AS4LOCAL":"N",
+    "VALPOS":10,
+    "AS4VERS":0,
     "DOMVALUE_L":"",
     "DOMVALUE_H":"",
     "APPVAL":""
@@ -235,6 +244,17 @@
     "AS4LOCAL":"N",
     "VALPOS":9,
     "AS4VERS":0,
+    "DDTEXT":"Won't Send / Sent",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"Z"
+   },
+   {
+    "DOMNAME":"ZETR_D_STACD",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":10,
+    "AS4VERS":0,
     "DDTEXT":"Not Sent",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
@@ -333,6 +353,17 @@
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
     "VALPOS":9,
+    "AS4VERS":0,
+    "DDTEXT":"Gönderilmeyecek / Gönderildi",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"Z"
+   },
+   {
+    "DOMNAME":"ZETR_D_STACD",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":10,
     "AS4VERS":0,
     "DDTEXT":"Gönderilmedi",
     "DOMVAL_LD":"",

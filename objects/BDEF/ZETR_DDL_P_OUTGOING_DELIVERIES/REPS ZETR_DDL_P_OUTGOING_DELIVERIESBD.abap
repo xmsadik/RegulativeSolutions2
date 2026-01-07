@@ -13,6 +13,8 @@ define behavior for zetr_ddl_p_outgoing_deliveries alias OutgoingDeliveries
   use action statusUpdate;
   use action setAsRejected;
   use action createWithoutReference;
+  use action downloadDeliveries;
+  use action markAsSent;
 
   use association _deliveryContents { }
   use association _deliveryLogs { }
