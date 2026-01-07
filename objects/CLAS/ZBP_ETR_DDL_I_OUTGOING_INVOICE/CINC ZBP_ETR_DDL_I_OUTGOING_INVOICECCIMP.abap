@@ -1263,6 +1263,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
               iv_print_data       = lv_pdf_content
               iv_name_of_main_doc = CONV #( lv_doc_name )
               iv_itemid           = |{ cl_abap_context_info=>get_system_date( ) }{ cl_abap_context_info=>get_system_time( ) }|
+              it_attachment_data  = VALUE #( ( name = lv_doc_name print_data = lv_pdf_content ) )
             IMPORTING
               ev_err_msg = DATA(lv_print_error) ).
           IF lv_print_error IS NOT INITIAL.
