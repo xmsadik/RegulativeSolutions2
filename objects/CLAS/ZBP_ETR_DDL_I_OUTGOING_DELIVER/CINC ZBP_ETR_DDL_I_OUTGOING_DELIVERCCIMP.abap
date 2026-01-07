@@ -873,6 +873,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
               iv_qname            = 'DEFAULT'
               iv_print_data       = lv_pdf_content
               iv_name_of_main_doc = CONV #( lv_doc_name )
+              iv_itemid           = |{ cl_abap_context_info=>get_system_date( ) }{ cl_abap_context_info=>get_system_time( ) }|
             IMPORTING
               ev_err_msg = DATA(lv_print_error) ).
           IF lv_print_error IS NOT INITIAL.
