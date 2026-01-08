@@ -17,13 +17,13 @@
       ENDCASE.
     ENDIF.
 
-    IF line_exists( it_requested_calc_elements[ table_line = 'REVERSED' ] ) OR
-       line_exists( it_requested_calc_elements[ table_line = 'STATUSCRITICALITY' ] ) OR
-       line_exists( it_requested_calc_elements[ table_line = 'OVERALLSTATUS' ] ).
-      cs_list_output-StatusCriticality = cs_list_output-StatusCriticalityInternal.
-      cs_list_output-Reversed = cs_list_output-ReversedInternal.
-      cs_list_output-OverallStatus = cs_list_output-OverallStatusInternal.
-    ENDIF.
+*    IF line_exists( it_requested_calc_elements[ table_line = 'REVERSED' ] ) OR
+*       line_exists( it_requested_calc_elements[ table_line = 'STATUSCRITICALITY' ] ) OR
+*       line_exists( it_requested_calc_elements[ table_line = 'OVERALLSTATUS' ] ).
+*      cs_list_output-StatusCriticality = cs_list_output-StatusCriticalityInternal.
+*      cs_list_output-Reversed = cs_list_output-ReversedInternal.
+*      cs_list_output-OverallStatus = cs_list_output-OverallStatusInternal.
+*    ENDIF.
 
     IF line_exists( it_requested_calc_elements[ table_line = 'PDFCONTENTURL' ] ) OR
        line_exists( it_requested_calc_elements[ table_line = 'HTMLCONTENTURL' ] ) OR

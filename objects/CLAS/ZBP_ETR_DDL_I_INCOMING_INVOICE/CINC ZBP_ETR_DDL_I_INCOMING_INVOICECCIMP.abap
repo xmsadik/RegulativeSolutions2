@@ -37,6 +37,9 @@ CLASS lhc_InvoiceList DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS sendInformationMail FOR MODIFY
       IMPORTING keys FOR ACTION InvoiceList~sendInformationMail RESULT result.
 
+    METHODS printSelected FOR MODIFY
+      IMPORTING keys FOR ACTION InvoiceList~printSelected RESULT result.
+
 ENDCLASS.
 
 CLASS lhc_InvoiceList IMPLEMENTATION.
@@ -805,6 +808,84 @@ CLASS lhc_InvoiceList IMPLEMENTATION.
       CORRESPONDING #( keys )
       RESULT invoicelist.
     result = VALUE #( FOR invoice IN invoicelist
+                 ( %tky   = invoice-%tky
+                   %param = invoice ) ).
+  ENDMETHOD.
+
+  METHOD printSelected.
+    READ ENTITIES OF zetr_ddl_i_incoming_invoices IN LOCAL MODE
+      ENTITY InvoiceList
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(invoices).
+
+    TYPES BEGIN OF ty_company.
+    TYPES companycode TYPE zetr_ddl_i_incoming_invoices-companycode.
+    TYPES companytitle TYPE zetr_ddl_i_incoming_invoices-companytitle.
+    TYPES END OF ty_company.
+    DATA lt_companies TYPE STANDARD TABLE OF ty_company.
+
+    lt_companies = CORRESPONDING #( invoices ).
+    SORT lt_companies BY companycode.
+    DELETE ADJACENT DUPLICATES FROM lt_companies COMPARING companycode.
+
+    DATA(lo_pdf_merger) = cl_rspo_pdf_merger=>create_instance( ).
+
+    TRY.
+        LOOP AT lt_companies INTO DATA(ls_company).
+          DATA(lo_invoice_operations) = zcl_etr_invoice_operations=>factory( ls_company-companycode ).
+          LOOP AT invoices ASSIGNING FIELD-SYMBOL(<ls_invoice>) WHERE companycode = ls_company-companycode.
+            DATA(lv_pdf_content) = lo_invoice_operations->incoming_einvoice_download( iv_document_uid = <ls_invoice>-DocumentUUID
+                                                                                      iv_content_type = 'PDF' ).
+            IF lv_pdf_content IS NOT INITIAL.
+              lo_pdf_merger->add_document( lv_pdf_content ).
+              CLEAR lv_pdf_content.
+            ENDIF.
+          ENDLOOP.
+        ENDLOOP.
+
+        CLEAR lv_pdf_content.
+        lv_pdf_content = lo_pdf_merger->merge_documents( ).
+        IF lv_pdf_content IS NOT INITIAL.
+          DATA(lv_doc_name) = |Invoices_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.pdf|.
+          cl_print_queue_utils=>create_queue_item_by_data(
+            EXPORTING
+              iv_qname            = 'DEFAULT'
+              iv_print_data       = lv_pdf_content
+              iv_name_of_main_doc = CONV #( lv_doc_name )
+              iv_itemid           = |{ cl_abap_context_info=>get_system_date( ) }{ cl_abap_context_info=>get_system_time( ) }|
+              it_attachment_data  = VALUE #( ( name = lv_doc_name print_data = lv_pdf_content ) )
+            IMPORTING
+              ev_err_msg = DATA(lv_print_error) ).
+          IF lv_print_error IS NOT INITIAL.
+            DATA(lv_error) = CONV bapi_msg( lv_print_error ).
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '000'
+                                                severity = if_abap_behv_message=>severity-error
+                                                v1 = lv_error(50)
+                                                v2 = lv_error+50(50)
+                                                v3 = lv_error+100(50)
+                                                v4 = lv_error+150(*) ) ) TO reported-InvoiceList.
+          ELSE.
+            APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '247'
+                                                severity = if_abap_behv_message=>severity-success
+                                                v1 = lv_doc_name ) ) TO reported-InvoiceList.
+          ENDIF.
+        ENDIF.
+
+      CATCH cx_root INTO DATA(lx_root).
+        lv_error = lx_root->get_text( ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-InvoiceList.
+    ENDTRY.
+
+    result = VALUE #( FOR invoice IN invoices
                  ( %tky   = invoice-%tky
                    %param = invoice ) ).
   ENDMETHOD.

@@ -15,6 +15,7 @@ define behavior for zetr_ddl_p_incoming_delhead //alias <alias_name>
   use action changePrintStatus;
   use action changeProcessStatus;
   use action sendInformationMail;
+  use action printSelected;
 
   use association _deliveryContents;
   use association _deliveryItems;
