@@ -49,8 +49,15 @@
       WHERE SDDocument = @ms_document-belnr
       INTO TABLE @ms_outdel_data-vbpa.
 
-    SELECT SalesDocument AS vbeln, SalesDocumentDate AS audat, PurchaseOrderByCustomer AS bstkd
-      FROM i_salesdocument
+    SELECT vbak~SalesDocument AS vbeln,
+           vbak~SalesDocumentDate AS audat,
+           vbak~PurchaseOrderByCustomer AS bstkd,
+           vbpa~Customer AS kunwe,
+           vbpa~AddressID AS adrwe
+      FROM i_salesdocument AS vbak
+      LEFT OUTER JOIN I_SDDocumentPartner WITH PRIVILEGED ACCESS AS vbpa
+        ON  vbpa~SDDocument = vbak~SalesDocument
+       AND vbpa~PartnerFunction = @mv_delivery_partner_role
       FOR ALL ENTRIES IN @ms_outdel_data-lips
       WHERE salesdocument = @ms_outdel_data-lips-vgbel
       INTO TABLE @ms_outdel_data-vbak.
@@ -88,9 +95,15 @@
     IF sy-subrc = 0.
       mv_shipto_address = ls_vbpa-adrnr.
     ELSEIF lv_partner_role <> 'WE'.
-      READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = 'WE'.
-      IF sy-subrc = 0.
+      LOOP AT ms_outdel_data-vbak INTO DATA(ls_vbak) WHERE adrwe IS NOT INITIAL.
         mv_shipto_address = ls_vbpa-adrnr.
+        EXIT.
+      ENDLOOP.
+      IF sy-subrc <> 0.
+        READ TABLE ms_outdel_data-vbpa INTO ls_vbpa WITH TABLE KEY by_parvw COMPONENTS parvw = 'WE'.
+        IF sy-subrc = 0.
+          mv_shipto_address = ls_vbpa-adrnr.
+        ENDIF.
       ENDIF.
     ENDIF.
   ENDMETHOD.

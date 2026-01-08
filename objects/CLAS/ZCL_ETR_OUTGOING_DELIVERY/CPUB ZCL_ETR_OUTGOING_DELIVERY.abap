@@ -197,6 +197,8 @@ CLASS zcl_etr_outgoing_delivery DEFINITION
     TYPES vbeln TYPE belnr_d.
     TYPES audat TYPE datum.
     TYPES bstkd TYPE c LENGTH 35.
+    TYPES kunwe TYPE kunnr.
+    TYPES adrwe TYPE c LENGTH 10.
     TYPES END OF mty_vbak.
 
     TYPES BEGIN OF mty_outdel_data.
