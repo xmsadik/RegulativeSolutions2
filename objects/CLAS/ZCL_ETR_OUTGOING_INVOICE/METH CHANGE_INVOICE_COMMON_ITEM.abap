@@ -11,31 +11,6 @@
         INTO DATA(ls_changed_item)
         WITH KEY linid = <ls_invoice_line>-id-content.
       CHECK sy-subrc = 0.
-      IF ls_changed_item-selii <> <ls_invoice_line>-item-sellersitemidentification-id-content.
-        <ls_invoice_line>-item-sellersitemidentification-id-content = ls_changed_item-selii.
-      ENDIF.
-      IF ls_changed_item-buyii <> <ls_invoice_line>-item-buyersitemidentification-id-content.
-        <ls_invoice_line>-item-buyersitemidentification-id-content = ls_changed_item-buyii.
-      ENDIF.
-      IF ls_changed_item-manii <> <ls_invoice_line>-item-manufacturersitemidentificatio-id-content.
-        <ls_invoice_line>-item-manufacturersitemidentificatio-id-content = ls_changed_item-manii.
-      ENDIF.
-      IF ls_changed_item-mdesc <> <ls_invoice_line>-item-name-content.
-        <ls_invoice_line>-item-name-content = ls_changed_item-mdesc.
-      ENDIF.
-      IF ls_changed_item-descr <> <ls_invoice_line>-item-description-content.
-        <ls_invoice_line>-item-description-content = ls_changed_item-descr.
-      ENDIF.
-      IF ls_changed_item-model <> <ls_invoice_line>-item-modelname-content.
-        <ls_invoice_line>-item-modelname-content = ls_changed_item-model.
-      ENDIF.
-      IF ls_changed_item-brand <> <ls_invoice_line>-item-brandname-content.
-        <ls_invoice_line>-item-brandname-content = ls_changed_item-brand.
-      ENDIF.
-      READ TABLE <ls_invoice_line>-note ASSIGNING FIELD-SYMBOL(<ls_note>) INDEX 1.
-      IF sy-subrc = 0 AND <ls_note>-content <> ls_changed_item-inote.
-        <ls_note>-content = ls_changed_item-inote.
-      ENDIF.
 
       IF ls_changed_item-splqt IS NOT INITIAL AND
          <ls_invoice_line>-invoicedquantity-content = ls_changed_item-menge AND
@@ -93,7 +68,35 @@
             ENDLOOP.
           ENDIF.
         ENDIF.
+      ENDIF.
 
+      IF ls_changed_item-selii <> <ls_invoice_line>-item-sellersitemidentification-id-content.
+        <ls_invoice_line>-item-sellersitemidentification-id-content = ls_changed_item-selii.
+      ENDIF.
+      IF ls_changed_item-buyii <> <ls_invoice_line>-item-buyersitemidentification-id-content.
+        <ls_invoice_line>-item-buyersitemidentification-id-content = ls_changed_item-buyii.
+      ENDIF.
+      IF ls_changed_item-manii <> <ls_invoice_line>-item-manufacturersitemidentificatio-id-content.
+        <ls_invoice_line>-item-manufacturersitemidentificatio-id-content = ls_changed_item-manii.
+      ENDIF.
+      IF ls_changed_item-mdesc <> <ls_invoice_line>-item-name-content.
+        <ls_invoice_line>-item-name-content = ls_changed_item-mdesc.
+      ENDIF.
+      IF ls_changed_item-descr <> <ls_invoice_line>-item-description-content.
+        <ls_invoice_line>-item-description-content = ls_changed_item-descr.
+      ENDIF.
+      IF ls_changed_item-model <> <ls_invoice_line>-item-modelname-content.
+        <ls_invoice_line>-item-modelname-content = ls_changed_item-model.
+      ENDIF.
+      IF ls_changed_item-brand <> <ls_invoice_line>-item-brandname-content.
+        <ls_invoice_line>-item-brandname-content = ls_changed_item-brand.
+      ENDIF.
+      READ TABLE <ls_invoice_line>-note ASSIGNING FIELD-SYMBOL(<ls_note>) INDEX 1.
+      IF sy-subrc = 0 AND <ls_note>-content <> ls_changed_item-inote.
+        <ls_note>-content = ls_changed_item-inote.
+      ENDIF.
+
+      IF ls_additional_item IS NOT INITIAL.
         APPEND ls_additional_item TO lt_additional_items.
       ENDIF.
     ENDLOOP.
