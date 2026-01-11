@@ -383,10 +383,15 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     INCLUDE TYPE zetr_t_oginv.
     TYPES END OF mty_document.
 
+    TYPES BEGIN OF mty_changed_items.
+    INCLUDE TYPE zetr_t_ogini.
+    TYPES END OF mty_changed_items.
+
     CLASS-METHODS factory
       IMPORTING
         !iv_document_uuid TYPE sysuuid_c22
         !iv_preview       TYPE abap_boolean OPTIONAL
+        !iv_rebuild       TYPE abap_boolean OPTIONAL
       RETURNING
         VALUE(ro_object)  TYPE REF TO zcl_etr_outgoing_invoice
       RAISING

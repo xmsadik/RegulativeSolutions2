@@ -47,6 +47,9 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic DEFINITION INHERITING FROM cl_abap_behavior
     METHODS markassent FOR MODIFY
       IMPORTING keys FOR ACTION outgoinginvoices~markassent RESULT result.
 
+    METHODS generateItemsHeader FOR MODIFY
+      IMPORTING keys FOR ACTION OutgoingInvoices~generateItemsHeader RESULT result.
+
     METHODS send_mail_to_partner
       IMPORTING
         it_invoice_list  TYPE mty_invoice_list
@@ -1353,6 +1356,85 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
     APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
                                         number   = '003'
                                         severity = if_abap_behv_message=>severity-success ) ) TO reported-outgoinginvoices.
+  ENDMETHOD.
+
+  METHOD generateItemsHeader.
+    READ ENTITIES OF zetr_ddl_i_outgoing_invoices IN LOCAL MODE
+          ENTITY outgoingInvoices
+            ALL FIELDS
+            WITH CORRESPONDING #( keys )
+        RESULT DATA(lt_invoices)
+        FAILED failed.
+    READ TABLE lt_invoices INTO DATA(ls_invoice) INDEX 1.
+    CHECK sy-subrc = 0.
+
+    IF ls_invoice-StatusCode = '' OR ls_invoice-StatusCode = '2'.
+      DATA lt_invoice_items TYPE STANDARD TABLE OF zetr_t_ogini.
+
+      TRY.
+          DATA(lo_outgoing_invoice) = zcl_etr_outgoing_invoice=>factory( iv_document_uuid = ls_invoice-DocumentUUID
+                                                                         iv_preview       = abap_true
+                                                                         iv_rebuild       = abap_true ).
+          lo_outgoing_invoice->build_invoice_data(
+            IMPORTING
+              es_invoice_ubl       = DATA(ls_invoice_ubl) ).
+
+          LOOP AT ls_invoice_ubl-invoiceline INTO DATA(ls_invoice_ubl_line).
+            APPEND INITIAL LINE TO lt_invoice_items ASSIGNING FIELD-SYMBOL(<ls_invoice_item>).
+            <ls_invoice_item>-docui = ls_invoice-DocumentUUID.
+            <ls_invoice_item>-linid = ls_invoice_ubl_line-id-content.
+            <ls_invoice_item>-selii = ls_invoice_ubl_line-item-sellersitemidentification-id-content.
+            <ls_invoice_item>-buyii = ls_invoice_ubl_line-item-buyersitemidentification-id-content.
+            <ls_invoice_item>-manii = ls_invoice_ubl_line-item-manufacturersitemidentificatio-id-content.
+            <ls_invoice_item>-mdesc = ls_invoice_ubl_line-item-name-content.
+            <ls_invoice_item>-descr = ls_invoice_ubl_line-item-description-content.
+            <ls_invoice_item>-inote = VALUE #( ls_invoice_ubl_line-note[ 1 ]-content OPTIONAL ).
+            <ls_invoice_item>-model = ls_invoice_ubl_line-item-modelname-content.
+            <ls_invoice_item>-brand = ls_invoice_ubl_line-item-brandname-content.
+            <ls_invoice_item>-menge = ls_invoice_ubl_line-invoicedquantity-content.
+            SELECT SINGLE meins
+              FROM zetr_t_untmc
+              WHERE unitc = @ls_invoice_ubl_line-invoicedquantity-unitcode
+              INTO @<ls_invoice_item>-meins.
+            <ls_invoice_item>-netpr = ls_invoice_ubl_line-price-priceamount-content.
+            <ls_invoice_item>-alwam = REDUCE wrbtr_cs( INIT asum TYPE wrbtr_cs
+                                                                 FOR ls_allowance IN ls_invoice_ubl_line-AllowanceCharge WHERE ( ChargeIndicator-content = '' )
+                                                                 NEXT asum += ls_allowance-Amount-content ).
+            <ls_invoice_item>-chram = REDUCE wrbtr_cs( INIT csum TYPE wrbtr_cs
+                                                                 FOR ls_charge IN ls_invoice_ubl_line-AllowanceCharge WHERE ( ChargeIndicator-content = 'true' )
+                                                                 NEXT csum += ls_charge-Amount-content ).
+            <ls_invoice_item>-wrbtr = ls_invoice_ubl_line-lineextensionamount-content.
+            <ls_invoice_item>-fwste = ls_invoice_ubl_line-taxtotal-taxamount-content.
+            <ls_invoice_item>-wtxam = REDUCE wrbtr_cs( INIT wsum TYPE wrbtr_cs
+                                                                     FOR ls_witholding IN ls_invoice_ubl_line-withholdingtaxtotal
+                                                                     NEXT wsum += ls_witholding-taxamount-content ).
+            <ls_invoice_item>-waers = ls_invoice-Currency.
+          ENDLOOP.
+
+          DELETE FROM zetr_t_ogini WHERE docui = @ls_invoice-DocumentUUID.
+          INSERT zetr_t_ogini FROM TABLE @lt_invoice_items.
+
+        CATCH zcx_etr_regulative_exception INTO DATA(lx_etr_exception).
+          DATA(lv_error) = CONV bapi_msg( lx_etr_exception->get_text( ) ).
+          APPEND VALUE #( documentuuid = ls_invoice-DocumentUUID
+                          %msg = new_message( id       = 'ZETR_COMMON'
+                                              number   = '000'
+                                              severity = if_abap_behv_message=>severity-error
+                                              v1 = lv_error(50)
+                                              v2 = lv_error+50(50)
+                                              v3 = lv_error+100(50)
+                                              v4 = lv_error+150(*) ) ) TO reported-outgoinginvoices.
+      ENDTRY.
+    ELSE.
+      APPEND VALUE #( documentuuid = ls_invoice-DocumentUUID
+                      %msg = new_message( id       = 'ZETR_COMMON'
+                                          number   = '020'
+                                          severity = if_abap_behv_message=>severity-error ) ) TO reported-outgoinginvoices.
+
+    ENDIF.
+    result = VALUE #( FOR ls_invoice_for IN lt_invoices
+                 ( %tky   = ls_invoice_for-%tky
+                   %param = ls_invoice_for ) ).
   ENDMETHOD.
 
 ENDCLASS.

@@ -17,6 +17,11 @@
       DATA(lo_edelivery_service) = zcl_etr_edelivery_ws=>factory( iv_company = ls_document-bukrs ).
       rv_document = lo_edelivery_service->incoming_delivery_download( is_document_numbers = CORRESPONDING #( ls_document )
                                                                       iv_content_type = iv_content_type ).
+      IF iv_content_type = 'UBL'.
+        CALL TRANSFORMATION zetr_xml_formatter
+          SOURCE XML rv_document
+          RESULT XML rv_document.
+      ENDIF.
       CHECK iv_create_log = abap_true.
       zcl_etr_regulative_log=>create_single_log(
         EXPORTING

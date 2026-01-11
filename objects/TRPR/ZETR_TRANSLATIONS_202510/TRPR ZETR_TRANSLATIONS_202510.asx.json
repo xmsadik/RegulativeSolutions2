@@ -11,7 +11,7 @@
     "CREATED_BY":"SAP_CUSTOMER",
     "CREATED_AT":"+20251003120549.5108140",
     "LAST_CHANGED_BY":"SAP_CUSTOMER",
-    "LAST_CHANGED_AT":"+20260108155458.1585320"
+    "LAST_CHANGED_AT":"+20260111150812.7699660"
    }
   ]
  },
@@ -22,12 +22,27 @@
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_ALWAM"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_BODY"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_BRAND"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_BSART"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_CHRAM"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
@@ -57,12 +72,22 @@
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_MODEL"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_OGDMR"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_OGIMR"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_SPLQT"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
@@ -137,6 +162,11 @@
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"MTDT_XTNSN",
+    "NAME":"ZETR_DDL_E_OUTGOING_INVITEM"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"MTDT_XTNSN",
     "NAME":"ZETR_DDL_E_OUTGOING_INVOICES"
    },
    {
@@ -181,12 +211,12 @@
     "TARGET_LANGUAGE":"T",
     "MAINTENANCE_STATUS":"NO_TRANSLA",
     "IMPORT_STATUS":"SUCCESS",
-    "LAST_IMPORTED_AT":"+20260108155458.1125330",
+    "LAST_IMPORTED_AT":"+20260111150812.7271900",
     "LAST_IMPORTED_BY":"SAP_CUSTOMER",
-    "LAST_UPLOADED_AT":"+20260108155450.9958260",
+    "LAST_UPLOADED_AT":"+20260111150804.9954880",
     "LAST_UPLOADED_BY":"SAP_CUSTOMER",
     "FILE_TYPE":"XLIFF",
-    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-METADATA_EXTENSION\" resname=\"ZETR_DDL_E_INCOMING_INVOICES\">\n        <trans-unit id=\"METADATA_EXTENSION:ZETR_DDL_E_INCOMING_INVOICES:UI.LINEITEM$12$.LABEL:FIELD:COMPANYCODE\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Print</source>\n          <target>Yazdır</target>\n          <note>UI line item label for action printSelected of entity ZETR_DDL_P_INCOMING_INVOICES.</note>\n        </trans-unit>\n      </group>\n      <group datatype=\"x-METADATA_EXTENSION\" resname=\"ZETR_DDL_E_INCOMING_DELHEAD\">\n        <trans-unit id=\"METADATA_EXTENSION:ZETR_DDL_E_INCOMING_DELHEAD:UI.LINEITEM$9$.LABEL:FIELD:COMPANYCODE\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Print</source>\n          <target>Yazdır</target>\n          <note>UI line item label for action printSelected of entity ZETR_DDL_P_INCOMING_DELHEAD.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
+    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-METADATA_EXTENSION\" resname=\"ZETR_DDL_E_OUTGOING_INVOICES\">\n        <trans-unit id=\"METADATA_EXTENSION:ZETR_DDL_E_OUTGOING_INVOICES:UI.IDENTIFICATION$1$.LABEL:FIELD:OVERALLSTATUS\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Generate Items</source>\n          <target>Kalemleri Üret</target>\n          <note>UI identification label for action generateItemsHeader of entity ZETR_DDL_P_OUTGOING_INVOICES.</note>\n        </trans-unit>\n      </group>\n      <group datatype=\"x-DATA_ELEMENT\" resname=\"ZETR_E_SPLQT\">\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_SPLQT:SHORT_DESCRIPTION\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Split quantity</source>\n\t\t  <target>Ayrıştırılan Miktar</target>\n          <note>Short description for Data Element ZETR_E_SPLQT.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_SPLQT:SHORT_FIELD_LABEL\" maxwidth=\"10\" size-unit=\"char\">\n          <source>Split</source>\n\t\t  <target>Miktar Ayr</target>\n          <note>Short field label for Data Element ZETR_E_SPLQT.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_SPLQT:MEDIUM_FIELD_LABEL\" maxwidth=\"20\" size-unit=\"char\">\n          <source>Split quantity</source>\n\t\t  <target>Ayrıştırılan Miktar</target>\n          <note>Medium field label for Data Element ZETR_E_SPLQT.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_SPLQT:LONG_FIELD_LABEL\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Split quantity</source>\n\t\t  <target>Ayrıştırılan Miktar</target>\n          <note>Long field label for Data Element ZETR_E_SPLQT.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_SPLQT:HEADING_FIELD_LABEL\" maxwidth=\"55\" size-unit=\"char\">\n          <source>Split quantity</source>\n\t\t  <target>Ayrıştırılan Miktar</target>\n          <note>Heading field label for Data Element ZETR_E_SPLQT.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
    }
   ]
  },

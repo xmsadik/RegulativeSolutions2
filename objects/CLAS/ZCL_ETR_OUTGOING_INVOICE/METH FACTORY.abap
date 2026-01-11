@@ -21,7 +21,8 @@
     TRY .
         CREATE OBJECT ro_object TYPE (lv_reference_class).
         ro_object->set_initial_data( is_document = ls_document
-                                     iv_preview = iv_preview ).
+                                     iv_preview = iv_preview
+                                     iv_rebuild = iv_rebuild ).
       CATCH cx_sy_create_object_error INTO DATA(lx_create_object_error).
         DATA(lv_message) = CONV bapi_msg( lx_create_object_error->get_text( ) ).
         RAISE EXCEPTION TYPE zcx_etr_regulative_exception

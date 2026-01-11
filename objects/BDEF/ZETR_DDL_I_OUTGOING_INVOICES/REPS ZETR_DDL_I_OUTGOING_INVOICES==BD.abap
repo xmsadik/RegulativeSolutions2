@@ -93,6 +93,7 @@ authorization master ( global, instance )
   //    }
 
   association _invoiceContents { }
+  association _invoiceItems { create; }
   association _invoiceLogs { create; }
 
   action ( features : instance ) downloadInvoices result [1] $self;
@@ -105,6 +106,47 @@ authorization master ( global, instance )
   action ( features : instance ) showSummary result [1] $self;
   action ( features : instance ) sendMailToSelected parameter zetr_ddl_i_mail_selection result [1] $self;
   action ( features : instance ) setAsRejected parameter zetr_ddl_i_reject_selection result [1] $self;
+  action ( features : instance ) generateItemsHeader result [1] $self;
+
+  side effects { action generateItemsHeader affects $self, entity _invoiceItems; }
+}
+
+define behavior for zetr_ddl_i_outgoing_invitem alias Items
+persistent table zetr_t_ogini
+lock dependent by _outgoingInvoices
+authorization dependent by _outgoingInvoices
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly : update ) LineID, DocumentUUID;
+  field ( readonly ) Quantity, UnitOfMeasure, NetPrice,
+                     AllowanceAmount, ChargeAmount, Amount,
+                     TaxAmount, WitholdingTaxAmount, Currency;
+  association _outgoingInvoices;
+  mapping for zetr_t_ogini
+    {
+      DocumentUUID                   = docui;
+      LineID                         = linid;
+      SellersItemIdentification      = selii;
+      BuyersItemIdentification       = buyii;
+      ManufacturerItemIdentification = manii;
+      MaterialDescription            = mdesc;
+      Description                    = descr;
+      ItemNote                       = inote;
+      ModelName                      = model;
+      BrandName                      = brand;
+      Quantity                       = menge;
+      SplitQuantity                  = splqt;
+      UnitOfMeasure                  = meins;
+      NetPrice                       = netpr;
+      AllowanceAmount                = alwam;
+      ChargeAmount                   = chram;
+      Amount                         = wrbtr;
+      TaxAmount                      = fwste;
+      WitholdingTaxAmount            = wtxam;
+      Currency                       = waers;
+    }
 }
 
 define behavior for zetr_ddl_i_outinv_logs alias Logs

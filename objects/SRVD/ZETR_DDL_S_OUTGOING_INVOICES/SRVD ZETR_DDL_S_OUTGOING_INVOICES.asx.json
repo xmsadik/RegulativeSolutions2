@@ -7,9 +7,9 @@
     "SRVDNAME":"ZETR_DDL_S_OUTGOING_INVOICES",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2024-06-04",
-    "CHANGED_AT":"14:10:18",
-    "DT_UUID":"4D5EAEBF6DC31EEF88CF85701AEA408A",
+    "CHANGED_ON":"2026-01-09",
+    "CHANGED_AT":"17:52:34",
+    "DT_UUID":"FA163EBBCF7E1FE0BBB07F41C4C8076B",
     "SOURCE_ORIGIN":"0",
     "SRVD_SOURCE_TYPE":"S",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -35,7 +35,7 @@
    {
     "SRVDNAME":"ZETR_DDL_S_OUTGOING_INVOICES",
     "VERSION":"A",
-    "SOURCE":"@EndUserText.label: 'Outgoing Invoices'\r\ndefine service ZETR_DDL_S_OUTGOING_INVOICES {\r\n  expose zetr_ddl_p_outgoing_invoices as OutgoingInvoices;\r\n  expose zetr_ddl_p_outinv_logs       as Logs;\r\n  expose zetr_ddl_p_outgoing_invcont  as Contents;\r\n  expose zetr_ddl_vh_reject_types;\r\n}"
+    "SOURCE":"@EndUserText.label: 'Outgoing Invoices'\r\ndefine service ZETR_DDL_S_OUTGOING_INVOICES {\r\n  expose zetr_ddl_p_outgoing_invoices as OutgoingInvoices;\r\n  expose zetr_ddl_p_outinv_logs       as Logs;\r\n  expose zetr_ddl_p_outgoing_invitem  as Items;\r\n  expose zetr_ddl_p_outgoing_invcont  as Contents;\r\n  expose zetr_ddl_vh_reject_types;\r\n}"
    }
   ]
  },
@@ -78,6 +78,15 @@
    {
     "SRVDNAME":"ZETR_DDL_S_OUTGOING_INVOICES",
     "SERVICE":"ZETR_DDL_S_OUTGOING_INVOICES",
+    "EXPOSED_ARTIFACT":"ZETR_DDL_P_OUTGOING_INVITEM",
+    "EXPOSED_ARTIFACT_TYPE":"E",
+    "EXPOSED_ALIAS":"ITEMS",
+    "EXPOSED_ALIAS_RAW":"Items",
+    "INCL_SERVICE":""
+   },
+   {
+    "SRVDNAME":"ZETR_DDL_S_OUTGOING_INVOICES",
+    "SERVICE":"ZETR_DDL_S_OUTGOING_INVOICES",
     "EXPOSED_ARTIFACT":"ZETR_DDL_P_OUTGOING_INVOICES",
     "EXPOSED_ARTIFACT_TYPE":"E",
     "EXPOSED_ALIAS":"OUTGOINGINVOICES",
@@ -113,8 +122,8 @@
     "SERVICE":"ZETR_DDL_S_OUTGOING_INVOICES",
     "SERVICE_RAW":"ZETR_DDL_S_OUTGOING_INVOICES",
     "SOURCE_TYPE":"S",
-    "DT_UUID":"4D5EAEBF6DC31EEF88CF85701AEA408A",
-    "RT_HASH":"316F4618B9494AAA0D64DDC6245CC608CC14FFEE",
+    "DT_UUID":"FA163EBBCF7E1FE0BBB07F41C4C8076B",
+    "RT_HASH":"53F0B2A51C32EAF5D1914A59B3028BBFC709492C",
     "GEN_VERSION":"0"
    }
   ]

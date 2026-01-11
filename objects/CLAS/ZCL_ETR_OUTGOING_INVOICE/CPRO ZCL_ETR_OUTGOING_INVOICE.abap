@@ -1,7 +1,9 @@
   PROTECTED SECTION.
     DATA mo_invoice_operations TYPE REF TO zcl_etr_invoice_operations .
     DATA ms_document TYPE mty_document .
+    DATA mt_changed_items TYPE STANDARD TABLE OF mty_changed_items.
     DATA mv_preview TYPE abap_boolean .
+    DATA mv_rebuild TYPE abap_boolean .
     DATA ms_invoice_ubl TYPE zif_etr_invoice_ubl21=>invoicetype .
     DATA ms_credit_ubl TYPE zif_etr_credit_ubl21=>creditnotetype .
     DATA mv_invoice_hash TYPE mty_hash_code .
@@ -101,6 +103,9 @@
     METHODS build_invoice_data_common_item
       IMPORTING
         iv_kalsm TYPE mty_kalsm
+      RAISING
+        zcx_etr_regulative_exception .
+    METHODS change_invoice_common_item
       RAISING
         zcx_etr_regulative_exception .
     METHODS build_invoice_data_item_change

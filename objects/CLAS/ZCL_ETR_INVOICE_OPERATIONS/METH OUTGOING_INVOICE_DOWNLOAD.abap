@@ -89,6 +89,13 @@
                                                                                                            envui = ls_document-envui )
                                                                             iv_content_type = iv_content_type ).
           ENDCASE.
+
+          IF iv_content_type = 'UBL'.
+            CALL TRANSFORMATION zetr_xml_formatter
+              SOURCE XML rv_document
+              RESULT XML rv_document.
+          ENDIF.
+
       ENDCASE.
       CHECK iv_create_log = abap_true.
       zcl_etr_regulative_log=>create_single_log(

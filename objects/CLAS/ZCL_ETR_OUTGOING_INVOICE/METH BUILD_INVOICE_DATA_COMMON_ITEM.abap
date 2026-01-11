@@ -269,4 +269,6 @@
         CHANGING
           cs_invoice_line = <ls_invoice_line> ).
     ENDLOOP.
+
+    change_invoice_common_item( ).
   ENDMETHOD.

@@ -3,5 +3,6 @@
       IMPORTING
         !is_document TYPE zetr_t_oginv
         !iv_preview  TYPE abap_boolean
+        !iv_rebuild  TYPE abap_boolean
       RAISING
         zcx_etr_regulative_exception .

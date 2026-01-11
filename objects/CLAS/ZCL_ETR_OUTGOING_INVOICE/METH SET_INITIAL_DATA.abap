@@ -1,8 +1,17 @@
   METHOD set_initial_data.
     ms_document = is_document.
     mv_preview = iv_preview.
+    mv_rebuild = iv_rebuild.
     mv_profile_id = is_document-prfid.
     mo_invoice_operations = zcl_etr_invoice_operations=>factory( ms_document-bukrs ).
+
+    IF mv_rebuild IS INITIAL.
+      SELECT *
+        FROM zetr_t_ogini
+        WHERE docui = @ms_document-docui
+        INTO TABLE @mt_changed_items.
+      SORT mt_changed_items BY linid.
+    ENDIF.
 
     SELECT SINGLE value
       FROM zetr_t_cmppi
