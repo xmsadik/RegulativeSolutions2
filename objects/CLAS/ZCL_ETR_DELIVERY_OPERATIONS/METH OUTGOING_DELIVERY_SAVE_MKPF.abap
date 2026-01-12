@@ -140,8 +140,13 @@
 
     ls_document-bldat = ls_mkpf-bldat.
     ls_document-ernam = ls_mkpf-usnam.
-    ls_document-erdat = ls_mkpf-cpudt.
-    ls_document-erzet = ls_mkpf-cputm.
+*    ls_document-erdat = ls_mkpf-cpudt.
+*    ls_document-erzet = ls_mkpf-cputm.
+
+    CONVERT DATE ls_mkpf-cpudt TIME ls_mkpf-cputm INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+    ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
 
     ls_edrule_input-awtyp = iv_awtyp.
     ls_edrule_input-mmdty = ls_mkpf-blart.

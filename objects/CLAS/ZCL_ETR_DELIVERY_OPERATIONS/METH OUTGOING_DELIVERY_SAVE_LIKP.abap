@@ -128,8 +128,14 @@
     ls_document-bwart = ls_lips-bwart.
     ls_document-sobkz = ls_lips-sobkz.
     ls_document-ernam = ls_likp-ernam.
-    ls_document-erdat = ls_likp-erdat.
-    ls_document-erzet = ls_likp-erzet.
+*    ls_document-erdat = ls_likp-erdat.
+*    ls_document-erzet = ls_likp-erzet.
+
+    CONVERT DATE ls_likp-erdat TIME ls_likp-erzet INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+    ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
+
     DATA(ls_partner_data) = get_partner_register_data( iv_customer = ls_likp-kunnr ).
     ls_document-taxid = ls_partner_data-bptaxnumber.
     ls_document-partner = ls_partner_data-businesspartner.

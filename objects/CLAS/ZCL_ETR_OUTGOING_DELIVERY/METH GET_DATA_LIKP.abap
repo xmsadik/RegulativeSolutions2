@@ -1,6 +1,7 @@
   METHOD get_data_likp.
     SELECT SINGLE DeliveryDocument AS vbeln,
-                  DeliveryDate AS bldat,
+*                  DeliveryDate AS bldat,
+                  DocumentDate AS bldat,
                   CreationDate AS erdat,
                   CreationTime AS erzet,
                   DeliveryDocumentType AS lfart,
