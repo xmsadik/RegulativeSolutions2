@@ -169,9 +169,14 @@
     ls_document-vkorg = ls_vbrk-vkorg.
     ls_document-vtweg = ls_vbrk-vtweg.
     ls_document-spart = ls_vbrk-spart.
-    ls_document-erdat = ls_vbrk-erdat.
-    ls_document-erzet = ls_vbrk-erzet.
+*    ls_document-erdat = ls_vbrk-erdat.
+*    ls_document-erzet = ls_vbrk-erzet.
     ls_document-ernam = ls_vbrk-ernam.
+
+    CONVERT DATE ls_vbrk-erdat TIME ls_vbrk-erzet INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+    ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
 
     ls_invoice_rule_input-awtyp = iv_awtyp.
     ls_invoice_rule_input-sddty = ls_vbrk-fkart.

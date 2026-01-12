@@ -2,10 +2,14 @@
     ms_invoice_ubl-ublversionid-content = '2.1'.
     ms_invoice_ubl-customizationid-content = 'TR1.2.1'.
     ms_invoice_ubl-copyindicator-content = 'false'.
+    DATA(lv_sydatum) = cl_abap_context_info=>get_system_date( ).
     DATA(lv_syuzeit) = cl_abap_context_info=>get_system_time( ).
-    ms_invoice_ubl-issuetime-content = lv_syuzeit+0(2) && ':' &&
-                                       lv_syuzeit+2(2) && ':' &&
-                                       lv_syuzeit+4(2).
+    CONVERT DATE lv_sydatum TIME lv_syuzeit INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ms_invoice_ubl-issuetime-content = lv_timestamp_text+11(8).
+*    ms_invoice_ubl-issuetime-content = lv_syuzeit+0(2) && ':' &&
+*                                       lv_syuzeit+2(2) && ':' &&
+*                                       lv_syuzeit+4(2).
     ms_invoice_ubl-profileid-content = zcl_etr_invoice_operations=>conversion_profile_id_output( CONV #( ms_document-prfid ) ).
     ms_invoice_ubl-invoicetypecode-content = zcl_etr_invoice_operations=>conversion_invoice_type_output( CONV #( ms_document-invty ) ).
     ms_invoice_ubl-uuid-content = ms_document-invui.
@@ -139,7 +143,7 @@
       IF lv_xslt_source IS NOT INITIAL.
         APPEND INITIAL LINE TO ms_invoice_ubl-additionaldocumentreference ASSIGNING FIELD-SYMBOL(<ls_document_reference>).
         <ls_document_reference>-id-content = ms_document-docui.
-        DATA(lv_sydatum) = cl_abap_context_info=>get_system_date( ).
+        lv_sydatum = cl_abap_context_info=>get_system_date( ).
         CONCATENATE lv_sydatum(4) lv_sydatum+4(2) lv_sydatum+6(2)
           INTO <ls_document_reference>-issuedate-content
           SEPARATED BY '-'.

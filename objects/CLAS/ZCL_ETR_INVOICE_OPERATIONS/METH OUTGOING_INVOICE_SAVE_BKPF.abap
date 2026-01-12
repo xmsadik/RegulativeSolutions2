@@ -164,8 +164,14 @@
     ls_document-belnr = iv_belnr.
     ls_document-gjahr = iv_gjahr.
     ls_document-ernam = ls_bkpf-usnam.
-    ls_document-erzet = ls_bkpf-erzet.
-    ls_document-erdat = ls_bkpf-erdat.
+*    ls_document-erzet = ls_bkpf-erzet.
+*    ls_document-erdat = ls_bkpf-erdat.
+
+    CONVERT DATE ls_bkpf-erdat TIME ls_bkpf-erzet INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+    ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
+
     IF ls_document-kursf IS INITIAL.
       IF ls_bkpf-kursf IS NOT INITIAL.
         ls_document-kursf = ls_bkpf-kursf.

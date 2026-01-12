@@ -9,6 +9,7 @@
         stblg  TYPE belnr_d,
         waers  TYPE waers,
         cpudt  TYPE datum,
+        cputm  TYPE uzeit,
         rmwwr  TYPE rmwwr,
         wmwst  TYPE wrbtr_cs,
         mwskz  TYPE mwskz,
@@ -43,6 +44,7 @@
                   invoice~reversedocument AS stblg,
                   invoice~documentcurrency AS waers,
                   invoice~creationdate AS cpudt,
+                  invoice~creationtime AS cputm,
                   invoice~invoicegrossamount AS rmwwr,
                   tax~taxamount AS wmwst,
                   tax~taxcode AS mwskz,
@@ -99,7 +101,13 @@
     ls_document-fwste = ls_rbkp-wmwst.
     ls_document-kursf = ls_rbkp-kursf.
     ls_document-ernam = ls_rbkp-usnam.
-    ls_document-erdat = ls_rbkp-cpudt.
+*    ls_document-erdat = ls_rbkp-cpudt.
+
+    CONVERT DATE ls_rbkp-cpudt TIME ls_rbkp-cputm INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+    DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+    ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+    ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
+
     IF ls_document-fwste IS INITIAL.
       ls_document-texex = abap_true.
     ENDIF.
