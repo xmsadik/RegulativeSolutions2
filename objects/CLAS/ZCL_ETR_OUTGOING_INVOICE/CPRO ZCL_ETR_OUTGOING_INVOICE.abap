@@ -108,6 +108,14 @@
     METHODS change_invoice_common_item
       RAISING
         zcx_etr_regulative_exception .
+    METHODS change_invoice_common_item_int
+      IMPORTING
+        is_changed_item    TYPE mty_changed_items
+      CHANGING
+        cs_existing_item   TYPE zif_etr_invoice_ubl21=>invoicelinetype
+        cs_additional_item TYPE zif_etr_invoice_ubl21=>invoicelinetype
+      RAISING
+        zcx_etr_regulative_exception .
     METHODS build_invoice_data_item_change
       IMPORTING
         is_item         TYPE mty_item_collect

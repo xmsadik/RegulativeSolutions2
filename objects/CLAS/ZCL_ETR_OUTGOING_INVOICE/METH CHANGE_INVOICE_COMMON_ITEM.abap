@@ -96,8 +96,16 @@
         <ls_note>-content = ls_changed_item-inote.
       ENDIF.
 
+      change_invoice_common_item_int(
+        EXPORTING
+          is_changed_item    = ls_changed_item
+        CHANGING
+          cs_existing_item   = <ls_invoice_line>
+          cs_additional_item = ls_additional_item ).
+
       IF ls_additional_item IS NOT INITIAL.
         APPEND ls_additional_item TO lt_additional_items.
+        CLEAR ls_additional_item.
       ENDIF.
     ENDLOOP.
     APPEND LINES OF lt_additional_items TO ms_invoice_ubl-invoiceline.
