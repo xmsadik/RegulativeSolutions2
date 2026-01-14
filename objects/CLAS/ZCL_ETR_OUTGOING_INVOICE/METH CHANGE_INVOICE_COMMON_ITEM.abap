@@ -3,6 +3,8 @@
     DATA: lt_additional_items TYPE STANDARD TABLE OF zif_etr_common_ubl21=>invoicelinetype,
           ls_additional_item  TYPE zif_etr_common_ubl21=>invoicelinetype,
           lv_ratio            TYPE p DECIMALS 5,
+          lv_menge            TYPE menge_d,
+          lv_wrbtr            TYPE wrbtr_cs,
           lv_index            TYPE i.
 
     lv_index = lines( ms_invoice_ubl-invoiceline ).
@@ -26,22 +28,26 @@
         ls_additional_item-invoicedquantity-content = ls_changed_item-splqt.
         <ls_invoice_line>-invoicedquantity-content -= ls_changed_item-splqt.
 
-        ls_additional_item-lineextensionamount-content = <ls_invoice_line>-lineextensionamount-content * lv_ratio.
+        lv_wrbtr = <ls_invoice_line>-lineextensionamount-content * lv_ratio.
+        ls_additional_item-lineextensionamount-content = lv_wrbtr.
         <ls_invoice_line>-lineextensionamount-content -= ls_additional_item-lineextensionamount-content.
 
         ls_additional_item-price-priceamount-content = ls_additional_item-lineextensionamount-content / ls_additional_item-invoicedquantity-content.
         <ls_invoice_line>-price-priceamount-content = <ls_invoice_line>-lineextensionamount-content / <ls_invoice_line>-invoicedquantity-content.
 
-        ls_additional_item-taxtotal-taxamount-content = <ls_invoice_line>-taxtotal-taxamount-content * lv_ratio.
+        lv_wrbtr = <ls_invoice_line>-taxtotal-taxamount-content * lv_ratio.
+        ls_additional_item-taxtotal-taxamount-content = lv_wrbtr.
         <ls_invoice_line>-taxtotal-taxamount-content -= ls_additional_item-taxtotal-taxamount-content.
         LOOP AT ls_additional_item-taxtotal-taxsubtotal ASSIGNING FIELD-SYMBOL(<ls_taxsubtotal_additional>).
           READ TABLE <ls_invoice_line>-taxtotal-taxsubtotal
             ASSIGNING FIELD-SYMBOL(<ls_taxsubtotal>)
             WITH KEY taxcategory-taxscheme-taxtypecode-content = <ls_taxsubtotal_additional>-taxcategory-taxscheme-taxtypecode-content.
           CHECK sy-subrc = 0.
-          <ls_taxsubtotal_additional>-taxamount-content = <ls_taxsubtotal>-taxamount-content * lv_ratio.
+          lv_wrbtr = <ls_taxsubtotal>-taxamount-content * lv_ratio.
+          <ls_taxsubtotal_additional>-taxamount-content = lv_wrbtr.
           <ls_taxsubtotal>-taxamount-content -= <ls_taxsubtotal_additional>-taxamount-content.
-          <ls_taxsubtotal_additional>-taxableamount-content = <ls_taxsubtotal>-taxableamount-content * lv_ratio.
+          lv_wrbtr = <ls_taxsubtotal>-taxableamount-content * lv_ratio.
+          <ls_taxsubtotal_additional>-taxableamount-content = lv_wrbtr.
           <ls_taxsubtotal>-taxableamount-content -= <ls_taxsubtotal_additional>-taxableamount-content.
         ENDLOOP.
 
@@ -54,16 +60,19 @@
             INDEX 1.
 
           IF sy-subrc = 0.
-            <ls_taxtotal_additional>-taxamount-content = <ls_taxtotal>-taxamount-content * lv_ratio.
+            lv_wrbtr = <ls_taxtotal>-taxamount-content * lv_ratio.
+            <ls_taxtotal_additional>-taxamount-content = lv_wrbtr.
             <ls_taxtotal>-taxamount-content -= <ls_taxtotal_additional>-taxamount-content.
             LOOP AT <ls_taxtotal_additional>-taxsubtotal ASSIGNING <ls_taxsubtotal_additional>.
               READ TABLE <ls_taxtotal>-taxsubtotal
                 ASSIGNING <ls_taxsubtotal>
                 WITH KEY taxcategory-taxscheme-taxtypecode-content = <ls_taxsubtotal_additional>-taxcategory-taxscheme-taxtypecode-content.
               CHECK sy-subrc = 0.
-              <ls_taxsubtotal_additional>-taxamount-content = <ls_taxsubtotal>-taxamount-content * lv_ratio.
+              lv_wrbtr = <ls_taxsubtotal>-taxamount-content * lv_ratio.
+              <ls_taxsubtotal_additional>-taxamount-content = lv_wrbtr.
               <ls_taxsubtotal>-taxamount-content -= <ls_taxsubtotal_additional>-taxamount-content.
-              <ls_taxsubtotal_additional>-taxableamount-content = <ls_taxsubtotal>-taxableamount-content * lv_ratio.
+              lv_wrbtr = <ls_taxsubtotal>-taxableamount-content * lv_ratio.
+              <ls_taxsubtotal_additional>-taxableamount-content = lv_wrbtr.
               <ls_taxsubtotal>-taxableamount-content -= <ls_taxsubtotal_additional>-taxableamount-content.
             ENDLOOP.
           ENDIF.
