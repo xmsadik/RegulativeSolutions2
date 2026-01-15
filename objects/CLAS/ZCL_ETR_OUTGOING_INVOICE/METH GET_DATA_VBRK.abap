@@ -124,11 +124,9 @@ ON vbak~salesdocument = vbrp~SalesDocument
 LEFT OUTER JOIN i_salesdocumentitem AS vbap
 ON  vbap~salesdocument = vbrp~salesdocument
 AND vbap~salesdocumentitem = vbrp~salesdocumentitem
-*LEFT OUTER JOIN I_SDDocumentItemPartner WITH PRIVILEGED ACCESS AS vbpa
-LEFT OUTER JOIN I_BillingDocumentPartner WITH PRIVILEGED ACCESS AS vbpa
-*ON  vbpa~SDDocument = vbrp~billingdocument
-ON  vbpa~BillingDocument = vbrp~billingdocument
-*AND vbpa~sddocumentitem = vbrp~BillingDocumentItem
+LEFT OUTER JOIN I_SDDocumentItemPartner WITH PRIVILEGED ACCESS AS vbpa
+ON  vbpa~SDDocument = vbrp~SalesDocument
+AND vbpa~sddocumentitem = vbrp~SalesDocumentItem
 AND vbpa~partnerfunction = 'WE'
 WHERE vbrp~BillingDocument = @ms_document-belnr
 INTO TABLE @ms_billing_data-vbrp.
