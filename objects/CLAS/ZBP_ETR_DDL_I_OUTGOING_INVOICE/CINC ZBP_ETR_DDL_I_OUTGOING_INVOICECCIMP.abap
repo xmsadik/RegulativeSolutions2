@@ -81,28 +81,30 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                       ( %tky = ls_invoice-%tky
                         %action-sendinvoices = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                        %action-generateItemsHeader = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-statuscode <> 'Z' ) OR ls_invoice-Reversed = 'X'
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-markAsSent = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-downloadInvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-downloadInvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'  OR ls_invoice-statuscode = 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-sendInvoicesBackground = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-archiveinvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-archiveinvoices = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2' OR ls_invoice-statuscode = 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-setasrejected = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-setasrejected = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2' OR ls_invoice-statuscode = 'Z'
                                                              THEN if_abap_behv=>fc-o-disabled
                                                         WHEN NOT line_exists( lt_authorizations[ bukrs = ls_invoice-CompanyCode ogimr = abap_true ] )
                                                              THEN if_abap_behv=>fc-o-disabled
                                                         ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-statusupdate = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-statusupdate = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2' OR ls_invoice-statuscode = 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-sendMailToPartner = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-sendMailToPartner = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2' OR ls_invoice-statuscode = 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %action-sendMailToSelected = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2'
+                        %action-sendMailToSelected = COND #( WHEN ls_invoice-statuscode = '' OR ls_invoice-statuscode = '2' OR ls_invoice-statuscode = 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %features-%update = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
+                        %features-%update = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-statuscode <> 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
-                        %features-%delete = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
+                        %features-%delete = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-statuscode <> 'Z'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %field-profileid = COND #( WHEN ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2'
                                                      THEN if_abap_behv=>fc-f-read_only
