@@ -80,7 +80,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
     result = VALUE #( FOR ls_invoice IN lt_invoices
                       ( %tky = ls_invoice-%tky
                         %action-sendinvoices = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
-                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
+                                                   THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  ) "kontrol
                         %action-generateItemsHeader = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' AND ls_invoice-statuscode <> 'Z' ) OR ls_invoice-Reversed = 'X'
                                                    THEN if_abap_behv=>fc-o-disabled ELSE if_abap_behv=>fc-o-enabled  )
                         %action-markAsSent = COND #( WHEN ( ls_invoice-statuscode <> '' AND ls_invoice-statuscode <> '2' ) OR ls_invoice-Reversed = 'X'
