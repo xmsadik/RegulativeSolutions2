@@ -97,7 +97,7 @@
       mv_shipto_address = ls_vbpa-adrnr.
     ELSEIF lv_partner_role <> 'WE'.
       LOOP AT ms_outdel_data-vbak INTO DATA(ls_vbak) WHERE adrwe IS NOT INITIAL.
-        mv_shipto_address = ls_vbpa-adrnr.
+        mv_shipto_address = ls_vbak-adrwe.
         EXIT.
       ENDLOOP.
       IF sy-subrc <> 0.

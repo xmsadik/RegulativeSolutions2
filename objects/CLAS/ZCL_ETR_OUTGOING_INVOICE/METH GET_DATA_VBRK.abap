@@ -90,7 +90,7 @@
            likp~shippingtype AS vgvsa,
            likp~ReferenceDocumentNumber AS vgxbl,
            likp~DeliveryDocumentBySupplier AS vglfx,
-CASE WHEN likp~ActualGoodsMovementDate IS NOT INITIAL THEN likp~ActualGoodsMovementDate ELSE likp~PlannedGoodsIssueDate END AS vgdat,
+CASE WHEN likp~ActualGoodsMovementDate IS NOT INITIAL THEN likp~ActualGoodsMovementDate ELSE likp~DocumentDate END AS vgdat,
 vbrp~SalesDocument AS aubel,
 vbrp~SalesDocumentItem AS aupos,
 vbak~salesdocumentdate AS audat,
