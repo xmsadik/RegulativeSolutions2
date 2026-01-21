@@ -64,7 +64,8 @@
           FROM I_Supplier
           WHERE Supplier = @ls_mseg_partner-lifnr
           INTO @ls_partner_data.
-      ELSEIF ls_mseg_partner-umlgo IS NOT INITIAL AND ls_mseg_partner-bwart <> '301' AND ls_mseg_partner-bwart <> '311'.
+      ELSEIF ls_mseg_partner-umlgo IS NOT INITIAL AND
+             ( ( ls_mseg_partner-bwart <> '301' AND ls_mseg_partner-bwart <> '311' ) OR mv_snsstloc_address IS NOT INITIAL ).
         SELECT SINGLE AddressID
           FROM I_StorageLocationAddress
           WHERE Plant = @ls_mseg_partner-umwrk

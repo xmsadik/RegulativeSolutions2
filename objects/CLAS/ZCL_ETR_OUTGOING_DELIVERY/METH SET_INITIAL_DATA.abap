@@ -35,6 +35,12 @@
         AND cuspa = 'DLVPARTNER'
       INTO @mv_delivery_partner_role.
 
+    SELECT SINGLE value
+      FROM zetr_t_edcus
+      WHERE bukrs = @ms_document-bukrs
+        AND cuspa = 'SNSSTLOCAD'
+      INTO @mv_snsstloc_address.
+
     SELECT *
       FROM zetr_t_odti
       WHERE docui = @ms_document-docui

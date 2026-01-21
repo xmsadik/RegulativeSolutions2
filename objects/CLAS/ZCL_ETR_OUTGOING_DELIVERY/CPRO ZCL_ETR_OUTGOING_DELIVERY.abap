@@ -6,6 +6,7 @@
     DATA mv_company_taxid TYPE zetr_e_taxid .
     DATA mv_add_signature TYPE zetr_E_VALUE .
     DATA mv_delivery_partner_role TYPE zetr_E_VALUE .
+    DATA mv_snsstloc_address TYPE zetr_E_VALUE .
     DATA mv_shipto_address TYPE c LENGTH 10 .
     DATA ms_delivery_ubl TYPE zif_etr_delivery_ubl21=>despatchadvicetype .
     DATA mv_delivery_hash TYPE string .
