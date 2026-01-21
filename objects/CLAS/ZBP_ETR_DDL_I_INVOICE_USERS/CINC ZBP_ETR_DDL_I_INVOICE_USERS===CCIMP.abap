@@ -23,12 +23,12 @@ CLASS lhc_zetr_ddl_i_invoice_users IMPLEMENTATION.
     IF lv_exists = abap_true.
       TRY.
           DATA: ls_job_info TYPE cl_apj_rt_api=>ty_job_info.
-          GET TIME STAMP FIELD DATA(lv_timestamp).
-          TRY.
-              DATA(lv_timezone) = cl_abap_context_info=>get_user_time_zone( ).
-            CATCH cx_abap_context_info_error.
-          ENDTRY.
-          lv_timestamp += 1000.
+*          GET TIME STAMP FIELD DATA(lv_timestamp).
+*          TRY.
+*              DATA(lv_timezone) = cl_abap_context_info=>get_user_time_zone( ).
+*            CATCH cx_abap_context_info_error.
+*          ENDTRY.
+*          lv_timestamp += 1000.
           cl_apj_rt_api=>schedule_job_commit_immstart(
             EXPORTING
                 iv_job_template_name = 'ZETR_AJT_INVOICE_USERS'

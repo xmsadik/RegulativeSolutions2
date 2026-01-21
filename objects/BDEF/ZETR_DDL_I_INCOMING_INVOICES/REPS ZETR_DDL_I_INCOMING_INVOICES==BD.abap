@@ -91,7 +91,8 @@ authorization master ( instance )
   action ( features : instance ) statusUpdate result [1] $self;
   action showSummary result [1] $self;
   action printSelected result [1] $self;
-  //  action ( features : instance ) downloadInvoices result [1] $self;
+
+  action downloadSelected parameter zetr_ddl_i_doccontyp_selection result [1] zetr_ddl_i_file_export;
   action ( features : instance ) sendResponse parameter zetr_ddl_i_appresp_selection result [1] $self;
   action ( features : instance ) setAsRejected parameter zetr_ddl_i_reject_selection result [1] $self;
   action ( features : instance ) sendInformationMail parameter zetr_ddl_i_send_mail result [1] $self;

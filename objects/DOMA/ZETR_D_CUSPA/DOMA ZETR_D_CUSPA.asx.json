@@ -140,7 +140,7 @@
     "AS4LOCAL":"N",
     "VALPOS":10,
     "AS4VERS":0,
-    "DOMVALUE_L":"EXTREVFLD",
+    "DOMVALUE_L":"SNSSTLOCAD",
     "DOMVALUE_H":"",
     "APPVAL":""
    },
@@ -336,10 +336,10 @@
     "AS4LOCAL":"N",
     "VALPOS":10,
     "AS4VERS":0,
-    "DDTEXT":"External Reverse Field",
+    "DDTEXT":"SNS Storage Location Address",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
-    "DOMVALUE_L":"EXTREVFLD"
+    "DOMVALUE_L":"SNSSTLOCAD"
    },
    {
     "DOMNAME":"ZETR_D_CUSPA",
@@ -545,10 +545,10 @@
     "AS4LOCAL":"N",
     "VALPOS":10,
     "AS4VERS":0,
-    "DDTEXT":"Harici İptal Alanı",
+    "DDTEXT":"SNS Depo Yeri Adresi Devral",
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
-    "DOMVALUE_L":"EXTREVFLD"
+    "DOMVALUE_L":"SNSSTLOCAD"
    },
    {
     "DOMNAME":"ZETR_D_CUSPA",

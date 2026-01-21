@@ -18,6 +18,7 @@ define behavior for zetr_ddl_p_incoming_invoices alias InvoiceList
   use action changeAccountingStatus;
   use action showSummary;
   use action printSelected;
+  use action downloadSelected;
   use action sendInformationMail;
 
   use association _invoiceContents;

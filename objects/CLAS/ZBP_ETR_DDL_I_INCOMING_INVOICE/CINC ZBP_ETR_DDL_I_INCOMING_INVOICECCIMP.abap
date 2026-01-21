@@ -39,6 +39,8 @@ CLASS lhc_InvoiceList DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS printSelected FOR MODIFY
       IMPORTING keys FOR ACTION InvoiceList~printSelected RESULT result.
+    METHODS downloadSelected FOR MODIFY
+      IMPORTING keys FOR ACTION InvoiceList~downloadSelected RESULT result.
 
 ENDCLASS.
 
@@ -650,6 +652,7 @@ CLASS lhc_InvoiceList IMPLEMENTATION.
                                               severity = if_abap_behv_message=>severity-none
                                               v1 = ls_company-companycode
                                               v2 = ls_company-companytitle ) ) TO reported-invoicelist.
+
         CATCH zcx_etr_regulative_exception.
       ENDTRY.
     ENDLOOP.
@@ -888,6 +891,79 @@ CLASS lhc_InvoiceList IMPLEMENTATION.
     result = VALUE #( FOR invoice IN invoices
                  ( %tky   = invoice-%tky
                    %param = invoice ) ).
+  ENDMETHOD.
+
+  METHOD downloadSelected.
+    DATA lt_content_types TYPE STANDARD TABLE OF zetr_e_dctyp.
+    READ TABLE keys INTO DATA(ls_key) INDEX 1.
+    CHECK sy-subrc = 0.
+    IF ls_key-%param-IncludeUBL IS INITIAL.
+      APPEND 'UBL' TO lt_content_types.
+    ENDIF.
+    IF ls_key-%param-IncludePDF IS INITIAL.
+      APPEND 'PDF' TO lt_content_types.
+    ENDIF.
+    IF ls_key-%param-IncludeHTML IS INITIAL.
+      APPEND 'HTML' TO lt_content_types.
+    ENDIF.
+    IF lt_content_types IS INITIAL.
+      APPEND 'PDF' TO lt_content_types.
+    ENDIF.
+
+    READ ENTITIES OF zetr_ddl_i_incoming_invoices IN LOCAL MODE
+      ENTITY InvoiceList
+      ALL FIELDS WITH
+      CORRESPONDING #( keys )
+      RESULT DATA(invoices).
+
+    TYPES BEGIN OF ty_company.
+    TYPES companycode TYPE zetr_ddl_i_incoming_invoices-companycode.
+    TYPES companytitle TYPE zetr_ddl_i_incoming_invoices-companytitle.
+    TYPES END OF ty_company.
+    DATA lt_companies TYPE STANDARD TABLE OF ty_company.
+
+    lt_companies = CORRESPONDING #( invoices ).
+    SORT lt_companies BY companycode.
+    DELETE ADJACENT DUPLICATES FROM lt_companies COMPARING companycode.
+
+    DATA(lo_zip) = NEW cl_abap_zip( ).
+
+    TRY.
+        LOOP AT lt_companies INTO DATA(ls_company).
+          DATA(lo_invoice_operations) = zcl_etr_invoice_operations=>factory( ls_company-companycode ).
+          LOOP AT invoices ASSIGNING FIELD-SYMBOL(<ls_invoice>) WHERE companycode = ls_company-companycode.
+            LOOP AT lt_content_types INTO DATA(lv_content_type).
+              DATA(lv_content) = lo_invoice_operations->incoming_einvoice_download( iv_document_uid = <ls_invoice>-DocumentUUID
+                                                                                    iv_content_type = lv_content_type ).
+              IF lv_content IS NOT INITIAL.
+                lo_zip->add(
+                  name           = <ls_invoice>-InvoiceID && '.' && SWITCH zetr_e_dctyp( lv_content_type WHEN 'UBL' THEN 'XML' ELSE lv_content_type  )
+                  content        = lv_content ).
+              ENDIF.
+              CLEAR lv_content.
+            ENDLOOP.
+          ENDLOOP.
+        ENDLOOP.
+
+        CLEAR lv_content.
+        lv_content = lo_zip->save( ).
+
+        IF lv_content IS NOT INITIAL.
+          DATA(lv_doc_name) = |Invoices_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.zip|.
+          result = VALUE #( ( %key = ls_key-%key
+                              %param = VALUE #( filename = lv_doc_name mimetype = 'application/zip' content = lv_content ) ) ).
+        ENDIF.
+
+      CATCH cx_root INTO DATA(lx_root).
+        DATA(lv_error) = CONV bapi_msg( lx_root->get_text( ) ).
+        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-InvoiceList.
+    ENDTRY.
   ENDMETHOD.
 
 ENDCLASS.

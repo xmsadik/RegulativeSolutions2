@@ -7,9 +7,9 @@
     "SRVDNAME":"ZETR_DDL_D_INCOMING_INVOICES",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2025-05-18",
-    "CHANGED_AT":"17:13:49",
-    "DT_UUID":"FA163EBBCF7E1FE08D816EC8569D84A7",
+    "CHANGED_ON":"2026-01-15",
+    "CHANGED_AT":"11:08:31",
+    "DT_UUID":"FA163EBBCF7E1FE0BCC050CFF9E84780",
     "SOURCE_ORIGIN":"0",
     "SRVD_SOURCE_TYPE":"S",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -35,7 +35,7 @@
    {
     "SRVDNAME":"ZETR_DDL_D_INCOMING_INVOICES",
     "VERSION":"A",
-    "SOURCE":"@EndUserText.label: 'Incoming Invoices'\r\ndefine service ZETR_DDL_D_INCOMING_INVOICES {\r\n  expose zetr_ddl_p_incoming_invoices as InvoiceList;\r\n  expose zetr_ddl_p_incoming_invlogs  as InvoiceLogs;\r\n  expose zetr_ddl_p_incoming_invcont  as InvoiceContents;\r\n  expose zetr_ddl_p_incoming_invitem  as InvoiceItems;\r\n  expose zetr_ddl_vh_reject_types     as RejectTypes;\r\n  expose zetr_ddl_vh_app_response     as ApplicationResponse;\r\n  expose ZETR_DDL_I_ACCSTAT_SELECTION as AccountingStatus;\r\n}"
+    "SOURCE":"@EndUserText.label: 'Incoming Invoices'\r\ndefine service ZETR_DDL_D_INCOMING_INVOICES {\r\n  expose zetr_ddl_p_incoming_invoices   as InvoiceList;\r\n  expose zetr_ddl_p_incoming_invlogs    as InvoiceLogs;\r\n  expose zetr_ddl_p_incoming_invcont    as InvoiceContents;\r\n  expose zetr_ddl_p_incoming_invitem    as InvoiceItems;\r\n  expose zetr_ddl_vh_reject_types       as RejectTypes;\r\n  expose zetr_ddl_vh_app_response       as ApplicationResponse;\r\n  expose ZETR_DDL_I_ACCSTAT_SELECTION   as AccountingStatus;\r\n  expose zetr_ddl_i_doccontyp_selection as DocumentContentType;\r\n}"
    }
   ]
  },
@@ -73,6 +73,15 @@
     "EXPOSED_ARTIFACT_TYPE":"E",
     "EXPOSED_ALIAS":"ACCOUNTINGSTATUS",
     "EXPOSED_ALIAS_RAW":"AccountingStatus",
+    "INCL_SERVICE":""
+   },
+   {
+    "SRVDNAME":"ZETR_DDL_D_INCOMING_INVOICES",
+    "SERVICE":"ZETR_DDL_D_INCOMING_INVOICES",
+    "EXPOSED_ARTIFACT":"ZETR_DDL_I_DOCCONTYP_SELECTION",
+    "EXPOSED_ARTIFACT_TYPE":"E",
+    "EXPOSED_ALIAS":"DOCUMENTCONTENTTYPE",
+    "EXPOSED_ALIAS_RAW":"DocumentContentType",
     "INCL_SERVICE":""
    },
    {
@@ -140,8 +149,8 @@
     "SERVICE":"ZETR_DDL_D_INCOMING_INVOICES",
     "SERVICE_RAW":"ZETR_DDL_D_INCOMING_INVOICES",
     "SOURCE_TYPE":"S",
-    "DT_UUID":"FA163EBBCF7E1FE08D816EC8569D84A7",
-    "RT_HASH":"4364FF93381BFCD411BE51C235A886E3EBFCF92C",
+    "DT_UUID":"FA163EBBCF7E1FE0BCC050CFF9E84780",
+    "RT_HASH":"C61C7CC253ECE4613AD8074D879A691C080129F1",
     "GEN_VERSION":"0"
    }
   ]
