@@ -12,6 +12,9 @@
             FROM zetr_ddl_i_tax_types
             WHERE TaxType = @ls_tax_match-txtyp
             INTO @DATA(ls_parent_tax_data).
+        IF ms_document-taxty IS NOT INITIAL.
+          ls_tax_match-taxty = ms_document-taxty.
+        ENDIF.
         SELECT SINGLE *
           FROM zetr_ddl_i_tax_types
           WHERE TaxType = @ls_tax_match-taxty
