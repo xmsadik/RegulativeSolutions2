@@ -253,6 +253,7 @@
           FROM zetr_ddl_i_tax_types
           WHERE TaxType = @ls_invoice_items-othtt
           INTO @ls_tax_data.
+        <ls_invoice_line>-taxtotal-taxamount-content = ls_invoice_items-othtx.
         APPEND INITIAL LINE TO <ls_invoice_line>-taxtotal-taxsubtotal ASSIGNING <ls_taxsubtotal>.
         <ls_taxsubtotal>-taxcategory-taxscheme-name-content = ls_tax_data-LongDescription.
         <ls_taxsubtotal>-taxcategory-taxscheme-taxtypecode-content = ls_invoice_items-othtt.
