@@ -69,5 +69,5 @@
     INSERT zetr_t_ogdli FROM TABLE @lt_items.
     zcl_etr_regulative_log=>create_single_log( iv_log_code    = zcl_etr_regulative_log=>mc_log_codes-created
                                                iv_document_id = rs_document-docui ).
-    COMMIT WORK AND WAIT.
+*    COMMIT WORK AND WAIT.
   ENDMETHOD.

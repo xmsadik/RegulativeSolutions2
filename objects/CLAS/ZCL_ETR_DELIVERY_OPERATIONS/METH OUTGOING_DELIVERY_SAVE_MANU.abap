@@ -54,6 +54,11 @@
         ls_document-erdat = cl_abap_context_info=>get_system_date( ).
         ls_document-erzet = cl_abap_context_info=>get_system_time( ).
 
+        CONVERT DATE ls_document-erdat TIME ls_document-erzet INTO TIME STAMP DATA(lv_timestamp) TIME ZONE 'UTC'.
+        DATA(lv_timestamp_text) = CONV zetr_e_descr100( |{ lv_timestamp  TIMESTAMP = ISO TIMEZONE = 'UTC+3' }| ).
+        ls_document-erdat = lv_timestamp_text(4) && lv_timestamp_text+5(2) && lv_timestamp_text+8(2).
+        ls_document-erzet = lv_timestamp_text+11(2) && lv_timestamp_text+14(2) && lv_timestamp_text+17(2).
+
         ls_edrule_input-awtyp = 'MANU'.
         ls_edrule_input-partner = ls_document-partner.
         ls_edrule_input-werks = ls_document-werks.

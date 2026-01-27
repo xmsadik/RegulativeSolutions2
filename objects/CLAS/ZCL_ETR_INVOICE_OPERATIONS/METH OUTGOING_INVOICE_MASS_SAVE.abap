@@ -297,6 +297,7 @@
         IF iv_max_count IS NOT INITIAL AND sy-tabix > iv_max_count.
           EXIT.
         ENDIF.
+
         IF ls_invoice-awtyp = ls_invoice_prev-awtyp AND
            ls_invoice-bukrs = ls_invoice_prev-bukrs AND
            ls_invoice-belnr = ls_invoice_prev-belnr AND
@@ -304,6 +305,19 @@
           CONTINUE.
         ENDIF.
         ls_invoice_prev = ls_invoice.
+
+        APPEND INITIAL LINE TO et_logs ASSIGNING <ls_log>.
+        <ls_log>-id = 'ZETR_COMMON'.
+        <ls_log>-type = if_abap_behv_message=>severity-information.
+        <ls_log>-number = '015'.
+        <ls_log>-message_v1 = ls_invoice-awtyp.
+        <ls_log>-message_v2 = ls_invoice-bukrs.
+        <ls_log>-message_v3 = ls_invoice-belnr.
+        <ls_log>-message_v4 = ls_invoice-gjahr.
+        MESSAGE ID <ls_log>-id TYPE <ls_log>-type NUMBER <ls_log>-number
+          WITH <ls_log>-message_v1 <ls_log>-message_v2 <ls_log>-message_v3 <ls_log>-message_v4
+          INTO <ls_log>-message.
+
         SELECT COUNT( * )
           FROM zetr_t_oginv
           WHERE bukrs = @ls_invoice-bukrs
@@ -326,18 +340,6 @@
               lv_bukrs = ls_invoice-bukrs.
               DATA(lo_invoice_operations) = zcl_etr_invoice_operations=>factory( ls_invoice-bukrs ).
             ENDIF.
-
-            APPEND INITIAL LINE TO et_logs ASSIGNING <ls_log>.
-            <ls_log>-id = 'ZETR_COMMON'.
-            <ls_log>-type = if_abap_behv_message=>severity-information.
-            <ls_log>-number = '015'.
-            <ls_log>-message_v1 = ls_invoice-awtyp.
-            <ls_log>-message_v2 = ls_invoice-bukrs.
-            <ls_log>-message_v3 = ls_invoice-belnr.
-            <ls_log>-message_v4 = ls_invoice-gjahr.
-            MESSAGE ID <ls_log>-id TYPE <ls_log>-type NUMBER <ls_log>-number
-              WITH <ls_log>-message_v1 <ls_log>-message_v2 <ls_log>-message_v3 <ls_log>-message_v4
-              INTO <ls_log>-message.
 
             CLEAR: ls_return, ls_document.
             lo_invoice_operations->outgoing_invoice_save(
