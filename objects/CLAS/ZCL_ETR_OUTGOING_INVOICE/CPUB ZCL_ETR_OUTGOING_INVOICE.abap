@@ -132,6 +132,11 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES po_unit TYPE meins.
     TYPES item_amount TYPE wrbtr_cs.
     TYPES tax_code TYPE mwskz.
+    TYPES refdoc_number TYPE belnr_d.
+    TYPES refdoc_year TYPE gjahr.
+    TYPES refdoc_item TYPE n LENGTH 4.
+    TYPES refdoc_ref TYPE xblnr.
+    TYPES refdoc_date TYPE datum.
     TYPES END OF mty_invrec_itemdata.
 
     TYPES BEGIN OF mty_invrec_glaccountdata.

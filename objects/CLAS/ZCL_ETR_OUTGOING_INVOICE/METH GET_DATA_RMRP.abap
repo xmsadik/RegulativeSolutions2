@@ -27,15 +27,23 @@
       WHERE companycode = @ms_document-bukrs
       INTO CORRESPONDING FIELDS OF @ms_invrec_data-t001.
 
-    SELECT SupplierInvoiceItem AS invoice_doc_item,
-           PurchaseOrder AS po_number,
-           PurchaseOrderItem AS po_item,
-           SupplierInvoiceItemText AS item_text,
-           QuantityInPurchaseOrderUnit AS Quantity,
-           PurchaseOrderPriceUnit AS po_unit,
-           SupplierInvoiceItemAmount AS item_amount,
-           TaxCode AS Tax_Code
-      FROM I_SuplrInvcItemPurOrdRefAPI01
+    SELECT item~SupplierInvoiceItem AS invoice_doc_item,
+           item~PurchaseOrder AS po_number,
+           item~PurchaseOrderItem AS po_item,
+           item~SupplierInvoiceItemText AS item_text,
+           item~QuantityInPurchaseOrderUnit AS Quantity,
+           item~PurchaseOrderPriceUnit AS po_unit,
+           item~SupplierInvoiceItemAmount AS item_amount,
+           item~TaxCode AS Tax_Code,
+           item~ReferenceDocument AS refdoc_number,
+           item~ReferenceDocumentFiscalYear AS refdoc_year,
+           item~ReferenceDocumentItem AS refdoc_item,
+           matdoc~ReferenceDocument AS refdoc_ref,
+           matdoc~DocumentDate AS refdoc_date
+      FROM I_SuplrInvcItemPurOrdRefAPI01 AS item
+      LEFT OUTER JOIN I_MaterialDocumentHeader_2 AS matdoc
+        ON matdoc~MaterialDocument = item~ReferenceDocument
+        AND matdoc~MaterialDocumentYear = item~ReferenceDocumentFiscalYear
       WHERE SupplierInvoice = @ms_document-belnr
         AND FiscalYear = @ms_document-gjahr
       INTO TABLE @ms_invrec_data-itemdata.
