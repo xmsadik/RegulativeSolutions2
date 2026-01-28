@@ -161,6 +161,8 @@
           FOR ALL ENTRIES IN @ms_invrec_data-ekpo
           WHERE PurchaseOrder = @ms_invrec_data-ekpo-ebeln
             AND PurchaseOrderItem = @ms_invrec_data-ekpo-ebelp
+            AND RvslOfGoodsReceiptIsAllowed = ''
+            AND DebitCreditCode = 'H'
           INTO TABLE @ms_invrec_data-ekbe.
 *        IF sy-subrc IS INITIAL.
 *          SELECT *
