@@ -39,6 +39,7 @@ CLASS lhc_InvoiceList DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS printSelected FOR MODIFY
       IMPORTING keys FOR ACTION InvoiceList~printSelected RESULT result.
+
     METHODS downloadSelected FOR MODIFY
       IMPORTING keys FOR ACTION InvoiceList~downloadSelected RESULT result.
 

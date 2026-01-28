@@ -1,0 +1,7 @@
+CLASS zbp_etr_i_defcl DEFINITION
+  PUBLIC
+  ABSTRACT
+  FINAL
+  FOR BEHAVIOR OF zetr_i_defcl.
+
+  PUBLIC SECTION.

@@ -40,7 +40,6 @@
             EXPORTING
               is_selection   = ls_selections
               iv_save_source = 'M'
-*            iv_max_count   = CONV #( lv_top )
             IMPORTING
               et_invoices    = DATA(lt_invoices) ).
           LOOP AT lt_invoices INTO DATA(ls_invoice).

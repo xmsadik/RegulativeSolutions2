@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'File Export'\r\ndefine root abstract entity zetr_ddl_i_file_export\r\n  //  with parameters parameter_name : parameter_type\r\n{\r\n  key id       : abap.int4;\r\n  @Semantics.largeObject: { mimeType      : 'mimetype',\r\n                            fileName      : 'filename',\r\n                            contentDispositionPreference: #ATTACHMENT,\r\n                            acceptableMimeTypes: ['application/pdf', 'text/html', 'application/xml'] }\r\n  content  : zetr_e_dcont;\r\n  filename : zetr_e_filename;\r\n  @Semantics.mimeType: true\r\n  mimetype : zetr_e_mime_type;\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'File Export'\r\ndefine root abstract entity zetr_ddl_i_file_export\r\n{\r\n  key id       : abap.int4;\r\n  @Semantics.largeObject: { mimeType      : 'mimetype',\r\n                            fileName      : 'filename',\r\n                            contentDispositionPreference: #ATTACHMENT,\r\n                            acceptableMimeTypes: ['application/zip'] }\r\n  content  : zetr_e_dcont;\r\n  filename : zetr_e_filename;\r\n  @Semantics.mimeType: true\r\n  mimetype : zetr_e_mime_type;\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"W",
+    "CHGFLAG":"",
     "SOURCE_TYPE":"A",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -60,21 +60,7 @@
     "LFIELDNAME":"CONTENT",
     "NAME":"SEMANTICS.LARGEOBJECT.ACCEPTABLEMIMETYPES$1$",
     "POSITION":5,
-    "VALUE":"'application/pdf'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_FILE_EXPORT",
-    "LFIELDNAME":"CONTENT",
-    "NAME":"SEMANTICS.LARGEOBJECT.ACCEPTABLEMIMETYPES$2$",
-    "POSITION":6,
-    "VALUE":"'text/html'"
-   },
-   {
-    "STRUCOBJN":"ZETR_DDL_I_FILE_EXPORT",
-    "LFIELDNAME":"CONTENT",
-    "NAME":"SEMANTICS.LARGEOBJECT.ACCEPTABLEMIMETYPES$3$",
-    "POSITION":7,
-    "VALUE":"'application/xml'"
+    "VALUE":"'application/zip'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_FILE_EXPORT",
@@ -101,14 +87,14 @@
     "STRUCOBJN":"ZETR_DDL_I_FILE_EXPORT",
     "LFIELDNAME":"MIMETYPE",
     "NAME":"SEMANTICS",
-    "POSITION":8,
+    "POSITION":6,
     "VALUE":""
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_FILE_EXPORT",
     "LFIELDNAME":"MIMETYPE",
     "NAME":"SEMANTICS.MIMETYPE",
-    "POSITION":9,
+    "POSITION":7,
     "VALUE":"true"
    }
   ]

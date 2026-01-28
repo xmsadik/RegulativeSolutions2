@@ -32,6 +32,7 @@
       WHERE bukrs = @iv_bukrs
       INTO TABLE @DATA(lt_identifications).
     IF sy-subrc IS INITIAL.
+      SORT lt_identifications BY prtid DESCENDING.
       LOOP AT lt_identifications INTO DATA(ls_identifications).
         APPEND INITIAL LINE TO rs_data-partyidentification ASSIGNING FIELD-SYMBOL(<ls_party_identification>).
         CASE ls_identifications-prtid.                                            .
