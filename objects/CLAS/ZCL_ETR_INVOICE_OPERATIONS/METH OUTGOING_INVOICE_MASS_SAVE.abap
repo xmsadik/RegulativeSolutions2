@@ -414,6 +414,32 @@
       ENDLOOP.
 
       IF lt_docui_range IS NOT INITIAL.
+        COMMIT WORK AND WAIT.
+
+        SELECT awtyp, bukrs, belnr, gjahr, COUNT(*) AS count
+          FROM zetr_t_oginv
+          GROUP BY awtyp, bukrs, belnr, gjahr
+          HAVING COUNT(*) > 1
+          INTO TABLE @DATA(lt_duplicate).
+        IF lt_duplicate IS NOT INITIAL.
+          LOOP AT lt_duplicate INTO DATA(ls_duplicate).
+            DATA(lv_count) = ls_duplicate-count - 1.
+            DO lv_count TIMES.
+              SELECT SINGLE docui
+                FROM zetr_t_oginv
+                WHERE awtyp = @ls_duplicate-awtyp
+                  AND bukrs = @ls_duplicate-bukrs
+                  AND belnr = @ls_duplicate-belnr
+                  AND gjahr = @ls_duplicate-gjahr
+                  AND stacd IN ('','2')
+                INTO @DATA(lv_docui).
+              CHECK sy-subrc = 0.
+              DELETE FROM zetr_t_oginv
+                WHERE docui = @lv_docui.
+            ENDDO.
+          ENDLOOP.
+        ENDIF.
+
         SELECT companycode AS bukrs ,
                documentnumber AS belnr ,
                fiscalyear AS gjahr ,
