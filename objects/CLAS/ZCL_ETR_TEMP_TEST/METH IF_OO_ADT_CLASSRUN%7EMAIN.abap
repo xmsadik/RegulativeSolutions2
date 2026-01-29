@@ -18,34 +18,55 @@
         out->write( lx_root->get_text( ) ).
     ENDTRY.
 
-    DATA: lv_belnr   TYPE belnr_d,
-          lv_docui   TYPE sysuuid_c22,
-          lv_confirm TYPE abap_bool.
+*    DATA: lv_belnr   TYPE belnr_d,
+*          lv_docui   TYPE sysuuid_c22,
+*          lv_confirm TYPE abap_bool.
+*
+*    " Debug modda değerleri girin:
+*    " lv_belnr, lv_docui, lv_confirm = abap_true
+*    "  BREAK-POINT.
+*
+*    IF lv_belnr IS INITIAL OR lv_docui IS INITIAL.
+*      out->write( 'HATA: Belge numarası ve UUID değeri girilmelidir!' ).
+*      RETURN.
+*    ENDIF.
+*
+*    IF lv_confirm = abap_false.
+*      out->write( 'UYARI: Silme işlemi onaylanmadı. lv_confirm = abap_true yapın!' ).
+*      RETURN.
+*    ENDIF.
+*
+*    DATA(lv_result) = delete_delivery_record(
+*      iv_belnr = lv_belnr
+*      iv_docui = lv_docui
+*      iv_confirm_delete = lv_confirm
+*    ).
+*
+*    IF lv_result = abap_true.
+*      out->write( |Kayıt başarıyla silindi - BELNR: { lv_belnr }, DOCUI: { lv_docui }| ).
+*    ELSE.
+*      out->write( 'Kayıt silinemedi veya bulunamadı.' ).
+*    ENDIF.
 
-    " Debug modda değerleri girin:
-    " lv_belnr, lv_docui, lv_confirm = abap_true
-    "  BREAK-POINT.
 
-    IF lv_belnr IS INITIAL OR lv_docui IS INITIAL.
-      out->write( 'HATA: Belge numarası ve UUID değeri girilmelidir!' ).
-      RETURN.
-    ENDIF.
 
-    IF lv_confirm = abap_false.
-      out->write( 'UYARI: Silme işlemi onaylanmadı. lv_confirm = abap_true yapın!' ).
-      RETURN.
-    ENDIF.
 
-    DATA(lv_result) = delete_delivery_record(
-      iv_belnr = lv_belnr
-      iv_docui = lv_docui
-      iv_confirm_delete = lv_confirm
-    ).
 
-    IF lv_result = abap_true.
-      out->write( |Kayıt başarıyla silindi - BELNR: { lv_belnr }, DOCUI: { lv_docui }| ).
-    ELSE.
-      out->write( 'Kayıt silinemedi veya bulunamadı.' ).
-    ENDIF.
+
+
+    "Veritabanı güncellemesi - ABAP Cloud'da UPDATE yerine Managed CBO kullanılmalı
+    "Ama basit örnek için:
+    MODIFY zetr_t_defcl FROM @( VALUE #(
+      mandt = sy-mandt
+      bukrs = '1000'
+      gjahr = '2025'
+      monat = '09'
+      manup = me->set_manual_upload( abap_true )
+    ) ).
+
+
+
+
+
 
   ENDMETHOD.

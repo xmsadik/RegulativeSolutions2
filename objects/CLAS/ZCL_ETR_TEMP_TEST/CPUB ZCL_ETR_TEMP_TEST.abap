@@ -15,3 +15,11 @@ CLASS zcl_etr_temp_test DEFINITION
         VALUE(rv_success) TYPE abap_bool
       RAISING
         cx_static_check.
+
+    TYPES ty_manup TYPE zetr_e_edf_manually_uploaded.
+
+    METHODS set_manual_upload
+      IMPORTING
+        iv_is_manual    TYPE abap_boolean
+      RETURNING
+        VALUE(rv_manup) TYPE ty_manup.
