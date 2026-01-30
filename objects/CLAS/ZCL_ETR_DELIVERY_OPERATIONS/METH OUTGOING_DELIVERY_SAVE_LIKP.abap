@@ -75,11 +75,11 @@
       es_return-id = 'ZETR_COMMON'.
       es_return-number = '005'.
       RETURN.
-    ELSEIF ls_likp-wbstk <> 'C'.
-      es_return-type = 'E'.
-      es_return-id = 'ZETR_COMMON'.
-      es_return-number = '246'.
-      RETURN.
+*    ELSEIF ls_likp-wbstk <> 'C'.
+*      es_return-type = 'E'.
+*      es_return-id = 'ZETR_COMMON'.
+*      es_return-number = '246'.
+*      RETURN.
     ENDIF.
 
     SELECT SINGLE datab, datbi, genid, prfid
@@ -161,6 +161,11 @@
       es_return-type = 'E'.
       es_return-id = 'ZETR_COMMON'.
       es_return-number = '243'.
+      RETURN.
+    ELSEIF ls_edrule_output-dcgis IS INITIAL AND ls_likp-wbstk <> 'C'.
+      es_return-type = 'E'.
+      es_return-id = 'ZETR_COMMON'.
+      es_return-number = '246'.
       RETURN.
     ENDIF.
 

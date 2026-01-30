@@ -4,8 +4,8 @@
   "data":
   [
    {
-    "APP_ID":"ZETR_IAM_DEFCL_UI5A",
-    "APP_TYPE":"UI5A",
+    "APP_ID":"ZETR_IAM_LEDGER_DEFCL_EXT",
+    "APP_TYPE":"EXT",
     "ABAP_LANGUAGE_VERSION":"5",
     "REL_FOR_CUST_CAT_EXT":"",
     "READ_ONLY":"",
@@ -20,9 +20,9 @@
     "TCODE":"",
     "UI_APP_ID":"",
     "CREATE_USER":"SAP_CUSTOMER",
-    "CREATE_TIMESTAMP":"+020260128183948",
+    "CREATE_TIMESTAMP":"+020260129143357",
     "CHANGE_USER":"SAP_CUSTOMER",
-    "CHANGE_TIMESTAMP":"+020260128201526"
+    "CHANGE_TIMESTAMP":"+020260129143418"
    }
   ]
  },
@@ -31,7 +31,7 @@
   "data":
   [
    {
-    "APP_ID":"ZETR_IAM_DEFCL_UI5A",
+    "APP_ID":"ZETR_IAM_LEDGER_DEFCL_EXT",
     "SRVC_NAME":"A794F84D0B15704DBFA6B55DC4A54A",
     "SRVC_TYPE":"HT",
     "UIAD_SRC":"",
@@ -45,8 +45,8 @@
   [
    {
     "LANGU":"T",
-    "APP_ID":"ZETR_IAM_DEFCL_UI5A",
-    "TEXT":"eDefter Process durum güncelleme uygulaması"
+    "APP_ID":"ZETR_IAM_LEDGER_DEFCL_EXT",
+    "TEXT":"eDefter procesler için update programı"
    }
   ]
  },
@@ -57,7 +57,7 @@
    {
     "PGMID":"R3TR",
     "OBJECT":"SIA6",
-    "OBJ_NAME":"ZETR_IAM_DEFCL_UI5A",
+    "OBJ_NAME":"ZETR_IAM_LEDGER_DEFCL_EXT",
     "KORRNUM":"",
     "SRCSYSTEM":"...",
     "AUTHOR":"SAP_CUSTOMER",
@@ -74,8 +74,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2026-01-28",
-    "CHECK_DATE":"2026-01-28",
+    "CREATED_ON":"2026-01-29",
+    "CHECK_DATE":"2026-01-29",
     "CHECK_CFG":""
    }
   ]
