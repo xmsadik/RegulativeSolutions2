@@ -32,7 +32,7 @@
            item~PurchaseOrderItem AS po_item,
            item~SupplierInvoiceItemText AS item_text,
            item~QuantityInPurchaseOrderUnit AS Quantity,
-           item~PurchaseOrderPriceUnit AS po_unit,
+           item~PurchaseOrderQuantityUnit AS po_unit,
            item~SupplierInvoiceItemAmount AS item_amount,
            item~TaxCode AS Tax_Code,
            item~ReferenceDocument AS refdoc_number,
