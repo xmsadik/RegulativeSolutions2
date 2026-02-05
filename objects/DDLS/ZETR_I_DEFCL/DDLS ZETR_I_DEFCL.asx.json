@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Ledger Process - Interface View'\r\ndefine root view entity ZETR_I_DEFCL\r\n  as select from zetr_t_defcl\r\n{\r\n  key bukrs,\r\n  key gjahr,\r\n  key monat,\r\n      ernam,\r\n      erdat,\r\n      erzet,\r\n      elprc,\r\n      stldr,\r\n      etldr,\r\n      stldd,\r\n      stsds,\r\n      etsds,\r\n      sgbsn,\r\n      egbsn,\r\n      dcdrs,\r\n      heror,\r\n      manup,\r\n      ardnm\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_DEFCL\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,W4T2",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

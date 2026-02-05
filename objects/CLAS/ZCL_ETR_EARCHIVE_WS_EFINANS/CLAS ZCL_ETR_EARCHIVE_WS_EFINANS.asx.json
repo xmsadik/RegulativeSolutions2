@@ -83,6 +83,13 @@
   [
    {
     "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "MTDTYPE2":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
     "CMPNAME":"MC_ERPCODE_PARAMETER",
     "CMPTYPE":0,
     "MTDTYPE":0,
@@ -96,6 +103,65 @@
   [
    {
     "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "VERSION":1,
+    "ALIAS":"",
+    "REDEFIN":"",
+    "EXPOSURE":1,
+    "STATE":1,
+    "EDITORDER":1,
+    "LOCKED":"",
+    "DISPID":0,
+    "R3RELEASE":"",
+    "AUTHOR":"",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "MTDDECLTYP":0,
+    "MTDABSTRCT":"",
+    "MTDFINAL":"",
+    "DSRNOTEOM":"",
+    "EDTX":"",
+    "MTDNEWEXC":"X",
+    "MTDREPLACE":"",
+    "MTDOPTNL":"",
+    "MTDSQLSERVICE":"",
+    "MTDAMDPRDONLY":"",
+    "MTDAMDPCDSCLNT":"",
+    "MTDAMDPCLNTINDEP":"",
+    "ATTDECLTYP":0,
+    "ATTDYNAMIC":"",
+    "ATTGETMTD":"",
+    "ATTSETMTD":"",
+    "ATTRDONLY":"",
+    "ATTVALUE":"",
+    "ATTPERSIST":"",
+    "ATTBUSOBJ":"",
+    "ATTKEYFLD":"",
+    "ATTEXPVIRT":0,
+    "EVTDECLTYP":0,
+    "TYPDUMMY":"",
+    "TYPTYPE":0,
+    "TYPE":"",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "REFCLSNAME":"",
+    "REFINTNAME":"",
+    "REFCMPNAME":"",
+    "BCMTDINST":"",
+    "BCMTDCAT":0,
+    "BCMTDDIA":"",
+    "BCMTDCOM":"",
+    "BCMTDSYN":0,
+    "BCEVTCAT":0,
+    "TYPESRC_LENG":0,
+    "TYPESRC":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
     "CMPNAME":"MC_ERPCODE_PARAMETER",
     "VERSION":1,
     "ALIAS":"",
@@ -105,7 +171,7 @@
     "EDITORDER":1,
     "LOCKED":"",
     "DISPID":0,
-    "R3RELEASE":"795",
+    "R3RELEASE":"",
     "AUTHOR":"",
     "CREATEDON":"2024-02-28",
     "CHANGEDBY":"",
@@ -161,6 +227,12 @@
   [
    {
     "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
     "CMPNAME":"MC_ERPCODE_PARAMETER",
     "LANGU":"E",
     "DESCRIPT":""
@@ -194,6 +266,26 @@
   "table":"SEOREDEF",
   "data":
   [
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "REFCLSNAME":"ZCL_ETR_EARCHIVE_WS",
+    "VERSION":1,
+    "MTDNAME":"GET_INCOMING_INVOICES",
+    "MTDABSTRCT":"",
+    "MTDFINAL":"",
+    "ATTVALUE":"",
+    "EXPOSURE":2
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "REFCLSNAME":"ZCL_ETR_EARCHIVE_WS",
+    "VERSION":1,
+    "MTDNAME":"INCOMING_INVOICE_DOWNLOAD",
+    "MTDABSTRCT":"",
+    "MTDFINAL":"",
+    "ATTVALUE":"",
+    "EXPOSURE":2
+   },
    {
     "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
     "REFCLSNAME":"ZCL_ETR_EARCHIVE_WS",
@@ -233,6 +325,276 @@
     "MTDFINAL":"",
     "ATTVALUE":"",
     "EXPOSURE":2
+   }
+  ]
+ },
+ {
+  "table":"SEOSUBCO",
+  "data":
+  [
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_FROM",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_TO",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_IMPORT_RECEIVED",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_INVOICE_UUID",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"RT_INVOICES",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"ZCX_ETR_REGULATIVE_EXCEPTION",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":1
+   }
+  ]
+ },
+ {
+  "table":"SEOSUBCODF",
+  "data":
+  [
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_FROM",
+    "VERSION":1,
+    "EDITORDER":1,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"BEGDA",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_TO",
+    "VERSION":1,
+    "EDITORDER":2,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"ENDDA",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_IMPORT_RECEIVED",
+    "VERSION":1,
+    "EDITORDER":3,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"ZETR_E_IMREC",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"X",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_INVOICE_UUID",
+    "VERSION":1,
+    "EDITORDER":4,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"ZETR_E_DUICH",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"X",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"RT_INVOICES",
+    "VERSION":1,
+    "EDITORDER":5,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"SAP_CUSTOMER",
+    "CHANGEDON":"2026-02-03",
+    "PARDECLTYP":3,
+    "PARPASSTYP":0,
+    "TYPTYPE":1,
+    "TYPE":"MTY_INCOMING_DOCUMENTS",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"ZCX_ETR_REGULATIVE_EXCEPTION",
+    "VERSION":1,
+    "EDITORDER":1,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-03",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":0,
+    "TYPTYPE":0,
+    "TYPE":"",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   }
+  ]
+ },
+ {
+  "table":"SEOSUBCOTX",
+  "data":
+  [
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_FROM",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_DATE_TO",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_IMPORT_RECEIVED",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"IV_INVOICE_UUID",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"RT_INVOICES",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "CMPNAME":"GET_INCOMING_ARCHIVES_INT",
+    "SCONAME":"ZCX_ETR_REGULATIVE_EXCEPTION",
+    "LANGU":"E",
+    "DESCRIPT":""
    }
   ]
  },
@@ -298,6 +660,24 @@
     "CLASSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
     "METHODINDX":4,
     "METHODNAME":"OUTGOING_INVOICE_SEND",
+    "FLAGS":0
+   },
+   {
+    "CLASSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "METHODINDX":5,
+    "METHODNAME":"GET_INCOMING_INVOICES",
+    "FLAGS":0
+   },
+   {
+    "CLASSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "METHODINDX":6,
+    "METHODNAME":"INCOMING_INVOICE_DOWNLOAD",
+    "FLAGS":0
+   },
+   {
+    "CLASSNAME":"ZCL_ETR_EARCHIVE_WS_EFINANS",
+    "METHODINDX":7,
+    "METHODNAME":"GET_INCOMING_ARCHIVES_INT",
     "FLAGS":0
    }
   ]
@@ -396,6 +776,39 @@
    },
    {
     "NAME":"ZCL_ETR_EARCHIVE_WS_EFINANS===CM004",
+    "VARCL":"X",
+    "DBAPL":"S",
+    "DBNA":"D$",
+    "SUBC":"I",
+    "APPL":"S",
+    "FIXPT":"X",
+    "LDBNAME":"D$S",
+    "UCCHECK":"X"
+   },
+   {
+    "NAME":"ZCL_ETR_EARCHIVE_WS_EFINANS===CM005",
+    "VARCL":"X",
+    "DBAPL":"S",
+    "DBNA":"D$",
+    "SUBC":"I",
+    "APPL":"S",
+    "FIXPT":"X",
+    "LDBNAME":"D$S",
+    "UCCHECK":"X"
+   },
+   {
+    "NAME":"ZCL_ETR_EARCHIVE_WS_EFINANS===CM006",
+    "VARCL":"X",
+    "DBAPL":"S",
+    "DBNA":"D$",
+    "SUBC":"I",
+    "APPL":"S",
+    "FIXPT":"X",
+    "LDBNAME":"D$S",
+    "UCCHECK":"X"
+   },
+   {
+    "NAME":"ZCL_ETR_EARCHIVE_WS_EFINANS===CM007",
     "VARCL":"X",
     "DBAPL":"S",
     "DBNA":"D$",

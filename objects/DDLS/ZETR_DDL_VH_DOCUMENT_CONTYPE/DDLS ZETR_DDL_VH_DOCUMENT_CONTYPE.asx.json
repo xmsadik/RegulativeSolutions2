@@ -12,7 +12,7 @@
     "SOURCE":"//@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Document Status VH'\r\n@ObjectModel: { dataCategory: #VALUE_HELP,\r\n                resultSet.sizeCategory: #XS,\r\n                representativeKey: 'DocumentContentType',\r\n                usageType.sizeCategory: #S,\r\n                usageType.dataClass: #ORGANIZATIONAL,\r\n                usageType.serviceQuality: #A,\r\n                supportedCapabilities: [#VALUE_HELP_PROVIDER, #SEARCHABLE_ENTITY],\r\n                modelingPattern: #VALUE_HELP_PROVIDER }\r\n\r\n@Search.searchable: true\r\n@Consumption.ranked: true\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine view entity zetr_ddl_vh_document_contype\r\n  as select from DDCDS_CUSTOMER_DOMAIN_VALUE_T( p_domain_name: 'ZETR_D_DCTYP' )\r\n{\r\n      @ObjectModel.text.element: ['Description']\r\n      @UI.textArrangement: #TEXT_FIRST\r\n  key cast( value_low as zetr_e_dctyp ) as DocumentContentType,\r\n      @Search.defaultSearchElement: true\r\n      text                              as Description\r\n}\r\nwhere language = $session.system_language\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"DDCDS_CUSTOMER_DOMAIN_VALUE_T\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T2",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

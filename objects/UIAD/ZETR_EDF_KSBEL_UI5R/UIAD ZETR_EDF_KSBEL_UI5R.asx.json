@@ -47,7 +47,9 @@
     "REUSE_TEXT":"",
     "CREATED_BY_CUSTOMER":"",
     "CAT_DESCR":"",
-    "ABAP_LANGUAGE_VERSION":"5"
+    "ABAP_LANGUAGE_VERSION":"5",
+    "COMMUNICATION_TARGET":"",
+    "PLUGIN_ID":""
    }
   ]
  },

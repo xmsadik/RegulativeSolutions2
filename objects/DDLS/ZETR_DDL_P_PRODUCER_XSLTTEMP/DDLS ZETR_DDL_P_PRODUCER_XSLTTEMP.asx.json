@@ -12,7 +12,7 @@
     "SOURCE":"@EndUserText.label: 'eArchive XSLT Templates'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity zetr_ddl_p_producer_xslttemp\r\n  as projection on zetr_ddl_i_producer_xslttemp\r\n{\r\n  key CompanyCode, \r\n  key XSLTTemplate,\r\n      DefaultTemplate,\r\n      @Semantics.largeObject: { mimeType: 'Mimetype',\r\n                                fileName: 'Filename',\r\n                                acceptableMimeTypes: ['text/xml'],\r\n                                contentDispositionPreference: #INLINE }\r\n      XSLTContent,\r\n      Filename,\r\n      @Semantics.mimeType: true\r\n      Mimetype,\r\n      _eProducerParameters : redirected to parent zetr_ddl_p_producer_parameters\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_PRODUCER_XSLTTEMP\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_PRODUCER_PARAMETERS\",\n\"ZETR_DDL_P_PRODUCER_PARAMETERS\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_PRODUCER_XSLTTEMP\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,W4T2Z",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

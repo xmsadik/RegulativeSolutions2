@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'eMail List'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity zetr_ddl_p_email_list\r\n  as projection on zetr_ddl_i_email_list\r\n{\r\n  key CompanyCode,\r\n  key ListItem,\r\n      TaxID,\r\n      @ObjectModel.text.element: ['EMailTimeText']\r\n      EMailTime,\r\n      EMailTimeText,\r\n      EMailAddress,\r\n      IncludeUBLFile,\r\n      IncludePDFFile,\r\n      /* Associations */\r\n      _companyInformation : redirected to parent zetr_ddl_p_company_information\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EMAIL_LIST\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_COMPANY_INFORMATION\",\n\"ZETR_DDL_P_COMPANY_INFORMATION\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EMAIL_LIST\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"4D",
+    "CHGFLAG":"J,W4T2Z",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -3,7 +3,8 @@
           lv_attribute TYPE string,
           lv_regex     TYPE string,
           lv_submatch  TYPE string,
-          lv_tab_field TYPE string.
+          lv_tab_field TYPE string,
+          lv_linno     TYPE buzei.
     LOOP AT it_xml_table INTO DATA(ls_xml_line).
       CASE ls_xml_line-tagname.
         WHEN 'irsaliyeSatir'.
@@ -19,7 +20,9 @@
                 <ls_item>-waers = ls_xml_item-value.
               WHEN 'siraNo'.
                 CHECK <ls_item>-linno IS INITIAL.
-                <ls_item>-linno = ls_xml_item-value.
+                lv_linno += 1.
+                <ls_item>-linno = lv_linno.
+                <ls_item>-aclin = ls_xml_item-value.
               WHEN 'gonderilenMalAdedi'.
                 <ls_item>-menge = ls_xml_item-value.
               WHEN 'birimKodu'.

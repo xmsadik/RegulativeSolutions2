@@ -12,7 +12,7 @@
     "SOURCE":"@EndUserText.label: 'Document Content Type Selection'\r\ndefine root abstract entity zetr_ddl_i_doccontyp_selection\r\n{\r\n  key IncludePDF  : zetr_e_include_pdf_file;\r\n  key IncludeHTML : zetr_e_include_html_file;\r\n  key IncludeUBL  : zetr_e_include_ubl_file;\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":",WT4",
     "SOURCE_TYPE":"A",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

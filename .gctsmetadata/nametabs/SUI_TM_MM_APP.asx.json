@@ -310,6 +310,20 @@
     "TYPE":"C",
     "LENGTH":1,
     "DECIMALS":-1
+   },
+   {
+    "NAME":"COMMUNICATION_TARGET",
+    "KEY":"",
+    "TYPE":"C",
+    "LENGTH":30,
+    "DECIMALS":-1
+   },
+   {
+    "NAME":"PLUGIN_ID",
+    "KEY":"",
+    "TYPE":"C",
+    "LENGTH":30,
+    "DECIMALS":-1
    }
   ],
   "properties":

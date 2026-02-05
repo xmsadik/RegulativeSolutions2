@@ -21,7 +21,33 @@ CLASS zcl_etr_earchive_ws DEFINITION
     TYPES value TYPE string.
     TYPES END OF mty_service_header .
     TYPES:
-      mty_service_header_tab TYPE TABLE OF mty_service_header WITH DEFAULT KEY .
+      mty_service_header_tab TYPE TABLE OF mty_service_header WITH DEFAULT KEY,
+      mty_incoming_list      TYPE STANDARD TABLE OF zetr_t_icinv WITH DEFAULT KEY,
+      mty_incoming_items     TYPE STANDARD TABLE OF zetr_t_icini WITH DEFAULT KEY.
+
+    TYPES:
+      BEGIN OF mty_incoming_document,
+        duzenlenmetarihi TYPE string,
+        faturano         TYPE string,
+        firmavkn         TYPE string,
+        gonderimsekli    TYPE string,
+        insertdate       TYPE string,
+        iptalitirazdurum TYPE string,
+        iptalitiraztarih TYPE string,
+        mukelleftckn     TYPE string,
+        mukellefvkn      TYPE string,
+        odenecektutar    TYPE string,
+        parabirimi       TYPE string,
+        tcknvkn          TYPE string,
+        tarih            TYPE string,
+        tesisatnumarasi  TYPE string,
+        toplamtutar      TYPE string,
+        unvan            TYPE string,
+        vergilertutari   TYPE string,
+        zaman            TYPE string,
+      END OF mty_incoming_document .
+    TYPES:
+      mty_incoming_documents TYPE STANDARD TABLE OF mty_incoming_document WITH DEFAULT KEY .
 
     CLASS-METHODS factory
       IMPORTING
@@ -76,5 +102,29 @@ CLASS zcl_etr_earchive_ws DEFINITION
       IMPORTING
         !is_document_numbers     TYPE zetr_s_document_numbers
         !iv_tax_exclusive_amount TYPE wrbtr_cs OPTIONAL
+      RAISING
+        zcx_etr_regulative_exception .
+
+    METHODS get_incoming_invoices
+      ABSTRACT
+      IMPORTING
+        !iv_date_from       TYPE datum OPTIONAL
+        !iv_date_to         TYPE datum OPTIONAL
+        !iv_import_received TYPE zetr_e_imrec OPTIONAL
+        !iv_invoice_uuid    TYPE zetr_e_duich OPTIONAL
+      EXPORTING
+        !ev_message         TYPE bapi_msg
+        rt_list             TYPE mty_incoming_list
+        rt_items            TYPE mty_incoming_items
+      RAISING
+        zcx_etr_regulative_exception .
+
+    METHODS incoming_invoice_download
+      ABSTRACT
+      IMPORTING
+        !is_document_numbers   TYPE zetr_s_document_numbers
+        !iv_content_type       TYPE zetr_e_dctyp
+      RETURNING
+        VALUE(rv_invoice_data) TYPE xstring
       RAISING
         zcx_etr_regulative_exception .

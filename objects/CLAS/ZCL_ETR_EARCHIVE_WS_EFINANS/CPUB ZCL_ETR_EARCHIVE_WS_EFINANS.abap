@@ -10,4 +10,6 @@ CLASS zcl_etr_earchive_ws_efinans DEFINITION
       outgoing_invoice_send REDEFINITION,
       outgoing_invoice_get_status REDEFINITION,
       outgoing_invoice_download REDEFINITION,
-      outgoing_invoice_cancel REDEFINITION.
+      outgoing_invoice_cancel REDEFINITION,
+      get_incoming_invoices REDEFINITION,
+      incoming_invoice_download REDEFINITION.

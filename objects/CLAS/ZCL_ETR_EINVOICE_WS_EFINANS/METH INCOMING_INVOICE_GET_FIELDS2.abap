@@ -4,6 +4,7 @@
           lv_regex     TYPE string,
           lv_submatch  TYPE string,
           lv_tab_field TYPE string,
+          lv_linno     TYPE buzei,
           lv_tevkifat  TYPE i.
     LOOP AT it_xml_table INTO DATA(ls_xml_line).
       CASE ls_xml_line-tagname.
@@ -18,7 +19,9 @@
             ENDIF.
             CASE ls_xml_line2-tagname.
               WHEN 'siraNo'.
-                <ls_item>-linno = ls_xml_line2-value.
+                lv_linno += 1.
+                <ls_item>-linno = lv_linno.
+                <ls_item>-aclin = ls_xml_line2-value.
               WHEN 'aliciUrunKodu'.
                 <ls_item>-buyii = ls_xml_line2-value.
               WHEN 'saticiUrunKodu'.
