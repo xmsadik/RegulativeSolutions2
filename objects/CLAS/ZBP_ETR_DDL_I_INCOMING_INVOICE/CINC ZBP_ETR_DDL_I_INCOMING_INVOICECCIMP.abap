@@ -895,26 +895,45 @@ CLASS lhc_InvoiceList IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD downloadSelected.
+    TYPES:
+      BEGIN OF ty_document_uuid,
+        DocumentUUID TYPE sysuuid_c36,
+      END OF ty_document_uuid.
+    DATA lt_document_uuids TYPE STANDARD TABLE OF ty_document_uuid.
     DATA lt_content_types TYPE STANDARD TABLE OF zetr_e_dctyp.
     READ TABLE keys INTO DATA(ls_key) INDEX 1.
-    CHECK sy-subrc = 0.
-    IF ls_key-%param-IncludeUBL IS INITIAL.
+    CHECK sy-subrc = 0 AND ls_key-%param-DocumentUUIDs IS NOT INITIAL.
+    IF ls_key-%param-IncludeUBL IS NOT INITIAL.
       APPEND 'UBL' TO lt_content_types.
     ENDIF.
-    IF ls_key-%param-IncludePDF IS INITIAL.
+    IF ls_key-%param-IncludePDF IS NOT INITIAL.
       APPEND 'PDF' TO lt_content_types.
     ENDIF.
-    IF ls_key-%param-IncludeHTML IS INITIAL.
+    IF ls_key-%param-IncludeHTML IS NOT INITIAL.
       APPEND 'HTML' TO lt_content_types.
     ENDIF.
     IF lt_content_types IS INITIAL.
       APPEND 'PDF' TO lt_content_types.
     ENDIF.
 
+    SPLIT ls_key-%param-DocumentUUIDs AT ',' INTO TABLE lt_document_uuids.
+    LOOP AT lt_document_uuids ASSIGNING FIELD-SYMBOL(<ls_doc_uuid>).
+      TRY.
+          TRANSLATE <ls_doc_uuid>-DocumentUUID TO UPPER CASE.
+          cl_system_uuid=>convert_uuid_c36_static(
+            EXPORTING
+              uuid     = <ls_doc_uuid>-DocumentUUID
+            IMPORTING
+              uuid_c22 = DATA(lv_uuid) ).
+          <ls_doc_uuid>-DocumentUUID = lv_uuid.
+        CATCH cx_uuid_error.
+      ENDTRY.
+    ENDLOOP.
+
     READ ENTITIES OF zetr_ddl_i_incoming_invoices IN LOCAL MODE
       ENTITY InvoiceList
       ALL FIELDS WITH
-      CORRESPONDING #( keys )
+      CORRESPONDING #( lt_document_uuids )
       RESULT DATA(invoices).
 
     TYPES BEGIN OF ty_company.
@@ -951,13 +970,16 @@ CLASS lhc_InvoiceList IMPLEMENTATION.
 
         IF lv_content IS NOT INITIAL.
           DATA(lv_doc_name) = |Invoices_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.zip|.
-          result = VALUE #( ( %key = ls_key-%key
+          result = VALUE #( ( %cid = ls_key-%cid
                               %param = VALUE #( filename = lv_doc_name mimetype = 'application/zip' content = lv_content ) ) ).
         ENDIF.
 
       CATCH cx_root INTO DATA(lx_root).
         DATA(lv_error) = CONV bapi_msg( lx_root->get_text( ) ).
-        APPEND VALUE #( %msg = new_message( id       = 'ZETR_COMMON'
+        result = VALUE #( ( %cid = ls_key-%cid
+                            %param = VALUE #( message = lv_error ) ) ).
+        APPEND VALUE #( %cid = ls_key-%cid
+                        %msg = new_message( id       = 'ZETR_COMMON'
                                             number   = '000'
                                             severity = if_abap_behv_message=>severity-error
                                             v1 = lv_error(50)

@@ -10,12 +10,13 @@ define behavior for zetr_ddl_p_incoming_delhead //alias <alias_name>
   use action statusUpdate;
   //  use action downloadInvoices;
   use action sendResponse;
-//  use action setAsRejected;
+  //  use action setAsRejected;
   use action addNote;
   use action changePrintStatus;
   use action changeProcessStatus;
   use action sendInformationMail;
   use action printSelected;
+  use action downloadSelected;
 
   use association _deliveryContents;
   use association _deliveryItems;

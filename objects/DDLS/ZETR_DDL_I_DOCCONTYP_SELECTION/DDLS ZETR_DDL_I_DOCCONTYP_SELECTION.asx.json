@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Document Content Type Selection'\r\ndefine root abstract entity zetr_ddl_i_doccontyp_selection\r\n{\r\n  key IncludePDF  : zetr_e_include_pdf_file;\r\n  key IncludeHTML : zetr_e_include_html_file;\r\n  key IncludeUBL  : zetr_e_include_ubl_file;\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Document Content Type Selection'\r\ndefine root abstract entity zetr_ddl_i_doccontyp_selection\r\n{\r\n  key DocumentUUIDs : zetr_e_string;\r\n      IncludePDF    : zetr_e_include_pdf_file;\r\n      IncludeHTML   : zetr_e_include_html_file;\r\n      IncludeUBL    : zetr_e_include_ubl_file;\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":",WT4",
+    "CHGFLAG":"T45",
     "SOURCE_TYPE":"A",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

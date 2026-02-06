@@ -30,6 +30,8 @@ CLASS lhc_zetr_ddl_i_incoming_delhea DEFINITION INHERITING FROM cl_abap_behavior
 
     METHODS printSelected FOR MODIFY
       IMPORTING keys FOR ACTION DeliveryList~printSelected RESULT result.
+    METHODS downloadSelected FOR MODIFY
+      IMPORTING keys FOR ACTION DeliveryList~downloadSelected RESULT result.
 
 ENDCLASS.
 
@@ -776,6 +778,101 @@ CLASS lhc_zetr_ddl_i_incoming_delhea IMPLEMENTATION.
     result = VALUE #( FOR delivery IN deliveries
                  ( %tky   = delivery-%tky
                    %param = delivery ) ).
+  ENDMETHOD.
+
+  METHOD downloadSelected.
+    TYPES:
+      BEGIN OF ty_document_uuid,
+        DocumentUUID TYPE sysuuid_c36,
+      END OF ty_document_uuid.
+    DATA lt_document_uuids TYPE STANDARD TABLE OF ty_document_uuid.
+    DATA lt_content_types TYPE STANDARD TABLE OF zetr_e_dctyp.
+    READ TABLE keys INTO DATA(ls_key) INDEX 1.
+    CHECK sy-subrc = 0 AND ls_key-%param-DocumentUUIDs IS NOT INITIAL.
+    IF ls_key-%param-IncludeUBL IS NOT INITIAL.
+      APPEND 'UBL' TO lt_content_types.
+    ENDIF.
+    IF ls_key-%param-IncludePDF IS NOT INITIAL.
+      APPEND 'PDF' TO lt_content_types.
+    ENDIF.
+    IF ls_key-%param-IncludeHTML IS NOT INITIAL.
+      APPEND 'HTML' TO lt_content_types.
+    ENDIF.
+    IF lt_content_types IS INITIAL.
+      APPEND 'PDF' TO lt_content_types.
+    ENDIF.
+
+    SPLIT ls_key-%param-DocumentUUIDs AT ',' INTO TABLE lt_document_uuids.
+    LOOP AT lt_document_uuids ASSIGNING FIELD-SYMBOL(<ls_doc_uuid>).
+      TRY.
+          TRANSLATE <ls_doc_uuid>-DocumentUUID TO UPPER CASE.
+          cl_system_uuid=>convert_uuid_c36_static(
+            EXPORTING
+              uuid     = <ls_doc_uuid>-DocumentUUID
+            IMPORTING
+              uuid_c22 = DATA(lv_uuid) ).
+          <ls_doc_uuid>-DocumentUUID = lv_uuid.
+        CATCH cx_uuid_error.
+      ENDTRY.
+    ENDLOOP.
+
+    READ ENTITIES OF zetr_ddl_i_incoming_delhead IN LOCAL MODE
+      ENTITY DeliveryList
+      ALL FIELDS WITH
+      CORRESPONDING #( lt_document_uuids )
+      RESULT DATA(deliveries).
+
+    TYPES BEGIN OF ty_company.
+    TYPES companycode TYPE zetr_ddl_i_incoming_invoices-companycode.
+    TYPES companytitle TYPE zetr_ddl_i_incoming_invoices-companytitle.
+    TYPES END OF ty_company.
+    DATA lt_companies TYPE STANDARD TABLE OF ty_company.
+
+    lt_companies = CORRESPONDING #( deliveries ).
+    SORT lt_companies BY companycode.
+    DELETE ADJACENT DUPLICATES FROM lt_companies COMPARING companycode.
+
+    DATA(lo_zip) = NEW cl_abap_zip( ).
+
+    TRY.
+        LOOP AT lt_companies INTO DATA(ls_company).
+          DATA(lo_delivery_operations) = zcl_etr_delivery_operations=>factory( ls_company-companycode ).
+          LOOP AT deliveries ASSIGNING FIELD-SYMBOL(<ls_delivery>) WHERE companycode = ls_company-companycode.
+            LOOP AT lt_content_types INTO DATA(lv_content_type).
+              DATA(lv_content) = lo_delivery_operations->incoming_edelivery_download( iv_document_uid = <ls_delivery>-DocumentUUID
+                                                                                      iv_content_type = lv_content_type ).
+              IF lv_content IS NOT INITIAL.
+                lo_zip->add(
+                  name           = <ls_delivery>-DeliveryID && '.' && SWITCH zetr_e_dctyp( lv_content_type WHEN 'UBL' THEN 'XML' ELSE lv_content_type  )
+                  content        = lv_content ).
+              ENDIF.
+              CLEAR lv_content.
+            ENDLOOP.
+          ENDLOOP.
+        ENDLOOP.
+
+        CLEAR lv_content.
+        lv_content = lo_zip->save( ).
+
+        IF lv_content IS NOT INITIAL.
+          DATA(lv_doc_name) = |Invoices_{ cl_abap_context_info=>get_system_date( ) }_{ cl_abap_context_info=>get_system_time( ) }.zip|.
+          result = VALUE #( ( %cid = ls_key-%cid
+                              %param = VALUE #( filename = lv_doc_name mimetype = 'application/zip' content = lv_content ) ) ).
+        ENDIF.
+
+      CATCH cx_root INTO DATA(lx_root).
+        DATA(lv_error) = CONV bapi_msg( lx_root->get_text( ) ).
+        result = VALUE #( ( %cid = ls_key-%cid
+                            %param = VALUE #( message = lv_error ) ) ).
+        APPEND VALUE #( %cid = ls_key-%cid
+                        %msg = new_message( id       = 'ZETR_COMMON'
+                                            number   = '000'
+                                            severity = if_abap_behv_message=>severity-error
+                                            v1 = lv_error(50)
+                                            v2 = lv_error+50(50)
+                                            v3 = lv_error+100(50)
+                                            v4 = lv_error+150(*) ) ) TO reported-deliverylist.
+    ENDTRY.
   ENDMETHOD.
 
 ENDCLASS.

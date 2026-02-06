@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'File Export'\r\ndefine root abstract entity zetr_ddl_i_file_export\r\n{\r\n  key id       : abap.int4;\r\n  @Semantics.largeObject: { mimeType      : 'mimetype',\r\n                            fileName      : 'filename',\r\n                            contentDispositionPreference: #ATTACHMENT,\r\n                            acceptableMimeTypes: ['application/zip'] }\r\n  content  : zetr_e_dcont;\r\n  filename : zetr_e_filename;\r\n  @Semantics.mimeType: true\r\n  mimetype : zetr_e_mime_type;\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'File Export'\r\ndefine root abstract entity zetr_ddl_i_file_export\r\n{\r\n  key filename : zetr_e_filename;\r\n      @Semantics.largeObject: { mimeType      : 'mimetype',\r\n                                fileName      : 'filename',\r\n                                contentDispositionPreference: #ATTACHMENT,\r\n                                acceptableMimeTypes: ['application/zip'] }\r\n      content  : zetr_e_dcont;\r\n      @Semantics.mimeType: true\r\n      mimetype : zetr_e_mime_type;\r\n      message : zetr_e_string;\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":",W4T",
+    "CHGFLAG":"4",
     "SOURCE_TYPE":"A",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
