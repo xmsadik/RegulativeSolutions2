@@ -117,8 +117,12 @@
          AND item~AccountingDocumentItem <> '000'
       INTO TABLE @ms_accdoc_data-bseg.
     IF sy-subrc IS INITIAL.
-      LOOP AT ms_accdoc_data-bseg INTO DATA(ls_bseg) USING KEY by_koart WHERE koart = 'D'
-                                                             AND shkzg = 'S'.
+      LOOP AT ms_accdoc_data-bseg INTO DATA(ls_bseg) USING KEY by_koart WHERE koart = 'D'.
+*                                                             AND shkzg = 'S'.
+        IF ls_bseg-shkzg = 'H'.
+          ls_bseg-dmbtr = ls_bseg-dmbtr * -1.
+          ls_bseg-wrbtr = ls_bseg-wrbtr * -1.
+        ENDIF.
         IF ms_accdoc_data-bseg_partner IS INITIAL.
           ms_accdoc_data-bseg_partner = ls_bseg.
         ELSE.
@@ -127,8 +131,12 @@
         ENDIF.
       ENDLOOP.
       IF sy-subrc IS NOT INITIAL.
-        LOOP AT ms_accdoc_data-bseg INTO ls_bseg USING KEY by_koart WHERE koart = 'K'
-                                                               AND shkzg = 'S'.
+        LOOP AT ms_accdoc_data-bseg INTO ls_bseg USING KEY by_koart WHERE koart = 'K'.
+*                                                               AND shkzg = 'S'.
+          IF ls_bseg-shkzg = 'H'.
+            ls_bseg-dmbtr = ls_bseg-dmbtr * -1.
+            ls_bseg-wrbtr = ls_bseg-wrbtr * -1.
+          ENDIF.
           IF ms_accdoc_data-bseg_partner IS INITIAL.
             ms_accdoc_data-bseg_partner = ls_bseg.
           ELSE.
@@ -184,14 +192,14 @@
       SELECT
         bseg~mwskz,
         SUM( CASE WHEN bseg~koart = 'S'
-                   AND bseg~shkzg = 'H'
+*                   AND bseg~shkzg = 'H'
                    AND fiac~accty = 'O'
-                  THEN bseg~wrbtr
+                  THEN CASE bseg~shkzg WHEN 'H' THEN bseg~wrbtr ELSE bseg~wrbtr * -1 END
                   ELSE 0 END ) AS fwste,
         SUM( CASE WHEN bseg~koart = 'S'
-                   AND bseg~shkzg = 'H'
+*                   AND bseg~shkzg = 'H'
                    AND fiac~accty = 'O'
-                  THEN bseg~dmbtr
+                  THEN CASE bseg~shkzg WHEN 'H' THEN bseg~dmbtr ELSE bseg~dmbtr * -1 END
                   ELSE 0 END ) AS hwste,
         SUM( CASE WHEN bseg~koart <> 'D'
                    AND bseg~koart <> 'K'
