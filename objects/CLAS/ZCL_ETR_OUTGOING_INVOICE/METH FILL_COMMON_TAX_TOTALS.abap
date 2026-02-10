@@ -76,34 +76,34 @@
         <ls_taxsubtotal>-taxamount-content = ls_taxtotal-taxamount.
         <ls_taxsubtotal>-taxamount-currencyid =  ms_invoice_ubl-documentcurrencycode-content.
       ENDLOOP.
-    ELSE.
-      READ TABLE ms_invoice_ubl-taxtotal INTO DATA(ls_existing_taxtotal) INDEX 1.
-      IF sy-subrc = 0 AND CONV wrbtr_cs( ls_existing_taxtotal-taxamount-content ) <> lv_taxtotal.
-        LOOP AT ls_existing_taxtotal-taxsubtotal INTO DATA(ls_existing_subtotal).
-          READ TABLE lt_taxtotal INTO ls_taxtotal
-            WITH KEY tax_code = ls_existing_subtotal-taxcategory-taxscheme-taxtypecode-content
-                     exp_code = ls_existing_subtotal-taxcategory-taxexemptionreasoncode-content
-                     tax_rate = ls_existing_subtotal-percent-content
-                     witholding = ''.
-          CHECK sy-subrc = 0.
-          DATA(lv_diff_amount) = CONV wrbtr_cs( ls_existing_subtotal-taxamount-content - ls_taxtotal-taxamount ).
-          CHECK lv_diff_amount IS NOT INITIAL.
-          LOOP AT ms_invoice_ubl-invoiceline ASSIGNING FIELD-SYMBOL(<ls_invoiceline>).
-            LOOP AT <ls_invoiceline>-taxtotal-taxsubtotal ASSIGNING <ls_taxsubtotal>
-              WHERE taxcategory-taxscheme-taxtypecode-content = ls_existing_subtotal-taxcategory-taxscheme-taxtypecode-content
-                AND taxcategory-taxexemptionreasoncode-content = ls_existing_subtotal-taxcategory-taxexemptionreasoncode-content
-                AND percent-content = ls_existing_subtotal-percent-content.
-              IF lv_diff_amount < 0.
-                CHECK CONV wrbtr_cs( <ls_taxsubtotal>-taxamount-content ) > abs( lv_diff_amount ).
-              ENDIF.
-              <ls_taxsubtotal>-taxamount-content = <ls_taxsubtotal>-taxamount-content - lv_diff_amount.
-              CLEAR lv_diff_amount.
-              EXIT.
-            ENDLOOP.
-            CHECK lv_diff_amount IS INITIAL.
-            EXIT.
-          ENDLOOP.
-        ENDLOOP.
-      ENDIF.
+*    ELSE.
+*      READ TABLE ms_invoice_ubl-taxtotal INTO DATA(ls_existing_taxtotal) INDEX 1.
+*      IF sy-subrc = 0 AND CONV wrbtr_cs( ls_existing_taxtotal-taxamount-content ) <> lv_taxtotal.
+*        LOOP AT ls_existing_taxtotal-taxsubtotal INTO DATA(ls_existing_subtotal).
+*          READ TABLE lt_taxtotal INTO ls_taxtotal
+*            WITH KEY tax_code = ls_existing_subtotal-taxcategory-taxscheme-taxtypecode-content
+*                     exp_code = ls_existing_subtotal-taxcategory-taxexemptionreasoncode-content
+*                     tax_rate = ls_existing_subtotal-percent-content
+*                     witholding = ''.
+*          CHECK sy-subrc = 0.
+*          DATA(lv_diff_amount) = CONV wrbtr_cs( ls_existing_subtotal-taxamount-content - ls_taxtotal-taxamount ).
+*          CHECK lv_diff_amount IS NOT INITIAL.
+*          LOOP AT ms_invoice_ubl-invoiceline ASSIGNING FIELD-SYMBOL(<ls_invoiceline>).
+*            LOOP AT <ls_invoiceline>-taxtotal-taxsubtotal ASSIGNING <ls_taxsubtotal>
+*              WHERE taxcategory-taxscheme-taxtypecode-content = ls_existing_subtotal-taxcategory-taxscheme-taxtypecode-content
+*                AND taxcategory-taxexemptionreasoncode-content = ls_existing_subtotal-taxcategory-taxexemptionreasoncode-content
+*                AND percent-content = ls_existing_subtotal-percent-content.
+*              IF lv_diff_amount < 0.
+*                CHECK CONV wrbtr_cs( <ls_taxsubtotal>-taxamount-content ) > abs( lv_diff_amount ).
+*              ENDIF.
+*              <ls_taxsubtotal>-taxamount-content = <ls_taxsubtotal>-taxamount-content - lv_diff_amount.
+*              CLEAR lv_diff_amount.
+*              EXIT.
+*            ENDLOOP.
+*            CHECK lv_diff_amount IS INITIAL.
+*            EXIT.
+*          ENDLOOP.
+*        ENDLOOP.
+*      ENDIF.
     ENDIF.
   ENDMETHOD.
