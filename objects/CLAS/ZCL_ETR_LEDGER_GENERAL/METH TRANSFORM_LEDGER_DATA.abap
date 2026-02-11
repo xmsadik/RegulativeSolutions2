@@ -717,47 +717,47 @@
                 REPLACE ALL OCCURRENCES OF PCRE '[^0-9a-zA-Z\s]' IN ls_xml_item-detailcomment WITH ''.
                 CLEAR ls_skat.
               ENDIF.
-            endif.
-
             ENDIF.
-            REPLACE ALL OCCURRENCES OF '\' IN ls_xml_item-detailcomment WITH '/'.
 
-            CLEAR lv_saknr.
-            lv_saknr = ls_item-hkont.
+          ENDIF.
+          REPLACE ALL OCCURRENCES OF '\' IN ls_xml_item-detailcomment WITH '/'.
+
+          CLEAR lv_saknr.
+          lv_saknr = ls_item-hkont.
 *          WRITE lv_saknr TO lv_saknr NO-ZERO.
-            lv_saknr = |{ lv_saknr ALPHA = OUT }|.
-            CONDENSE lv_saknr.
-            lv_saknr = lv_saknr+0(3).
-            CLEAR ls_hspplan.
+          lv_saknr = |{ lv_saknr ALPHA = OUT }|.
+          CONDENSE lv_saknr.
+          lv_saknr = lv_saknr+0(3).
+          CLEAR ls_hspplan.
 
-            CLEAR ls_hspplan.
-            READ TABLE gt_hspplan INTO ls_hspplan WITH KEY saknr = lv_saknr.
-            IF sy-subrc EQ 0.
-              ls_xml_item-accountmainid             = lv_saknr.
-              ls_xml_item-accountmaindescription    = ls_hspplan-saknr_t.
-              CLEAR ls_skat.
-              READ TABLE gt_skat INTO ls_skat WITH KEY saknr = ls_item-hkont.
-              IF sy-subrc IS INITIAL.
-                ls_xml_item-accountsubid = ls_item-hkont.
-                SHIFT ls_xml_item-accountsubid LEFT DELETING LEADING space.
-                SHIFT ls_xml_item-accountsubid LEFT DELETING LEADING '0'.
-                ls_xml_item-accountsubdescription = ls_skat-txt50.
-                REPLACE ALL OCCURRENCES OF PCRE '[^0-9a-zA-Z\s]' IN ls_xml_item-accountsubdescription WITH ''.
-              ENDIF.
+          CLEAR ls_hspplan.
+          READ TABLE gt_hspplan INTO ls_hspplan WITH KEY saknr = lv_saknr.
+          IF sy-subrc EQ 0.
+            ls_xml_item-accountmainid             = lv_saknr.
+            ls_xml_item-accountmaindescription    = ls_hspplan-saknr_t.
+            CLEAR ls_skat.
+            READ TABLE gt_skat INTO ls_skat WITH KEY saknr = ls_item-hkont.
+            IF sy-subrc IS INITIAL.
+              ls_xml_item-accountsubid = ls_item-hkont.
+              SHIFT ls_xml_item-accountsubid LEFT DELETING LEADING space.
+              SHIFT ls_xml_item-accountsubid LEFT DELETING LEADING '0'.
+              ls_xml_item-accountsubdescription = ls_skat-txt50.
+              REPLACE ALL OCCURRENCES OF PCRE '[^0-9a-zA-Z\s]' IN ls_xml_item-accountsubdescription WITH ''.
             ENDIF.
+          ENDIF.
 
-            ls_xml_item-debitamount  = lv_debit.
-            ls_xml_item-creditamount = lv_credit.
-
-
-
+          ls_xml_item-debitamount  = lv_debit.
+          ls_xml_item-creditamount = lv_credit.
 
 
 
 
-            IF gs_params-xhtml IS INITIAL.
-              lo_xml_generator->set_item_y( EXPORTING is_item = ls_xml_item ).
-              "
+
+
+
+          IF gs_params-xhtml IS INITIAL.
+            lo_xml_generator->set_item_y( EXPORTING is_item = ls_xml_item ).
+            "
 *            lo_xml_generator->set_item_yb( EXPORTING is_item = ls_xml_item ).
 *            "
 *            lo_xml_generator->set_item_gib_yb( EXPORTING is_item = ls_xml_item ).
@@ -769,14 +769,14 @@
 *            lo_xml_generator->set_item_gib_kb( EXPORTING is_item = ls_xml_item ).
 *            "
 *            lo_xml_generator->set_item_dr( EXPORTING is_item = ls_xml_item ).
-            ENDIF.
-            "
-            lo_int_xml->set_item( EXPORTING is_item = ls_xml_item ).
+          ENDIF.
+          "
+          lo_int_xml->set_item( EXPORTING is_item = ls_xml_item ).
 
-          ENDLOOP.
         ENDLOOP.
+      ENDLOOP.
 
-        IF gs_params-xhtml IS INITIAL.
+      IF gs_params-xhtml IS INITIAL.
 *        TRY.
 *            CALL METHOD lo_xml_generator->save
 *              EXPORTING
@@ -787,21 +787,21 @@
 *                iv_partn = <ls_parts>-partn.
 *          CATCH cx_root INTO lo_root.
 *        ENDTRY.
-        ENDIF.
+      ENDIF.
 
-        TRY.
-            CALL METHOD lo_int_xml->save
-              EXPORTING
-                iv_bukrs = <ls_parts>-bukrs
-                iv_bcode = <ls_parts>-bcode
-                iv_gjahr = <ls_parts>-gjahr
-                iv_monat = <ls_parts>-monat
-                iv_partn = <ls_parts>-partn.
-          CATCH cx_root INTO lo_root.
-        ENDTRY.
-
-
-      ENDLOOP.
+      TRY.
+          CALL METHOD lo_int_xml->save
+            EXPORTING
+              iv_bukrs = <ls_parts>-bukrs
+              iv_bcode = <ls_parts>-bcode
+              iv_gjahr = <ls_parts>-gjahr
+              iv_monat = <ls_parts>-monat
+              iv_partn = <ls_parts>-partn.
+        CATCH cx_root INTO lo_root.
+      ENDTRY.
 
 
-    ENDMETHOD.
+    ENDLOOP.
+
+
+  ENDMETHOD.
