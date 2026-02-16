@@ -152,6 +152,24 @@
     "DOMVALUE_L":"EABELGE",
     "DOMVALUE_H":"",
     "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YATIRIMTES",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DOMVALUE_L":"IDIS",
+    "DOMVALUE_H":"",
+    "APPVAL":""
    }
   ]
  },
@@ -282,6 +300,28 @@
    },
    {
     "DOMNAME":"ZETR_D_INPRF",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YATIRIMTES"
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DDTEXT":"Rebar Monitoring System",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"IDIS"
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
     "VALPOS":1,
@@ -400,6 +440,28 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"EABELGE"
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":12,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YATIRIMTES"
+   },
+   {
+    "DOMNAME":"ZETR_D_INPRF",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":13,
+    "AS4VERS":0,
+    "DDTEXT":"İnşaat Demiri İzleme Sistemi",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"IDIS"
    }
   ]
  },

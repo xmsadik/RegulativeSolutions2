@@ -11,7 +11,7 @@
     "CREATED_BY":"SAP_CUSTOMER",
     "CREATED_AT":"+20251003120549.5108140",
     "LAST_CHANGED_BY":"SAP_CUSTOMER",
-    "LAST_CHANGED_AT":"+20260130073902.2521590"
+    "LAST_CHANGED_AT":"+20260216132515.1993680"
    }
   ]
  },
@@ -63,6 +63,11 @@
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_EMAIL_TO"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_IMARC"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
@@ -221,12 +226,12 @@
     "TARGET_LANGUAGE":"T",
     "MAINTENANCE_STATUS":"NO_TRANSLA",
     "IMPORT_STATUS":"SUCCESS",
-    "LAST_IMPORTED_AT":"+20260130073902.2076910",
+    "LAST_IMPORTED_AT":"+20260216132515.1536850",
     "LAST_IMPORTED_BY":"SAP_CUSTOMER",
-    "LAST_UPLOADED_AT":"+20260130073855.2648160",
+    "LAST_UPLOADED_AT":"+20260216132508.6465250",
     "LAST_UPLOADED_BY":"SAP_CUSTOMER",
     "FILE_TYPE":"XLIFF",
-    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-DATA_ELEMENT\" resname=\"ZETR_E_DCGIS\">\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:SHORT_DESCRIPTION\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Short description for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:SHORT_FIELD_LABEL\" maxwidth=\"10\" size-unit=\"char\">\n          <source>No chk.g.i</source>\n\t\t  <target>MalÇkKnYok</target>\n          <note>Short field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:MEDIUM_FIELD_LABEL\" maxwidth=\"20\" size-unit=\"char\">\n          <source>Don't chk.goods iss.</source>\n\t\t  <target>Mal çıkış kont.yok</target>\n          <note>Medium field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:LONG_FIELD_LABEL\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Long field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:HEADING_FIELD_LABEL\" maxwidth=\"55\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Heading field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
+    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-MESSAGE_CLASS\" resname=\"ZETR_COMMON\">\n        <trans-unit id=\"MESSAGE_CLASS:ZETR_COMMON:SHORT_TEXT:248\" maxwidth=\"73\" size-unit=\"char\">\n          <source>Document content is not available</source>\n\t\t  <target>Belge içeriği mevcut değil</target>\n          <note>Short description for message 248 of message class ZETR_COMMON.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
    }
   ]
  },

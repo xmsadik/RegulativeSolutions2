@@ -4,27 +4,32 @@
           lv_content      TYPE string,
           lv_key          TYPE string.
 
+    IF iv_content_type <> 'PDF'.
+      RAISE EXCEPTION TYPE zcx_etr_regulative_exception
+        MESSAGE e248(zetr_common).
+    ENDIF.
 
     CONCATENATE
-  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.earsiv.uut.cs.com.tr/">'
-  '<soapenv:Header>'
-  '<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">'
-  '<wsse:UsernameToken>'
-  '<wsse:Username>' ms_company_parameters-wsusr '</wsse:Username>'
-  '<wsse:Password>' ms_company_parameters-wspwd '</wsse:Password>'
-  '</wsse:UsernameToken>'
-  '</wsse:Security>'
-  '</soapenv:Header>'
-  '<soapenv:Body>'
-  '<ser:gibEarsivFaturaPdfAl>'
-  '<input>{ "firmaVkn":"' mv_company_taxid
-            '","mukellefVkn":"' is_document_numbers-taxid
-            '","faturaNo":"' is_document_numbers-docno '"}</input>'
-  '</ser:gibEarsivFaturaPdfAl>'
-  '</soapenv:Body>'
-  '</soapenv:Envelope>'
-  INTO lv_request_xml.
-    lv_response_xml = run_service( lv_request_xml ).
+      '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.earsiv.uut.cs.com.tr/">'
+      '<soapenv:Header>'
+      '<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">'
+      '<wsse:UsernameToken>'
+      '<wsse:Username>' ms_company_parameters-wsusr '</wsse:Username>'
+      '<wsse:Password>' ms_company_parameters-wspwd '</wsse:Password>'
+      '</wsse:UsernameToken>'
+      '</wsse:Security>'
+      '</soapenv:Header>'
+      '<soapenv:Body>'
+      '<ser:gibEarsivFaturaPdfAl>'
+      '<input>{ "firmaVkn":"' mv_company_taxid
+                '","mukellefVkn":"' is_document_numbers-taxid
+                '","faturaNo":"' is_document_numbers-docno '"}</input>'
+      '</ser:gibEarsivFaturaPdfAl>'
+      '</soapenv:Body>'
+      '</soapenv:Envelope>'
+      INTO lv_request_xml.
+    lv_response_xml = run_service( iv_request = lv_request_xml
+                                   iv_use_alternative_endpoint = abap_true ).
 
     DATA(lt_xml_table) = zcl_etr_regulative_common=>parse_xml( lv_response_xml ).
     LOOP AT lt_xml_table INTO DATA(ls_xml_line).

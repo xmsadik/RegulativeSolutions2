@@ -6,6 +6,8 @@
         rv_output = 'YOLCUBERABERFATURA'.
       WHEN 'EABELGE'.
         rv_output = 'EARSIVBELGE'.
+      WHEN 'YATIRIMTES'.
+        rv_output = 'YATIRIMTESVIK'.
       WHEN OTHERS.
         rv_output = iv_input.
     ENDCASE.

@@ -540,7 +540,7 @@
     "EDITORDER":7,
     "LOCKED":"",
     "DISPID":0,
-    "R3RELEASE":"918",
+    "R3RELEASE":"",
     "AUTHOR":"",
     "CREATEDON":"2026-02-03",
     "CHANGEDBY":"",
@@ -585,8 +585,8 @@
     "BCMTDCOM":"",
     "BCMTDSYN":0,
     "BCEVTCAT":0,
-    "TYPESRC_LENG":771,
-    "TYPESRC":"BEGIN OF mty_incoming_document,\r\n        duzenlenmetarihi TYPE string,\r\n        faturano         TYPE string,\r\n        firmavkn         TYPE string,\r\n        gonderimsekli    TYPE string,\r\n        insertdate       TYPE string,\r\n        iptalitirazdurum TYPE string,\r\n        iptalitiraztarih TYPE string,\r\n        mukelleftckn     TYPE string,\r\n        mukellefvkn      TYPE string,\r\n        odenecektutar    TYPE string,\r\n        parabirimi       TYPE string,\r\n        tcknvkn          TYPE string,\r\n        tarih            TYPE string,\r\n        tesisatnumarasi  TYPE string,\r\n        toplamtutar      TYPE string,\r\n        unvan            TYPE string,\r\n        vergilertutari   TYPE string,\r\n        zaman            TYPE string,\r\n      END OF mty_incoming_document\r\n"
+    "TYPESRC_LENG":795,
+    "TYPESRC":"BEGIN OF mty_incoming_document,\r\n        duzenlenmetarihi TYPE string,\r\n        faturano         TYPE zetr_e_docno,\r\n        firmavkn         TYPE string,\r\n        gonderimsekli    TYPE string,\r\n        insertdate       TYPE string,\r\n        iptalitirazdurum TYPE string,\r\n        iptalitiraztarih TYPE string,\r\n        mukelleftckn     TYPE zetr_e_taxid,\r\n        mukellefvkn      TYPE zetr_e_taxid,\r\n        odenecektutar    TYPE string,\r\n        parabirimi       TYPE string,\r\n        tcknvkn          TYPE zetr_e_taxid,\r\n        tarih            TYPE string,\r\n        tesisatnumarasi  TYPE string,\r\n        toplamtutar      TYPE string,\r\n        unvan            TYPE string,\r\n        vergilertutari   TYPE string,\r\n        zaman            TYPE string,\r\n      END OF mty_incoming_document\r\n"
    },
    {
     "CLSNAME":"ZCL_ETR_EARCHIVE_WS",
@@ -599,7 +599,7 @@
     "EDITORDER":8,
     "LOCKED":"",
     "DISPID":0,
-    "R3RELEASE":"918",
+    "R3RELEASE":"",
     "AUTHOR":"",
     "CREATEDON":"2026-02-03",
     "CHANGEDBY":"",

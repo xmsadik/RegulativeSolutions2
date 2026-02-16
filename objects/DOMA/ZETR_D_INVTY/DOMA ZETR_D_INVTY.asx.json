@@ -179,6 +179,60 @@
     "DOMVALUE_L":"MUSTAHSIL",
     "DOMVALUE_H":"",
     "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DOMVALUE_L":"TEKNOLOJI",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YTBSATIS",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YTBISTISNA",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":18,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YTBIADE",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":19,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YTBTEV",
+    "DOMVALUE_H":"",
+    "APPVAL":""
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "AS4LOCAL":"N",
+    "VALPOS":20,
+    "AS4VERS":0,
+    "DOMVALUE_L":"YTBTEVIADE",
+    "DOMVALUE_H":"",
+    "APPVAL":""
    }
   ]
  },
@@ -342,6 +396,72 @@
    },
    {
     "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DDTEXT":"Technology Incentive",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"TEKNOLOJI"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive - Sales",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBSATIS"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive - Exemption",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBISTISNA"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":18,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive - Return",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBIADE"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":19,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive - Witholding",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBTEV"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "VALPOS":20,
+    "AS4VERS":0,
+    "DDTEXT":"Investment & Incentive - Witholding Return",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBTEVIADE"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
     "DDLANGUAGE":"T",
     "AS4LOCAL":"N",
     "VALPOS":1,
@@ -493,6 +613,72 @@
     "DOMVAL_LD":"",
     "DOMVAL_HD":"",
     "DOMVALUE_L":"MUSTAHSIL"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":15,
+    "AS4VERS":0,
+    "DDTEXT":"Teknoloji Destek",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"TEKNOLOJI"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":16,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik Satış",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBSATIS"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":17,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik İstisna",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBISTISNA"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":18,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik İade",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBIADE"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":19,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik Tevkifat",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBTEV"
+   },
+   {
+    "DOMNAME":"ZETR_D_INVTY",
+    "DDLANGUAGE":"T",
+    "AS4LOCAL":"N",
+    "VALPOS":20,
+    "AS4VERS":0,
+    "DDTEXT":"Yatırım Teşvik Tevkifatlı İade",
+    "DOMVAL_LD":"",
+    "DOMVAL_HD":"",
+    "DOMVALUE_L":"YTBTEVIADE"
    }
   ]
  },
