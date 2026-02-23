@@ -7,7 +7,9 @@
                   documentdate AS bldat,
                   accountingdocumenttype AS blart,
                   absoluteexchangerate AS kursf,
-                  AccountingDocumentHeaderText AS bktxt
+                  AccountingDocumentHeaderText AS bktxt,
+                  ReferenceDocumentType AS awtyp,
+                  OriginalReferenceDocument AS awkey
        FROM i_journalentry
        WHERE companycode = @ms_document-bukrs
          AND accountingdocument = @ms_document-belnr
