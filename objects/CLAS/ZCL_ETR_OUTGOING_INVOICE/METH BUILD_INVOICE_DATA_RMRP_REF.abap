@@ -27,7 +27,7 @@
 *      ENDLOOP.
 *    ELSE.
     LOOP AT ms_invrec_data-ekbe INTO DATA(ls_ekbe).
-      CHECK ls_ekbe-vgabe = '1' AND ls_ekbe-menge IS NOT INITIAL.
+      CHECK ls_ekbe-vgabe = '1' AND ls_ekbe-menge IS NOT INITIAL AND ls_ekbe-bewtp <> 'E'.
 *      READ TABLE ms_invrec_data-mseg
 *        WITH TABLE KEY mblnr = ls_ekbe-belnr
 *                       mjahr = ls_ekbe-gjahr

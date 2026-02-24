@@ -173,6 +173,7 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES ebelp TYPE ebelp.
     TYPES zekkn TYPE dzekkn.
     TYPES vgabe TYPE c LENGTH 1.
+    TYPES bewtp TYPE c LENGTH 1.
     TYPES gjahr TYPE mjahr.
     TYPES belnr TYPE mblnr.
     TYPES buzei TYPE mblpo.
