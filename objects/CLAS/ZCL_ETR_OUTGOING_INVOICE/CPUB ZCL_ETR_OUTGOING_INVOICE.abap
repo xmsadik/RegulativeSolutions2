@@ -245,6 +245,7 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES vgxbl TYPE c LENGTH 16.
     TYPES vglfx TYPE c LENGTH 35.
     TYPES vgdat TYPE datum.
+    TYPES vgcdt TYPE datum.
     TYPES aubel TYPE belnr_d.
     TYPES aupos TYPE n LENGTH 6.
     TYPES audat TYPE datum.

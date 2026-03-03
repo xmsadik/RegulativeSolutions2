@@ -91,6 +91,7 @@
            likp~ReferenceDocumentNumber AS vgxbl,
            likp~DeliveryDocumentBySupplier AS vglfx,
 CASE WHEN likp~ActualGoodsMovementDate IS NOT INITIAL THEN likp~ActualGoodsMovementDate ELSE likp~DocumentDate END AS vgdat,
+likp~CreationDate as vgcdt,
 vbrp~SalesDocument AS aubel,
 vbrp~SalesDocumentItem AS aupos,
 vbak~salesdocumentdate AS audat,

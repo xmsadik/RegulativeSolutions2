@@ -5,6 +5,7 @@
     TYPES vgxbl TYPE c LENGTH 16.
     TYPES vglfx TYPE c LENGTH 35.
     TYPES vgdat TYPE datum.
+    TYPES vgcdt TYPE datum.
     TYPES END OF ty_likp.
     DATA lt_likp TYPE STANDARD TABLE OF ty_likp.
 
@@ -24,7 +25,7 @@
     ENDIF.
 
     lt_likp = CORRESPONDING #( ms_billing_data-vbrp ).
-    DELETE lt_likp WHERE vgdat IS INITIAL.
+*    DELETE lt_likp WHERE vgdat IS INITIAL.
     SORT lt_likp BY vgbel.
     DELETE ADJACENT DUPLICATES FROM lt_likp COMPARING vgbel.
     IF lt_likp IS NOT INITIAL.
@@ -51,7 +52,13 @@
         ENDIF.
         <ls_desdoc_ref>-documenttype-content = 'DESPATCH'.
         <ls_desdoc_ref>-documenttypecode-content = ls_likp-vgbel.
-        IF ls_edelivery-addat IS NOT INITIAL.
+        IF ls_likp-vgcdt IS NOT INITIAL.
+          CONCATENATE ls_likp-vgcdt+0(4)
+                      ls_likp-vgcdt+4(2)
+                      ls_likp-vgcdt+6(2)
+            INTO <ls_desdoc_ref>-issuedate-content
+            SEPARATED BY '-'.
+        ELSEIF ls_edelivery-addat IS NOT INITIAL.
           CONCATENATE ls_edelivery-addat+0(4)
                       ls_edelivery-addat+4(2)
                       ls_edelivery-addat+6(2)
