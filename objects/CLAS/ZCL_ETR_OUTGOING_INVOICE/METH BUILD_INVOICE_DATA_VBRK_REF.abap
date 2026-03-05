@@ -25,7 +25,7 @@
     ENDIF.
 
     lt_likp = CORRESPONDING #( ms_billing_data-vbrp ).
-*    DELETE lt_likp WHERE vgdat IS INITIAL.
+    DELETE lt_likp WHERE vgcdt IS INITIAL.
     SORT lt_likp BY vgbel.
     DELETE ADJACENT DUPLICATES FROM lt_likp COMPARING vgbel.
     IF lt_likp IS NOT INITIAL.
