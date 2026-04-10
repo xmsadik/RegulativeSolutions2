@@ -233,6 +233,8 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES posnr TYPE n LENGTH 6.
     TYPES fkimg TYPE menge_d.
     TYPES vrkme TYPE meins.
+    TYPES menge TYPE menge_d.
+    TYPES meins TYPE meins.
     TYPES matnr TYPE matnr.
     TYPES arktx TYPE zetr_e_descr.
     TYPES werks TYPE werks_d.

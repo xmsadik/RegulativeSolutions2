@@ -79,6 +79,8 @@
     SELECT vbrp~BillingDocumentItem AS posnr,
            vbrp~BillingQuantity AS fkimg,
            vbrp~BillingQuantityUnit AS vrkme,
+           vbrp~BillingQuantityInBaseUnit AS menge,
+           vbrp~BaseUnit AS meins,
            vbrp~Product AS matnr,
            vbrp~BillingDocumentItemText AS arktx,
            vbrp~Plant AS werks,
