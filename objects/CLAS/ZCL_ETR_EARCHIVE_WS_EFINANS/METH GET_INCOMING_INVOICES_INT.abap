@@ -35,6 +35,7 @@
     LOOP AT lt_xml_table INTO DATA(ls_xml_line).
       CASE ls_xml_line-name.
         WHEN 'return'.
+          CHECK ls_xml_line-node_type = 'CO_NT_ELEMENT_OPEN'.
           APPEND INITIAL LINE TO rt_invoices ASSIGNING <ls_list>.
         WHEN OTHERS.
           TRANSLATE ls_xml_line-name TO UPPER CASE.
