@@ -38,7 +38,10 @@
         rs_status-dlvii = ls_document-dlvii.
       ENDIF.
 
-      IF rs_status-resst = '1' AND rs_status-itmrs IS INITIAL.
+      IF rs_status-resst = '1'.
+        rs_status-resst = '3'.
+      ENDIF.
+      IF rs_status-resst = '3' AND rs_status-itmrs IS INITIAL.
         DATA(lv_response_ubl) = lo_edelivery_service->outgoing_delivery_respdown( is_document_numbers = VALUE #( docui = iv_document_uid
                                                                                                                  docii = ls_document-dlvii
                                                                                                                  duich = ls_document-dlvui
