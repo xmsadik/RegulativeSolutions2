@@ -38,9 +38,12 @@
         rs_status-dlvii = ls_document-dlvii.
       ENDIF.
 
-      IF rs_status-resst = '1'.
-        rs_status-resst = '3'.
-      ENDIF.
+      CASE rs_status-resst.
+        WHEN '1'.
+          rs_status-resst = '3'.
+        WHEN ''.
+          rs_status-resst = 'X'.
+      ENDCASE.
       IF rs_status-resst = '3' AND rs_status-itmrs IS INITIAL.
         DATA(lv_response_ubl) = lo_edelivery_service->outgoing_delivery_respdown( is_document_numbers = VALUE #( docui = iv_document_uid
                                                                                                                  docii = ls_document-dlvii
