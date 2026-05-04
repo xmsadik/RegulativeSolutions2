@@ -6,7 +6,7 @@
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e005(zetr_common).
-    ELSEIF ls_document-ruuid IS INITIAL OR ls_document-resst <> '1'.
+    ELSEIF ls_document-ruuid IS INITIAL." OR ls_document-resst <> '1'.
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e008(zetr_common).
     ELSEIF ls_document-archv IS NOT INITIAL.
