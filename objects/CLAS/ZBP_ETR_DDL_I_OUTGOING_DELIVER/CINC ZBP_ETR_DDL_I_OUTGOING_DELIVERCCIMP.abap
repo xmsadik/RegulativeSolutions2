@@ -615,6 +615,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD statusUpdate.
+    DATA lt_arcd TYPE TABLE OF zetr_t_arcd.
     READ ENTITIES OF zetr_ddl_i_outgoing_deliveries IN LOCAL MODE
       ENTITY OutgoingDeliveries
       ALL FIELDS WITH
@@ -634,7 +635,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                 AND docty = 'OUTDLVRES'
               INTO @DATA(has_response).
             IF has_response IS INITIAL.
-              <DeliveryLine>-ToBeSent = abap_true.
+              APPEND VALUE #(  docui = <DeliveryLine>-DocumentUUID ) TO lt_arcd.
             ENDIF.
           ENDIF.
           <deliveryline>-StatusCode = ls_status-stacd.
@@ -700,15 +701,15 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                     CREATE BY \_deliveryContents
                     FIELDS ( DocumentUUID ContentType DocumentType )
                     AUTO FILL CID
-                    WITH VALUE #( FOR delivery IN deliverylist WHERE ( ToBeSent = abap_true )
-                                     ( documentuuid = delivery-documentuuid
-                                       %target = VALUE #( ( DocumentUUID = delivery-documentuuid
+                    WITH VALUE #( FOR ls_arcd IN lt_arcd
+                                     ( documentuuid = ls_arcd-docui
+                                       %target = VALUE #( ( DocumentUUID = ls_arcd-docui
                                                             ContentType = 'PDF'
                                                             DocumentType = 'OUTDLVRES' )
-                                                          ( DocumentUUID = delivery-documentuuid
+                                                          ( DocumentUUID = ls_arcd-docui
                                                             ContentType = 'HTML'
                                                             DocumentType = 'OUTDLVRES' )
-                                                          ( DocumentUUID = delivery-documentuuid
+                                                          ( DocumentUUID = ls_arcd-docui
                                                             ContentType = 'UBL'
                                                             DocumentType = 'OUTDLVRES' ) ) ) )
 
