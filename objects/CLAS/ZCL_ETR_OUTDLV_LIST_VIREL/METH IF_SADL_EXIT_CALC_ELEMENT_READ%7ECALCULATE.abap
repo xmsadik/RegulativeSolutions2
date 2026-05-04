@@ -28,7 +28,7 @@
 
       ENDIF.
       IF <ls_output>-ResponseUUID IS NOT INITIAL AND line_exists( it_requested_calc_elements[ table_line = 'RESPONSECONTENTURL' ] ).
-        <ls_output>-ResponseContentUrl = 'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
+        <ls_output>-ResponseContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
                                     '/sap/opu/odata/sap/ZETR_DDL_B_OUTG_DELIVERIES/Contents(DocumentUUID=guid''' &&
                                     lv_uuid && ''',ContentType=''PDF'',DocumentType=''OUTDLVRES'')/$value'.
       ENDIF.
