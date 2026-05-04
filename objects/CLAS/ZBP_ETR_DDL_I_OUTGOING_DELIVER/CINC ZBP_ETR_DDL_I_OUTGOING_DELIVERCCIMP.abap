@@ -31,7 +31,7 @@ CLASS lhc_items IMPLEMENTATION.
       WHERE bukrs = @lt_deliveries-CompanyCode
       INTO TABLE @DATA(lt_authorizations).
     LOOP AT lt_items INTO DATA(ls_item).
-      READ TABLE lt_deliveries INTO DATA(ls_delivery) WITH KEY DocumentUUID = ls_item-DocumentUUID.
+      READ TABLE lt_deliveries INTO DATA(ls_delivery) WITH TABLE KEY entity COMPONENTS DocumentUUID = ls_item-DocumentUUID.
       CHECK sy-subrc = 0.
       APPEND VALUE #( %tky = ls_item-%tky
                         %features-%update = COND #( WHEN ls_delivery-statuscode <> '' AND
@@ -627,8 +627,15 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
           DATA(lo_delivery_operations) = zcl_etr_delivery_operations=>factory( <deliveryline>-companycode ).
           DATA(ls_status) = lo_delivery_operations->outgoing_delivery_status( iv_document_uid = <DeliveryLine>-DocumentUUID
                                                                               iv_db_write     = abap_false ).
-          IF ls_status-ruuid IS NOT INITIAL AND <DeliveryLine>-ResponseUUID IS INITIAL.
-            <DeliveryLine>-ToBeSent = abap_true.
+          IF <deliveryline>-ResponseUUID IS NOT INITIAL OR ls_status-ruuid IS NOT INITIAL.
+            SELECT SINGLE @abap_true
+              FROM zetr_t_arcd
+              WHERE docui = @<DeliveryLine>-DocumentUUID
+                AND docty = 'OUTDLVRES'
+              INTO @DATA(has_response).
+            IF has_response IS INITIAL.
+              <DeliveryLine>-ToBeSent = abap_true.
+            ENDIF.
           ENDIF.
           <deliveryline>-StatusCode = ls_status-stacd.
           <deliveryline>-StatusDetail = ls_status-staex.
