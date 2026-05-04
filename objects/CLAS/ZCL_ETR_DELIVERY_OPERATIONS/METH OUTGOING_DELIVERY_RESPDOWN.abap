@@ -1,6 +1,6 @@
   METHOD outgoing_delivery_respdown.
     SELECT SINGLE docui, bukrs, archv, dlvii AS docii, dlvui AS duich, dlvno AS docno, envui, ruuid, resst
-       FROM zetr_t_icdlv
+       FROM zetr_t_ogdlv
        WHERE docui = @iv_document_uid
        INTO @DATA(ls_document).
     IF sy-subrc <> 0.
