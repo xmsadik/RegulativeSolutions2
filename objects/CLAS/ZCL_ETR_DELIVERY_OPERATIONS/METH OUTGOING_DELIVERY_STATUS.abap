@@ -11,7 +11,6 @@
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e032(zetr_common).
     ELSEIF ls_document-resst = '3' OR
-           ls_document-resst = 'X' OR
            ls_document-resst = 'R'.
       RETURN.
     ELSE.
