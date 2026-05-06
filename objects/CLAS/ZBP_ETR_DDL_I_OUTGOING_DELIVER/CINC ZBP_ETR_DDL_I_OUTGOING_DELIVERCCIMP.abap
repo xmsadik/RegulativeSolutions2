@@ -420,6 +420,17 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
       INTO TABLE @DATA(lt_sent_deliveries).
     SORT lt_sent_deliveries BY DocumentType CompanyCode DocumentNumber FiscalYear.
 
+    DATA lt_logs TYPE STANDARD TABLE OF zetr_ddl_i_outgoing_dellogs.
+
+    SELECT DocumentUUID
+      FROM zetr_ddl_i_outgoing_dellogs
+      FOR ALL ENTRIES IN @deliveryList
+      WHERE DocumentUUID = @deliveryList-DocumentUUID
+        AND LogCode = @zcl_etr_regulative_log=>mc_log_codes-sent
+      INTO TABLE @DATA(lt_already_sent).
+    SORT lt_already_sent BY DocumentUUID.
+    DELETE ADJACENT DUPLICATES FROM lt_already_sent COMPARING DocumentUUID.
+
     LOOP AT deliveryList ASSIGNING FIELD-SYMBOL(<deliveryLine>).
       IF <deliveryLine>-Reversed = abap_true.
         APPEND VALUE #( DocumentUUID = <deliveryLine>-DocumentUUID
@@ -438,6 +449,30 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
         DELETE deliveryList.
       ELSE.
         TRY.
+            TRY.
+                DATA(ls_existing_status) = zcl_etr_delivery_operations=>factory( <deliveryLine>-CompanyCode )->outgoing_delivery_status(
+                                               iv_document_uid = <deliveryLine>-DocumentUUID
+                                               iv_db_write     = abap_false ).
+                IF ls_existing_status IS NOT INITIAL.
+                  <deliveryLine>-StatusCode = ls_existing_status-stacd.
+                  <deliveryLine>-Response = ls_existing_status-resst.
+                  <deliveryLine>-StatusDetail = ls_existing_status-staex.
+                  <deliveryLine>-DeliveryUUID = ls_existing_status-dlvui.
+                  <deliveryLine>-EnvelopeUUID = ls_existing_status-envui.
+                  <deliveryLine>-DeliveryID = ls_existing_status-dlvno.
+                  CONTINUE.
+                ENDIF.
+              CATCH cx_root.
+            ENDTRY.
+
+            APPEND INITIAL LINE TO lt_logs ASSIGNING FIELD-SYMBOL(<ls_log>).
+            <ls_log>-LogUUID = cl_system_uuid=>create_uuid_c22_static( ).
+            <ls_log>-DocumentUUID = <deliveryLine>-DocumentUUID.
+            <ls_log>-CreatedBy = sy-uname.
+            <ls_log>-CreationDate = cl_abap_context_info=>get_system_date( ).
+            <ls_log>-CreationTime = cl_abap_context_info=>get_system_time( ).
+            <ls_log>-LogCode = zcl_etr_regulative_log=>mc_log_codes-sent.
+
             DATA(OutgoingdeliveryInstance) = zcl_etr_outgoing_delivery=>factory( <deliveryline>-documentuuid ).
             IF <deliveryLine>-deliveryID IS INITIAL.
               <deliveryLine>-deliveryID = OutgoingdeliveryInstance->generate_delivery_id( iv_save_db = '' ).
@@ -487,7 +522,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                             %msg = new_message( id       = 'ZETR_COMMON'
                                                 number   = '033'
                                                 severity = if_abap_behv_message=>severity-success ) ) TO reported-Outgoingdeliveries.
-
+            MESSAGE s033(zetr_common) INTO <ls_log>-logNote.
 
           CATCH cx_root INTO DATA(RegulativeException).
             DATA(ErrorMessage) = CONV bapi_msg( RegulativeException->get_text( ) ).
@@ -505,6 +540,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                                                 v4 = ErrorMessage+135(*) ) ) TO reported-Outgoingdeliveries.
             <deliveryLine>-StatusCode = '2'.
             <deliveryLine>-StatusDetail = ErrorMessage.
+            <ls_log>-logNote = ErrorMessage.
             EXIT.
         ENDTRY.
       ENDIF.
@@ -543,14 +579,23 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                     CREATE BY \_deliveryLogs
                     FIELDS ( loguuid documentuuid createdby creationdate creationtime logcode lognote )
                     AUTO FILL CID
-                    WITH VALUE #( FOR delivery IN deliveryList WHERE ( StatusCode = '1' OR StatusCode = '5' )
-                                     ( DocumentUUID = delivery-DocumentUUID
-                                       %target = VALUE #( ( LogUUID = cl_system_uuid=>create_uuid_c22_static( )
-                                                            DocumentUUID = delivery-DocumentUUID
-                                                            CreatedBy = sy-uname
-                                                            CreationDate = cl_abap_context_info=>get_system_date( )
-                                                            CreationTime = cl_abap_context_info=>get_system_time( )
-                                                            LogCode = zcl_etr_regulative_log=>mc_log_codes-sent ) ) ) )
+                    WITH VALUE #( FOR ls_log IN lt_logs
+                                     ( DocumentUUID = ls_log-DocumentUUID
+                                       %target = VALUE #( ( LogUUID = ls_log-LogUUID
+                                                            DocumentUUID = ls_log-DocumentUUID
+                                                            CreatedBy = ls_log-CreatedBy
+                                                            CreationDate = ls_log-CreationDate
+                                                            CreationTime = ls_log-CreationTime
+                                                            LogCode = ls_log-LogCode
+                                                            LogNote = ls_log-LogNote ) ) ) )
+*                    WITH VALUE #( FOR delivery IN deliveryList WHERE ( StatusCode = '1' OR StatusCode = '5' )
+*                                     ( DocumentUUID = delivery-DocumentUUID
+*                                       %target = VALUE #( ( LogUUID = cl_system_uuid=>create_uuid_c22_static( )
+*                                                            DocumentUUID = delivery-DocumentUUID
+*                                                            CreatedBy = sy-uname
+*                                                            CreationDate = cl_abap_context_info=>get_system_date( )
+*                                                            CreationTime = cl_abap_context_info=>get_system_time( )
+*                                                            LogCode = zcl_etr_regulative_log=>mc_log_codes-sent ) ) ) )
              FAILED failed.
       CATCH cx_uuid_error.
     ENDTRY.
