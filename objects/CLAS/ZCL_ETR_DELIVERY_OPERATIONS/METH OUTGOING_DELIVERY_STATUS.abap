@@ -1,6 +1,6 @@
   METHOD outgoing_delivery_status.
-    SELECT SINGLE bukrs, dlvii, sndus, dlvds, snddt,
-                  stacd, staex, resst, radsc, rsend, envui, dlvui, dlvno, dlvqi, ruuid
+    SELECT SINGLE bukrs, dlvii, sndus, dlvds, snddt, stacd, staex,
+                  resst, radsc, rsend, envui, dlvui, dlvno, dlvqi, ruuid, itmrs
       FROM zetr_t_ogdlv
       WHERE docui = @iv_document_uid
       INTO @DATA(ls_document).
@@ -12,6 +12,7 @@
         MESSAGE e032(zetr_common).
     ELSEIF ls_document-resst = '3' OR
            ls_document-resst = 'R'.
+      rs_status = CORRESPONDING #( ls_document ).
       RETURN.
     ELSE.
 
