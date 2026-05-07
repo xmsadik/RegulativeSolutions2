@@ -32,6 +32,7 @@
           WHEN 'ID'.
             IF <ls_delivery_line>-id IS INITIAL.
               <ls_delivery_line>-id = ls_xml_line2-value.
+              CONDENSE <ls_delivery_line>-id.
             ENDIF.
           WHEN 'DeliveredQuantity'.
             <ls_delivery_line>-deliveredquantity = ls_xml_line2-value.
@@ -54,6 +55,7 @@
           WHEN 'ID'.
             IF <ls_response_line>-id IS INITIAL.
               <ls_response_line>-id = ls_xml_line2-value.
+              CONDENSE <ls_response_line>-id.
             ENDIF.
           WHEN 'ReceivedQuantity' OR 'ShortQuantity' OR 'OversupplyQuantity'  OR 'RejectedQuantity'.
             TRANSLATE ls_xml_line2-name TO UPPER CASE.
