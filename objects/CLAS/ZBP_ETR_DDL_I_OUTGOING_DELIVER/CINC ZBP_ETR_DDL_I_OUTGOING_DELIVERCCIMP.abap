@@ -453,7 +453,7 @@ CLASS lhc_zetr_ddl_i_outgoing_delive IMPLEMENTATION.
                 DATA(ls_existing_status) = zcl_etr_delivery_operations=>factory( <deliveryLine>-CompanyCode )->outgoing_delivery_status(
                                                iv_document_uid = <deliveryLine>-DocumentUUID
                                                iv_db_write     = abap_false ).
-                IF ls_existing_status IS NOT INITIAL.
+                IF ls_existing_status IS NOT INITIAL AND ls_existing_status-stacd <> '' AND ls_existing_status-stacd <> '2'.
                   <deliveryLine>-StatusCode = ls_existing_status-stacd.
                   <deliveryLine>-Response = ls_existing_status-resst.
                   <deliveryLine>-StatusDetail = ls_existing_status-staex.
