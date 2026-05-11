@@ -57,25 +57,5 @@
       lv_monat_prev = gv_monat - 1.
     ENDIF.
 
-*    "Check if previous month's ledger was sent to GIB
-*    SELECT SINGLE COUNT(*)
-*      FROM zetr_t_oldef
-*      WHERE bukrs = @gv_bukrs
-*        AND bcode = @gv_bcode
-*        AND gjahr = @lv_gjahr_prev
-*        AND monat = @lv_monat_prev
-*        AND ( gbyok = @space OR gbkok = @space )
-*        AND manup = @space.
-*
-*    IF sy-subrc = 0.
-*      add_message( iv_msgid = 'ZETR_EDF_MSG'
-*                   iv_msgty = 'E'
-*                   iv_msgno = '016'
-*                   iv_msgv1 = lv_gjahr_prev
-*                   iv_msgv2 = lv_monat_prev ).
-*      rv_has_errors = abap_true.
-*      RETURN.
-*    ENDIF.
-
     rv_has_errors = abap_false.
   ENDMETHOD.

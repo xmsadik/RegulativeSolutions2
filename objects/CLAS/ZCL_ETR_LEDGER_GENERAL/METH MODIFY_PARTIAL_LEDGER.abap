@@ -140,6 +140,17 @@
     gs_yevno-datbi  = gv_datbi.
     gs_yevno-datab  = gv_datab.
     gs_yevno-tsfyd  = gv_tasfiye.
+    "*" bu blok yalnızca yılın ilk ayında (mali yıl varyantına göre, genellikle Ocak) aktif olur.
+    " Yeni mali yıl başlangıcında yevmiye numarasını 1'den başlat
+    IF gv_monat_buk EQ lv_monstart.
+      " Önceki kaydın yılı mevcut yıldan küçükse bu yeni bir yıl başlangıcıdır
+      IF ls_yevno_prev-gjahr < gv_gjahr OR ls_yevno_prev IS INITIAL.
+        CLEAR: ls_yevno_prev-eyevno,
+               ls_yevno_prev-elinen,
+               ls_yevno_prev-parno.
+      ENDIF.
+    ENDIF.
+    "bu blok yalnızca yılın ilk ayında (mali yıl varyantına göre, genellikle Ocak) aktif olur.
     gs_yevno-syevno = ls_yevno_prev-eyevno + 1.
     gs_yevno-eyevno = ls_yevno_prev-eyevno.
     gs_yevno-slinen = ls_yevno_prev-elinen + 1.
