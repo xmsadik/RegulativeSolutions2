@@ -264,7 +264,6 @@ CLASS zcl_etr_invoice_operations DEFINITION
         !iv_date_from       TYPE datum OPTIONAL
         !iv_date_to         TYPE datum OPTIONAL
         !iv_import_received TYPE zetr_e_imrec OPTIONAL
-        !iv_import_archives TYPE zetr_e_imarc OPTIONAL
         !iv_invoice_uuid    TYPE zetr_e_duich OPTIONAL
       RETURNING
         VALUE(rt_list)      TYPE mty_incoming_list
@@ -342,12 +341,3 @@ CLASS zcl_etr_invoice_operations DEFINITION
         it_requested_calc_elements TYPE if_sadl_exit_calc_element_read=>tt_elements
       CHANGING
         cs_list_output             TYPE zetr_ddl_p_outgoing_invoices.
-
-    METHODS outgoing_invoice_chk_reversed
-      IMPORTING
-        !iv_awtyp          TYPE zetr_e_awtyp
-        !iv_bukrs          TYPE bukrs
-        !iv_belnr          TYPE belnr_d
-        !iv_gjahr          TYPE gjahr
-      RETURNING
-        VALUE(rv_reversed) TYPE abap_boolean.

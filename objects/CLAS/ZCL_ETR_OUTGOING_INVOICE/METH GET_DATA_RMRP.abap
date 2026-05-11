@@ -151,7 +151,6 @@
                PurchaseOrderItem AS ebelp,
                AccountAssignmentNumber AS zekkn,
                PurchasingHistoryDocumentType AS vgabe,
-               PurchasingHistoryCategory AS bewtp,
                PurchasingHistoryDocumentYear AS gjahr,
                PurchasingHistoryDocument AS belnr,
                PurchasingHistoryDocumentItem AS buzei,

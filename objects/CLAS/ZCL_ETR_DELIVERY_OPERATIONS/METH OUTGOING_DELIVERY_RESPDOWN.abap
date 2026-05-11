@@ -1,12 +1,12 @@
   METHOD outgoing_delivery_respdown.
     SELECT SINGLE docui, bukrs, archv, dlvii AS docii, dlvui AS duich, dlvno AS docno, envui, ruuid, resst
-       FROM zetr_t_ogdlv
+       FROM zetr_t_icdlv
        WHERE docui = @iv_document_uid
        INTO @DATA(ls_document).
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e005(zetr_common).
-    ELSEIF ls_document-ruuid IS INITIAL." OR ls_document-resst <> '1'.
+    ELSEIF ls_document-ruuid IS INITIAL OR ls_document-resst <> '1'.
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e008(zetr_common).
     ELSEIF ls_document-archv IS NOT INITIAL.

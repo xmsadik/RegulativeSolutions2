@@ -1,5 +1,5 @@
   METHOD incoming_einvoice_download.
-    SELECT SINGLE docui, bukrs, archv, invii AS docii, invui AS duich, invno AS docno, envui, taxid, prfid
+    SELECT SINGLE docui, bukrs, archv, invii AS docii, invui AS duich, invno AS docno, envui
       FROM zetr_t_icinv
       WHERE docui = @iv_document_uid
       INTO @DATA(ls_document).
@@ -13,16 +13,9 @@
           AND conty = @iv_content_type
         INTO @rv_document.
     ELSE.
-      CASE ls_document-prfid.
-        WHEN 'EARSIV'.
-          DATA(lo_earchive_service) = zcl_etr_earchive_ws=>factory( iv_company = ls_document-bukrs ).
-          rv_document = lo_earchive_service->incoming_invoice_download( is_document_numbers = CORRESPONDING #( ls_document )
-                                                                        iv_content_type = iv_content_type ).
-        WHEN OTHERS.
-          DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
-          rv_document = lo_einvoice_service->incoming_invoice_download( is_document_numbers = CORRESPONDING #( ls_document )
-                                                                        iv_content_type = iv_content_type ).
-      ENDCASE.
+      DATA(lo_einvoice_service) = zcl_etr_einvoice_ws=>factory( iv_company = ls_document-bukrs ).
+      rv_document = lo_einvoice_service->incoming_invoice_download( is_document_numbers = CORRESPONDING #( ls_document )
+                                                                    iv_content_type = iv_content_type ).
       IF iv_content_type = 'UBL'.
         CALL TRANSFORMATION zetr_xml_formatter
           SOURCE XML rv_document

@@ -211,8 +211,7 @@
                  prntd AS Printed,
                  aliass AS Aliass,
                  dlvii AS IntegratorDocumentID
-          WHERE docui IN @lt_docui_range
-            AND bukrs IN @lt_bukrs_range
+          WHERE bukrs IN @lt_bukrs_range
             AND stacd IN @lt_stacd_range
             AND awtyp IN @lt_awtyp_range
             AND bldat IN @lt_bldat_range

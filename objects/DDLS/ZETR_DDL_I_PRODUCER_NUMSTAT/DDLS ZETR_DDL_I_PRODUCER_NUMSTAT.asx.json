@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'eInvoice Serial Number Status'\r\ndefine view entity zetr_ddl_i_producer_numstat\r\n  as select from zetr_t_edocnum as Numbers\r\n  association        to parent zetr_ddl_i_producer_serials as _producerSerials     on  $projection.CompanyCode  = _producerSerials.CompanyCode\r\n                                                                                   and $projection.SerialPrefix = _producerSerials.SerialPrefix\r\n  association [1..1] to zetr_ddl_i_producer_parameters      as _eProducerParameters on  $projection.CompanyCode = _eProducerParameters.CompanyCode\r\n{\r\n  key Numbers.bukrs as CompanyCode,\r\n  key Numbers.nrobj as NumberRangeObject,\r\n  key Numbers.serpr as SerialPrefix,\r\n  key Numbers.numrn as NumberRangeNumber,\r\n  key Numbers.gjahr as FiscalYear,\r\n      Numbers.numst as NumberStatus,\r\n      _eProducerParameters,\r\n      _producerSerials\r\n}\r\nwhere\r\n  Numbers.nrobj = 'ZETR_EPR'\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_EDOCNUM\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_PRODUCER_PARAMETERS\",\n\"ZETR_DDL_I_PRODUCER_SERIALS\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"DA",
+    "CHGFLAG":"J,WT429",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -21,8 +21,8 @@
                                                                         iv_xml_xstring = iv_delivery_ubl ).
     LOOP AT lt_delivery_xml_table INTO DATA(ls_xml_line) WHERE name = 'DespatchLine'
                                                            AND node_type = 'CO_NT_ELEMENT_OPEN'.
-      DATA(lv_index) = sy-tabix + 1.
       APPEND INITIAL LINE TO lt_delivery_lines ASSIGNING FIELD-SYMBOL(<ls_delivery_line>).
+      DATA(lv_index) = sy-tabix + 1.
       LOOP AT lt_delivery_xml_table INTO DATA(ls_xml_line2) FROM lv_index.
         IF ( ls_xml_line2-name = 'DespatchLine' AND ls_xml_line2-node_type = 'CO_NT_ELEMENT_CLOSE' ).
           EXIT.
@@ -32,7 +32,6 @@
           WHEN 'ID'.
             IF <ls_delivery_line>-id IS INITIAL.
               <ls_delivery_line>-id = ls_xml_line2-value.
-              CONDENSE <ls_delivery_line>-id.
             ENDIF.
           WHEN 'DeliveredQuantity'.
             <ls_delivery_line>-deliveredquantity = ls_xml_line2-value.
@@ -41,11 +40,11 @@
     ENDLOOP.
 
     DATA(lt_response_xml_table) = zcl_etr_regulative_common=>parse_xml( iv_xml_string = ''
-                                                                        iv_xml_xstring = iv_response_ubl ).
+                                                                        iv_xml_xstring = iv_delivery_ubl ).
     LOOP AT lt_response_xml_table INTO ls_xml_line WHERE name = 'ReceiptLine'
                                                      AND node_type = 'CO_NT_ELEMENT_OPEN'.
-      lv_index = sy-tabix + 1.
       APPEND INITIAL LINE TO lt_response_lines ASSIGNING FIELD-SYMBOL(<ls_response_line>).
+      lv_index = sy-tabix + 1.
       LOOP AT lt_response_xml_table INTO ls_xml_line2 FROM lv_index.
         IF ( ls_xml_line2-name = 'ReceiptLine' AND ls_xml_line2-node_type = 'CO_NT_ELEMENT_CLOSE' ).
           EXIT.
@@ -55,7 +54,6 @@
           WHEN 'ID'.
             IF <ls_response_line>-id IS INITIAL.
               <ls_response_line>-id = ls_xml_line2-value.
-              CONDENSE <ls_response_line>-id.
             ENDIF.
           WHEN 'ReceivedQuantity' OR 'ShortQuantity' OR 'OversupplyQuantity'  OR 'RejectedQuantity'.
             TRANSLATE ls_xml_line2-name TO UPPER CASE.

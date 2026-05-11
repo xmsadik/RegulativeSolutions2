@@ -38,22 +38,6 @@
                 WHEN OTHERS.
                   <ls_output>-Content = lo_delivery_operations->outgoing_delivery_download( iv_document_uid = <ls_output>-DocumentUUID
                                                                                             iv_content_type = <ls_output>-ContentType ).
-                  DATA(lv_document_content) = <ls_output>-Content.
-
-                  IF <ls_output>-ContentType = 'PDF'.
-                    TRY.
-                        DATA(lv_response) = lo_delivery_operations->outgoing_delivery_respdown( iv_document_uid = <ls_output>-DocumentUUID
-                                                                                                iv_content_type = <ls_output>-ContentType ).
-                        IF lv_response IS NOT INITIAL.
-                          DATA(lo_merger) = cl_rspo_pdf_merger=>create_instance( ).
-                          lo_merger->add_document( <ls_output>-Content ).
-                          lo_merger->add_document( lv_response ).
-                          <ls_output>-Content = lo_merger->merge_documents( ).
-                        ENDIF.
-                      CATCH cx_root.
-                        <ls_output>-Content = lv_document_content.
-                    ENDTRY.
-                  ENDIF.
               ENDCASE.
             CATCH zcx_etr_regulative_exception INTO DATA(lx_etr_regulative_exception).
               <ls_output>-Content = cl_abap_conv_codepage=>create_out( )->convert(

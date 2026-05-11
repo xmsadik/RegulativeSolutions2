@@ -7,8 +7,6 @@
         rv_output = 'YOLCU'.
       WHEN 'EARSIVBELGE'.
         rv_output = 'EABELGE'.
-      WHEN 'YATIRIMTESVIK'.
-        rv_output = 'YATIRIMTES'.
       WHEN OTHERS.
         rv_output = iv_input.
     ENDCASE.
