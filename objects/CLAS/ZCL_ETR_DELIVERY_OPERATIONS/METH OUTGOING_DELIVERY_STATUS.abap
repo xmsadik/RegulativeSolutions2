@@ -1,6 +1,6 @@
   METHOD outgoing_delivery_status.
-    SELECT SINGLE bukrs, dlvii, sndus, dlvds, snddt,
-                  stacd, staex, resst, radsc, rsend, envui, dlvui, dlvno, dlvqi, ruuid
+    SELECT SINGLE bukrs, dlvii, sndus, dlvds, snddt, stacd, staex,
+                  resst, radsc, rsend, envui, dlvui, dlvno, dlvqi, ruuid, itmrs
       FROM zetr_t_ogdlv
       WHERE docui = @iv_document_uid
       INTO @DATA(ls_document).
@@ -10,9 +10,9 @@
     ELSEIF ls_document-stacd = ''.
       RAISE EXCEPTION TYPE zcx_etr_regulative_exception
         MESSAGE e032(zetr_common).
-    ELSEIF ( ls_document-resst <> '' AND
-             ls_document-resst <> '0' AND
-             ls_document-resst <> '1' ) OR ls_document-resst = 'R'.
+    ELSEIF ls_document-resst = '3' OR
+           ls_document-resst = 'R'.
+      rs_status = CORRESPONDING #( ls_document ).
       RETURN.
     ELSE.
 
@@ -38,7 +38,13 @@
         rs_status-dlvii = ls_document-dlvii.
       ENDIF.
 
-      IF rs_status-resst = '1' AND rs_status-itmrs IS INITIAL.
+      CASE rs_status-resst.
+        WHEN '1'.
+          rs_status-resst = '3'.
+        WHEN ''.
+          rs_status-resst = 'X'.
+      ENDCASE.
+      IF rs_status-resst = '3' AND rs_status-itmrs IS INITIAL.
         DATA(lv_response_ubl) = lo_edelivery_service->outgoing_delivery_respdown( is_document_numbers = VALUE #( docui = iv_document_uid
                                                                                                                  docii = ls_document-dlvii
                                                                                                                  duich = ls_document-dlvui

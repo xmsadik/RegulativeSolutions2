@@ -1,7 +1,9 @@
   METHOD if_oo_adt_classrun~main.
+    DATA lt_bukrs TYPE RANGE OF bukrs.
     SELECT SINGLE *
       FROM zetr_t_eipar
-      WHERE wsusr <> ''
+      WHERE bukrs IN @lt_bukrs
+        AND wsusr <> ''
       INTO @DATA(ls_parameter).
     CHECK sy-subrc = 0.
     DATA lv_total_lines TYPE i.

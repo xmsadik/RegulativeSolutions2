@@ -20,6 +20,8 @@
           DATA(lv_invui) = CONV sysuuid_c36( ls_parameter-low ).
         WHEN 'P_IMREC'.
           DATA(lv_imrec) = CONV abap_boolean( ls_parameter-low ).
+        WHEN 'P_EARSIV'.
+          DATA(lv_earsiv) = CONV abap_boolean( ls_parameter-low ).
       ENDCASE.
     ENDLOOP.
     IF lv_begda IS INITIAL AND lv_endda IS INITIAL.
@@ -44,6 +46,7 @@
               DATA(lt_invoice_list) = lo_invoice_operations->get_incoming_invoices( iv_date_from = lv_begda
                                                                                     iv_date_to   = lv_endda
                                                                                     iv_import_received = lv_imrec
+                                                                                    iv_import_archives = lv_earsiv
                                                                                     iv_invoice_uuid = lv_invui ).
               DATA(lv_saved_records) = lines( lt_invoice_list ).
               DATA(lo_message) = cl_bali_message_setter=>create( severity = if_bali_constants=>c_severity_status

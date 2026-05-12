@@ -30,5 +30,12 @@
                                   length = 1
                                   param_text = 'Import Received'
                                   checkbox_ind = abap_true
+                                  changeable_ind = abap_true )
+                                ( selname = 'P_EARSIV'
+                                  kind = if_apj_dt_exec_object=>parameter
+                                  datatype = 'C'
+                                  length = 1
+                                  param_text = 'Import eArchive'
+                                  checkbox_ind = abap_true
                                   changeable_ind = abap_true ) ).
   ENDMETHOD.

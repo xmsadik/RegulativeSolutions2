@@ -98,7 +98,7 @@
                      kinak = space.
         IF sy-subrc IS INITIAL.
           ls_items-mwskz = ls_konv-mwsk1.
-          ls_items-mwsbp = ls_konv-kwert.
+          ls_items-mwsbp += ls_konv-kwert.
         ENDIF.
       ENDLOOP.
       IF ls_items-mwskz IS INITIAL.
@@ -110,7 +110,7 @@
                      kinak = space.
         IF sy-subrc IS INITIAL.
           ls_items-mwskz = ls_konv-mwsk1.
-          ls_items-mwsbp = ls_konv-kwert.
+          ls_items-mwsbp += ls_konv-kwert.
         ENDIF.
       ENDIF.
 

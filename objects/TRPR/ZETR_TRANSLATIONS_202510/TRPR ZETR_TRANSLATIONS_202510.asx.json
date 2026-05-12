@@ -11,7 +11,7 @@
     "CREATED_BY":"SAP_CUSTOMER",
     "CREATED_AT":"+20251003120549.5108140",
     "LAST_CHANGED_BY":"SAP_CUSTOMER",
-    "LAST_CHANGED_AT":"+20260130073902.2521590"
+    "LAST_CHANGED_AT":"+20260430162307.7261940"
    }
   ]
  },
@@ -63,6 +63,11 @@
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DATA_ELEM",
     "NAME":"ZETR_E_EMAIL_TO"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DATA_ELEM",
+    "NAME":"ZETR_E_IMARC"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
@@ -133,6 +138,11 @@
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
     "TYPE":"DOMAIN",
     "NAME":"ZETR_D_NROBJ"
+   },
+   {
+    "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
+    "TYPE":"DOMAIN",
+    "NAME":"ZETR_D_RESST"
    },
    {
     "PROJECT_ID":"ZETR_TRANSLATIONS_202510",
@@ -221,12 +231,12 @@
     "TARGET_LANGUAGE":"T",
     "MAINTENANCE_STATUS":"NO_TRANSLA",
     "IMPORT_STATUS":"SUCCESS",
-    "LAST_IMPORTED_AT":"+20260130073902.2076910",
+    "LAST_IMPORTED_AT":"+20260430162307.6851960",
     "LAST_IMPORTED_BY":"SAP_CUSTOMER",
-    "LAST_UPLOADED_AT":"+20260130073855.2648160",
+    "LAST_UPLOADED_AT":"+20260430162255.6822740",
     "LAST_UPLOADED_BY":"SAP_CUSTOMER",
     "FILE_TYPE":"XLIFF",
-    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-DATA_ELEMENT\" resname=\"ZETR_E_DCGIS\">\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:SHORT_DESCRIPTION\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Short description for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:SHORT_FIELD_LABEL\" maxwidth=\"10\" size-unit=\"char\">\n          <source>No chk.g.i</source>\n\t\t  <target>MalÇkKnYok</target>\n          <note>Short field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:MEDIUM_FIELD_LABEL\" maxwidth=\"20\" size-unit=\"char\">\n          <source>Don't chk.goods iss.</source>\n\t\t  <target>Mal çıkış kont.yok</target>\n          <note>Medium field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:LONG_FIELD_LABEL\" maxwidth=\"40\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Long field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n        <trans-unit id=\"DATA_ELEMENT:ZETR_E_DCGIS:HEADING_FIELD_LABEL\" maxwidth=\"55\" size-unit=\"char\">\n          <source>Do not check goods issue</source>\n\t\t  <target>Mal çıkış kontrolü yok</target>\n          <note>Heading field label for Data Element ZETR_E_DCGIS.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
+    "FILE_CONTENT":"<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">\n  <file datatype=\"plaintext\" original=\"ZETR_TRANSLATIONS_202510\" source-language=\"en-US\" target-language=\"tr\">\n    <header>\n      <tool tool-company=\"SAP SE\" tool-id=\"urn:x-sap:maintain-translations-fiori-app\" tool-name=\"Maintain Translations Fiori App\" tool-version=\"1.0.0\"/>\n    </header>\n    <body>\n      <group datatype=\"x-DOMAIN\" resname=\"ZETR_D_RESST\">\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:X\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Response not required</source>\n          <target>Yanıt Gerekmiyor</target>\n          <note>Description for fixed value X of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:0\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Waiting for response</source>\n          <target>Yanıt Bekleniyor</target>\n          <note>Description for fixed value 0 of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:1\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Rejected</source>\n          <target>Reddedildi</target>\n          <note>Description for fixed value 1 of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:2\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Accepted</source>\n          <target>Kabul Edildi</target>\n          <note>Description for fixed value 2 of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:3\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Response Received</source>\n\t\t  <target>Cevap alındı</target>\n          <note>Description for fixed value 3 of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:R\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Marked as rejected</source>\n          <target>Reddedildi Olarak İşaretlendi</target>\n          <note>Description for fixed value R of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:K\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Rejected via KEP</source>\n          <target>KEP Reddi</target>\n          <note>Description for fixed value K of domain ZETR_D_RESST.</note>\n        </trans-unit>\n        <trans-unit id=\"DOMAIN:ZETR_D_RESST:FIXED_VALUE_DESCRIPTION:G\" maxwidth=\"60\" size-unit=\"char\">\n          <source>Cancelled via TRA</source>\n          <target>GİB İptal</target>\n          <note>Description for fixed value G of domain ZETR_D_RESST.</note>\n        </trans-unit>\n      </group>\n    </body>\n  </file>\n</xliff>"
    }
   ]
  },

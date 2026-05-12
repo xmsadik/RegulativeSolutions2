@@ -316,7 +316,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
     ENDIF.
 
     SELECT
-      FROM ZETR_ddl_i_outgoing_invoices
+      FROM zetr_ddl_i_outgoing_invoices
       FIELDS DocumentType, CompanyCode, DocumentNumber, FiscalYear
       FOR ALL ENTRIES IN @InvoiceList
       WHERE DocumentType = @InvoiceList-DocumentType
@@ -344,29 +344,38 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
     SORT lt_auto_mail BY bukrs prfid.
 
     LOOP AT InvoiceList ASSIGNING FIELD-SYMBOL(<InvoiceLine>).
-      IF <InvoiceLine>-Reversed = abap_true.
-        APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
-                        %msg = new_message( id       = 'ZETR_COMMON'
-                                            number   = '036'
-                                            severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
-        DELETE InvoiceList.
-      ELSEIF <InvoiceLine>-ExemptionExists = abap_true AND <InvoiceLine>-TaxExemption IS INITIAL.
-        APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
-                        %msg = new_message( id       = 'ZETR_COMMON'
-                                            number   = '039'
-                                            severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
-        DELETE InvoiceList.
-      ELSEIF line_exists( lt_sent_invoices[ DocumentType = <InvoiceLine>-DocumentType
-                                            CompanyCode = <InvoiceLine>-CompanyCode
-                                            DocumentNumber = <InvoiceLine>-DocumentNumber
-                                            FiscalYear = <InvoiceLine>-FiscalYear ] ).
-        APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
-                        %msg = new_message( id       = 'ZETR_COMMON'
-                                            number   = '020'
-                                            severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
-        DELETE InvoiceList.
-      ELSE.
-        TRY.
+      TRY.
+          IF <InvoiceLine>-Reversed = abap_true.
+            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                            %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '036'
+                                                severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
+            DELETE InvoiceList.
+          ELSEIF zcl_etr_invoice_operations=>factory( <InvoiceLine>-CompanyCode )->outgoing_invoice_chk_reversed( iv_awtyp = <InvoiceLine>-DocumentType
+                                                                                                                  iv_bukrs = <InvoiceLine>-CompanyCode
+                                                                                                                  iv_belnr = <InvoiceLine>-DocumentNumber
+                                                                                                                  iv_gjahr = <InvoiceLine>-FiscalYear ) = abap_true.
+            <InvoiceLine>-Reversed = abap_true.
+            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                            %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '036'
+                                                severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
+          ELSEIF <InvoiceLine>-ExemptionExists = abap_true AND <InvoiceLine>-TaxExemption IS INITIAL.
+            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                            %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '039'
+                                                severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
+            DELETE InvoiceList.
+          ELSEIF line_exists( lt_sent_invoices[ DocumentType = <InvoiceLine>-DocumentType
+                                                CompanyCode = <InvoiceLine>-CompanyCode
+                                                DocumentNumber = <InvoiceLine>-DocumentNumber
+                                                FiscalYear = <InvoiceLine>-FiscalYear ] ).
+            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                            %msg = new_message( id       = 'ZETR_COMMON'
+                                                number   = '020'
+                                                severity = if_abap_behv_message=>severity-error ) ) TO reported-OutgoingInvoices.
+            DELETE InvoiceList.
+          ELSE.
             DATA(OutgoingInvoiceInstance) = zcl_etr_outgoing_invoice=>factory( <invoiceline>-documentuuid ).
             IF <InvoiceLine>-InvoiceID IS INITIAL.
               <InvoiceLine>-InvoiceID = OutgoingInvoiceInstance->generate_invoice_id( iv_save_db = '' ).
@@ -465,27 +474,26 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                             %msg = new_message( id       = 'ZETR_COMMON'
                                                 number   = '033'
                                                 severity = if_abap_behv_message=>severity-success ) ) TO reported-OutgoingInvoices.
+          ENDIF.
 
-
-          CATCH cx_root INTO DATA(RegulativeException).
-            DATA(ErrorMessage) = CONV bapi_msg( RegulativeException->get_text( ) ).
-            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
-                            %msg = new_message( id       = 'ZETR_COMMON'
-                                                number   = '207'
-                                                severity = if_abap_behv_message=>severity-information ) ) TO reported-OutgoingInvoices.
-            APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
-                            %msg = new_message( id       = 'ZETR_COMMON'
-                                                number   = '000'
-                                                severity = if_abap_behv_message=>severity-information
-                                                v1 = ErrorMessage(50)
-                                                v2 = ErrorMessage+50(50)
-                                                v3 = ErrorMessage+100(50)
-                                                v4 = ErrorMessage+150(*) ) ) TO reported-OutgoingInvoices.
-            <InvoiceLine>-StatusCode = '2'.
-            <InvoiceLine>-StatusDetail = ErrorMessage.
-            EXIT.
-        ENDTRY.
-      ENDIF.
+        CATCH cx_root INTO DATA(RegulativeException).
+          DATA(ErrorMessage) = CONV bapi_msg( RegulativeException->get_text( ) ).
+          APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                          %msg = new_message( id       = 'ZETR_COMMON'
+                                              number   = '207'
+                                              severity = if_abap_behv_message=>severity-information ) ) TO reported-OutgoingInvoices.
+          APPEND VALUE #( DocumentUUID = <InvoiceLine>-DocumentUUID
+                          %msg = new_message( id       = 'ZETR_COMMON'
+                                              number   = '000'
+                                              severity = if_abap_behv_message=>severity-information
+                                              v1 = ErrorMessage(50)
+                                              v2 = ErrorMessage+50(50)
+                                              v3 = ErrorMessage+100(50)
+                                              v4 = ErrorMessage+150(*) ) ) TO reported-OutgoingInvoices.
+          <InvoiceLine>-StatusCode = '2'.
+          <InvoiceLine>-StatusDetail = ErrorMessage.
+          EXIT.
+      ENDTRY.
     ENDLOOP.
     CHECK InvoiceList IS NOT INITIAL.
 
@@ -505,6 +513,7 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                                         StatusCode = Invoice-StatusCode
                                                         StatusDetail = Invoice-StatusDetail
                                                         Response = Invoice-Response
+                                                        Reversed = Invoice-Reversed
                                                         %control-Sender = if_abap_behv=>mk-on
                                                         %control-SendDate = if_abap_behv=>mk-on
                                                         %control-SendTime = if_abap_behv=>mk-on
@@ -515,7 +524,8 @@ CLASS lhc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
                                                         %control-EnvelopeUUID = if_abap_behv=>mk-on
                                                         %control-StatusCode = if_abap_behv=>mk-on
                                                         %control-StatusDetail = if_abap_behv=>mk-on
-                                                        %control-Response = if_abap_behv=>mk-on ) )
+                                                        %control-Response = if_abap_behv=>mk-on
+                                                        %control-Reversed = if_abap_behv=>mk-on ) )
 
 *                ENTITY OutgoingInvoices
 *                    CREATE BY \_invoiceContents
@@ -1570,6 +1580,9 @@ CLASS lsc_zetr_ddl_i_outgoing_invoic IMPLEMENTATION.
         ENDIF.
         IF ls_update-%control-ReturnedDocumentDates = if_abap_behv=>mk-on.
           <ls_invoice>-retdd = ls_update-ReturnedDocumentDates.
+        ENDIF.
+        IF ls_update-%control-Reversed = if_abap_behv=>mk-on.
+          <ls_invoice>-revch = ls_update-Reversed.
         ENDIF.
         APPEND INITIAL LINE TO lt_logs ASSIGNING FIELD-SYMBOL(<ls_log>).
         <ls_log>-docui = ls_update-documentuuid.

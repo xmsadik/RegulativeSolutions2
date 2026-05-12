@@ -45,6 +45,8 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES blart TYPE blart.
     TYPES kursf TYPE zetr_e_kursf.
     TYPES bktxt TYPE zetr_e_descr.
+    TYPES awtyp TYPE awtyp.
+    TYPES awkey TYPE awkey.
     TYPES END OF mty_bkpf.
 
     TYPES BEGIN OF mty_bseg.
@@ -171,6 +173,7 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES ebelp TYPE ebelp.
     TYPES zekkn TYPE dzekkn.
     TYPES vgabe TYPE c LENGTH 1.
+    TYPES bewtp TYPE c LENGTH 1.
     TYPES gjahr TYPE mjahr.
     TYPES belnr TYPE mblnr.
     TYPES buzei TYPE mblpo.
@@ -230,6 +233,8 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES posnr TYPE n LENGTH 6.
     TYPES fkimg TYPE menge_d.
     TYPES vrkme TYPE meins.
+    TYPES menge TYPE menge_d.
+    TYPES meins TYPE meins.
     TYPES matnr TYPE matnr.
     TYPES arktx TYPE zetr_e_descr.
     TYPES werks TYPE werks_d.
@@ -242,6 +247,7 @@ CLASS zcl_etr_outgoing_invoice DEFINITION
     TYPES vgxbl TYPE c LENGTH 16.
     TYPES vglfx TYPE c LENGTH 35.
     TYPES vgdat TYPE datum.
+    TYPES vgcdt TYPE datum.
     TYPES aubel TYPE belnr_d.
     TYPES aupos TYPE n LENGTH 6.
     TYPES audat TYPE datum.

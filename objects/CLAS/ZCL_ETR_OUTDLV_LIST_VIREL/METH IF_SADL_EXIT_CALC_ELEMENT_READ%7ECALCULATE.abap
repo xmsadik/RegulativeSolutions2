@@ -4,18 +4,19 @@
     CHECK lt_output IS NOT INITIAL.
 
     LOOP AT lt_output ASSIGNING FIELD-SYMBOL(<ls_output>).
+      TRY.
+          cl_system_uuid=>convert_uuid_c22_static(
+            EXPORTING
+              uuid = <ls_output>-documentuuid
+            IMPORTING
+              uuid_c36 = DATA(lv_uuid) ).
+        CATCH cx_uuid_error.
+          "handle exception
+      ENDTRY.
+
       IF line_exists( it_requested_calc_elements[ table_line = 'PDFCONTENTURL' ] ) OR
          line_exists( it_requested_calc_elements[ table_line = 'HTMLCONTENTURL' ] ) OR
          line_exists( it_requested_calc_elements[ table_line = 'UBLCONTENTURL' ] ).
-        TRY.
-            cl_system_uuid=>convert_uuid_c22_static(
-              EXPORTING
-                uuid = <ls_output>-documentuuid
-              IMPORTING
-                uuid_c36 = DATA(lv_uuid) ).
-          CATCH cx_uuid_error.
-            "handle exception
-        ENDTRY.
         <ls_output>-PDFContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
                                     '/sap/opu/odata/sap/ZETR_DDL_B_OUTG_DELIVERIES/Contents(DocumentUUID=guid''' &&
                                     lv_uuid && ''',ContentType=''PDF'',DocumentType=''OUTDLVDOC'')/$value'.
@@ -28,7 +29,7 @@
 
       ENDIF.
       IF <ls_output>-ResponseUUID IS NOT INITIAL AND line_exists( it_requested_calc_elements[ table_line = 'RESPONSECONTENTURL' ] ).
-        <ls_output>-ResponseContentUrl = 'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
+        <ls_output>-ResponseContentUrl = "'https://' && zcl_etr_regulative_common=>get_ui_url( ) &&
                                     '/sap/opu/odata/sap/ZETR_DDL_B_OUTG_DELIVERIES/Contents(DocumentUUID=guid''' &&
                                     lv_uuid && ''',ContentType=''PDF'',DocumentType=''OUTDLVRES'')/$value'.
       ENDIF.
